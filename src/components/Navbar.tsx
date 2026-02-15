@@ -14,10 +14,14 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 w-full z-50 glass-nav">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <a href="#" className="text-foreground font-semibold tracking-tight text-lg flex items-center gap-2 group">
-          <span className="bg-foreground text-background text-xs font-bold px-1.5 py-0.5 rounded-md group-hover:scale-110 transition-transform">
-            MHB
-          </span>
+        <a href="#" className="text-foreground font-semibold tracking-tight text-lg flex items-center gap-3 group">
+          
+          {/* Added 'mt-[2px]' to push the dot down slightly for visual alignment */}
+          <div className="relative flex h-3 w-3 items-center justify-center mt-[2px]">
+             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-20 group-hover:opacity-40 transition-opacity"></span>
+             <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span>
+          </div>
+
           <span>Muhammad Hanan Baloch</span>
         </a>
 

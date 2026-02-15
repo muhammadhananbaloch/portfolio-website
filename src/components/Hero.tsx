@@ -22,14 +22,20 @@ const Hero = () => {
           Available for new opportunities
         </div>
 
+        {/* IMPACTFUL HEADLINE */}
         <h1 className="text-5xl md:text-7xl font-semibold tracking-tighter text-foreground leading-[1.1]">
-          Architecting Scalable{" "}
+          <span className="text-muted-foreground">Architecting</span> Scalable{" "}
           <br className="hidden md:block" />
-          <span className="text-muted-foreground">AI & Autonomous Systems.</span>
+          AI <span className="text-muted-foreground">&</span> Autonomous Systems
+          <span className="text-green-500">.</span>
         </h1>
 
+        {/* SCANNABLE DESCRIPTION */}
         <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-          Specializing in Deep Learning, RAG Pipelines, and Agentic Workflows. I engineer robust Python solutions that bridge complex data science with real-world utility.
+          Specializing in <span className="text-foreground font-medium">Deep Learning</span>,{" "}
+          <span className="text-foreground font-medium">RAG Pipelines</span>, and{" "}
+          <span className="text-foreground font-medium">Agentic Workflows</span>. 
+          I engineer robust <span className="text-foreground font-medium">Python</span> solutions that bridge complex data science with real-world utility.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
