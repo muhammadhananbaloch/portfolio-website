@@ -29,8 +29,13 @@ const Contact = () => {
             <Mail size={18} />
             <span>Send an Email</span>
           </a>
+          
           <a
-            href="#" // Update with your actual Calendly/booking link if applicable
+            href="mailto:contact@muhammadhananbaloch.dev?subject=Consultation%20Request&body=Hi%20Hanan,%20I'd%20like%20to%20discuss%20a%20potential%20AI%20solution..."
+            
+            /* Added ID for Google Tag Manager tracking */
+            id="consultation-btn"
+            
             className="group flex items-center justify-center gap-3 px-8 py-4 border border-border rounded-full font-medium text-foreground hover:bg-white/5 transition-all"
           >
             <Calendar size={18} />
