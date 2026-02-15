@@ -16,35 +16,41 @@ const Contact = () => {
         viewport={{ once: true }}
         className="max-w-3xl mx-auto text-center space-y-8"
       >
-        <h2 className="text-3xl font-semibold text-foreground tracking-tight">Ready to build something intelligent?</h2>
+        <h2 className="text-3xl font-semibold text-foreground tracking-tight">Let's Build the Future of Intelligence</h2>
         <p className="text-muted-foreground text-lg leading-relaxed">
-          I'm currently looking for new opportunities to apply my skills in Python Automation and AI Engineering. Whether you have a question or just want to say hi, I'll try my best to get back to you!
+          I am always open to discussing autonomous agents, RAG architecture, or how AI can solve your most complex operational bottlenecks. Whether you're looking for a technical partner or just want to talk AI, let's connect.
         </p>
 
-        <div className="flex justify-center gap-6 pt-6">
+        <div className="flex flex-col sm:flex-row justify-center gap-4 pt-6">
           <a
             href="mailto:muhammadhananbaloch@outlook.com"
-            className="group flex items-center gap-3 px-6 py-3 bg-foreground text-background rounded-lg font-medium hover:scale-105 transition-transform"
+            className="group flex items-center justify-center gap-3 px-8 py-4 bg-foreground text-background rounded-full font-medium hover:scale-105 transition-all shadow-lg"
           >
             <Mail size={18} />
-            <span>Send Email</span>
+            <span>Send an Email</span>
           </a>
           <a
-            href="#"
-            className="group flex items-center gap-3 px-6 py-3 border border-border rounded-lg font-medium text-foreground hover:bg-white/5 transition-colors"
+            href="#" // Update with your actual Calendly/booking link if applicable
+            className="group flex items-center justify-center gap-3 px-8 py-4 border border-border rounded-full font-medium text-foreground hover:bg-white/5 transition-all"
           >
             <Calendar size={18} />
-            <span>Book a Call</span>
+            <span>Schedule a Consultation</span>
           </a>
         </div>
 
         <div className="flex justify-center items-center gap-8 pt-12 opacity-60">
           {[
-            { icon: Github, label: "GitHub" },
-            { icon: Linkedin, label: "LinkedIn" },
-            { icon: Twitter, label: "Twitter" },
-          ].map(({ icon: Icon, label }) => (
-            <a key={label} href="#" className="hover:text-foreground hover:opacity-100 transition-all flex flex-col items-center gap-2 text-muted-foreground">
+            { icon: Github, label: "GitHub", href: "https://github.com/muhammadhananbaloch" },
+            { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/muhammadhananbaloch/" },
+            { icon: Twitter, label: "Twitter", href: "https://x.com/muhammadhanann" },
+          ].map(({ icon: Icon, label, href }) => (
+            <a 
+              key={label} 
+              href={href} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="hover:text-foreground hover:opacity-100 transition-all flex flex-col items-center gap-2 text-muted-foreground"
+            >
               <Icon size={24} />
               <span className="text-xs">{label}</span>
             </a>
