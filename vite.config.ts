@@ -5,11 +5,11 @@ import path from "path";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
-    host: true, // Listen on all addresses (0.0.0.0)
+    host: true, 
     port: 8080,
-    allowedHosts: ["supplementally-nonrelieving-anette.ngrok-free.dev"],
+    allowedHosts: true, // Allows any host for previewing purposes
     watch: {
-      usePolling: true, // CRITICAL: Forces Docker to see Windows file changes
+      usePolling: true, 
     },
   },
   plugins: [
