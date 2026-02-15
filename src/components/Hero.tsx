@@ -23,13 +23,13 @@ const Hero = () => {
         </div>
 
         <h1 className="text-5xl md:text-7xl font-semibold tracking-tighter text-foreground leading-[1.1]">
-          Engineering Intelligence{" "}
+          Architecting Scalable{" "}
           <br className="hidden md:block" />
-          <span className="text-muted-foreground">&amp; Automation.</span>
+          <span className="text-muted-foreground">AI & Autonomous Systems.</span>
         </h1>
 
         <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-          From NeuroScan AI to autonomous agents. I build scalable Python solutions that bridge complex data science with real-world utility.
+          Specializing in Deep Learning, RAG Pipelines, and Agentic Workflows. I engineer robust Python solutions that bridge complex data science with real-world utility.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
