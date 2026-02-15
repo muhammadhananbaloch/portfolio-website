@@ -1,0 +1,7 @@
+services:
+  portfolio:
+    container_name: hanan-portfolio
+    build: .
+    ports:
+      - "3001:80"  # Accessibility: Open localhost:3000 to see your site
+    restart: always

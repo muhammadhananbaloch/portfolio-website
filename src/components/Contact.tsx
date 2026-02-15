@@ -23,7 +23,7 @@ const Contact = () => {
 
         <div className="flex justify-center gap-6 pt-6">
           <a
-            href="mailto:email@example.com"
+            href="mailto:muhammadhananbaloch@outlook.com"
             className="group flex items-center gap-3 px-6 py-3 bg-foreground text-background rounded-lg font-medium hover:scale-105 transition-transform"
           >
             <Mail size={18} />

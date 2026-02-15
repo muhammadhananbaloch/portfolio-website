@@ -7,9 +7,9 @@ const fadeUp = {
 
 const experiences = [
   {
-    title: "AI & Automation Intern",
-    company: "Recent Role",
-    date: "2024 – Present",
+    title: "AI Engineer",
+    company: "JBS Americas and Europe",
+    date: "Oct 2025 – Present",
     description:
       "Built Marketing Audit Agents to automate competitive analysis and reporting. Developed Freight Qualification Voice Agents using Python and LLM pipelines for real-time logistics decision-making.",
     active: true,

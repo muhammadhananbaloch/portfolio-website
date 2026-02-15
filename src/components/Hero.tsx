@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex flex-col justify-center items-center text-center pt-20 px-6 bg-grid">
+    <section id="about" className="relative min-h-screen flex flex-col justify-center items-center text-center pt-20 px-6 bg-grid">
       {/* Spotlight */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] glow-bg opacity-60 pointer-events-none" />
 
@@ -41,17 +41,19 @@ const Hero = () => {
             <ArrowRight size={18} />
           </a>
           <a
-            href="#"
+            href="https://drive.google.com/file/d/1FxqXKWAzpl2jAau1EkrCi8JpYJWmjcYz/view?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
             className="px-8 py-3 border border-border text-foreground font-medium rounded-full hover:bg-white/5 transition-all flex items-center gap-2"
           >
             <Download size={18} />
             Download CV
           </a>
           <div className="flex gap-4 sm:ml-4">
-            <a href="#" className="p-3 text-muted-foreground hover:text-foreground transition-colors" aria-label="GitHub">
+            <a href="https://github.com/muhammadhananbaloch" target="_blank" rel="noopener noreferrer" className="p-3 text-muted-foreground hover:text-foreground transition-colors" aria-label="GitHub">
               <Github size={22} />
             </a>
-            <a href="#" className="p-3 text-muted-foreground hover:text-foreground transition-colors" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/in/muhammadhananbaloch/" target="_blank" rel="noopener noreferrer" className="p-3 text-muted-foreground hover:text-foreground transition-colors" aria-label="LinkedIn">
               <Linkedin size={22} />
             </a>
           </div>
