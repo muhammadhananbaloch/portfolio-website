@@ -11,16 +11,8 @@ const experiences = [
     company: "JBS Americas and Europe",
     date: "Oct 2025 – Present",
     description:
-      "Built Marketing Audit Agents to automate competitive analysis and reporting. Developed Freight Qualification Voice Agents using Python and LLM pipelines for real-time logistics decision-making.",
+      "Driving enterprise innovation by architecting autonomous AI systems that solve complex operational challenges. From intelligent voice agents to automated audit pipelines, I design and deploy scalable solutions that streamline workflows, enhance decision-making, and deliver measurable business value.",
     active: true,
-  },
-  {
-    title: "Python Automation Engineer",
-    company: "Freelance & Projects",
-    date: "2023 – 2024",
-    description:
-      "Designed and deployed scalable automation solutions including invoice OCR pipelines, real estate data platforms, and AI-powered chatbots for clients across multiple industries.",
-    active: false,
   },
 ];
 
