@@ -44,6 +44,7 @@ const Hero = () => {
             href="https://drive.google.com/file/d/1FxqXKWAzpl2jAau1EkrCi8JpYJWmjcYz/view?usp=sharing"
             target="_blank"
             rel="noopener noreferrer"
+            id="resume-download-btn"
             className="px-8 py-3 border border-border text-foreground font-medium rounded-full hover:bg-white/5 transition-all flex items-center gap-2"
           >
             <Download size={18} />
