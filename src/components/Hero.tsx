@@ -60,9 +60,14 @@ const Hero = () => {
         </div>
       </motion.div>
 
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-50">
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.5 }}
+        transition={{ delay: 1, duration: 1 }}
+        className="mt-12 animate-bounce"
+      >
         <ChevronDown size={24} className="text-foreground" />
-      </div>
+      </motion.div>
     </section>
   );
 };
