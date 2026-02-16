@@ -1,8 +1,3 @@
-Good catch. Accuracy matters, especially in technical documentation. A `t3.micro` instance is significantly better for burstable performance than the older `t2` generation.
-
-Here is the **corrected** `README.md` with the updated specs. Copy and replace your entire file:
-
-```markdown
 # Muhammad Hanan Baloch | Personal Platform
 
 ![Status](https://img.shields.io/badge/Status-Production-success)
@@ -115,7 +110,3 @@ nginx.conf           # Custom Nginx server configuration
 ---
 
 *© 2026 Muhammad Hanan Baloch. Licensed under MIT.*
-
-```
-
-```
