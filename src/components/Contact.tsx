@@ -31,9 +31,11 @@ const Contact = () => {
           </a>
           
           <a
-            href="mailto:contact@muhammadhananbaloch.dev?subject=Consultation%20Request&body=Hi%20Hanan,%20I'd%20like%20to%20discuss%20a%20potential%20AI%20solution..."
+            href="https://calendly.com/muhammaddhananbaloch/30min"
+            target="_blank"
+            rel="noopener noreferrer"
             
-            /* Added ID for Google Tag Manager tracking */
+            /* ✅ ID Preserved for GTM Tracking */
             id="consultation-btn"
             
             className="group flex items-center justify-center gap-3 px-8 py-4 border border-border rounded-full font-medium text-foreground hover:bg-white/5 transition-all"
