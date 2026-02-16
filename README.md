@@ -1,73 +1,121 @@
-# Welcome to your Lovable project
+Good catch. Accuracy matters, especially in technical documentation. A `t3.micro` instance is significantly better for burstable performance than the older `t2` generation.
 
-## Project info
+Here is the **corrected** `README.md` with the updated specs. Copy and replace your entire file:
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+```markdown
+# Muhammad Hanan Baloch | Personal Platform
 
-## How can I edit this code?
+![Status](https://img.shields.io/badge/Status-Production-success)
+![Docker](https://img.shields.io/badge/Container-Dockerized-blue)
+![AWS](https://img.shields.io/badge/Cloud-AWS%20EC2-orange)
 
-There are several ways of editing your application.
+> **Live Site:** [https://muhammadhananbaloch.dev](https://muhammadhananbaloch.dev)
 
-**Use Lovable**
+A production-grade personal platform engineered to serve as a central hub for my work in **Agentic AI**, **RAG Pipelines**, and **Scalable Systems**. 
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+Unlike standard static sites, this project focuses on robust infrastructure, real-time analytics, and a frictionless user experience. It is designed to be a living "digital sandbox" for experimenting with new web technologies and autonomous agents.
 
-Changes made via Lovable will be committed automatically to this repo.
+---
 
-**Use your preferred IDE**
+## 🛠 Tech Stack
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### **Frontend & UI**
+* **Framework:** [React](https://react.dev/) + [Vite](https://vitejs.dev/) (TypeScript)
+* **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+* **Animation:** [Framer Motion](https://www.framer.com/motion/) (Semantic animations)
+* **Components:** [Shadcn UI](https://ui.shadcn.com/) + [Lucide React](https://lucide.dev/)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### **Infrastructure & DevOps**
+* **Containerization:** Docker (Multi-stage builds)
+* **Web Server:** Nginx (Alpine Linux based)
+* **Hosting:** AWS EC2 (t3.micro / Linux/Unix)
+* **CDN & Security:** Cloudflare (Edge caching, SSL, DDoS protection)
 
-Follow these steps:
+### **Intelligence & Analytics**
+* **Tracking:** Google Analytics 4 (GA4) + Google Tag Manager (GTM)
+* **Events:** Custom event triggers for "Consultation Clicks" and "Resume Downloads"
+* **Integration:** Calendly (Direct booking API)
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+---
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## ✨ Key Features
 
-# Step 3: Install the necessary dependencies.
-npm i
+* **⚡ Zero-Friction Scheduling:** Integrated Calendly modal for direct consultation booking without leaving the page.
+* **📊 Granular Analytics:** Tracks not just page views, but specific interactions (e.g., recruiter intent signals).
+* **🎨 Minimalist "Dark Mode" Aesthetic:** Designed for readability and focus, reflecting a "Systems Engineering" vibe.
+* **📱 Fully Responsive:** Mobile-first architecture with smooth, gesture-based navigation menus.
+* **🔒 Enterprise-Grade Security:** A+ SSL rating via Cloudflare strict encryption.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+* Node.js (v18+)
+* Docker (Optional, for containerized testing)
+
+### Local Development
+1.  **Clone the repository**
+    ```bash
+    git clone [https://github.com/muhammadhananbaloch/portfolio.git](https://github.com/muhammadhananbaloch/portfolio.git)
+    cd portfolio
+    ```
+
+2.  **Install dependencies**
+    ```bash
+    npm install
+    ```
+
+3.  **Run the development server**
+    ```bash
+    npm run dev
+    ```
+
+---
+
+## 🐳 Docker Deployment
+
+To simulate the production environment locally:
+
+1.  **Build the image**
+    ```bash
+    docker build -t portfolio-app .
+    ```
+
+2.  **Run the container**
+    ```bash
+    docker run -p 8080:80 portfolio-app
+    ```
+    *Access at `http://localhost:8080`*
+
+---
+
+## 📂 Project Structure
+
+```bash
+src/
+├── assets/          # Static assets (images, pdfs)
+├── components/      # Reusable UI components (Hero, Navbar, Contact)
+├── lib/             # Utility functions (Tailwind merge, clsx)
+├── index.css        # Global styles & Tailwind directives
+└── App.tsx          # Main application entry point
+Dockerfile           # Multi-stage build configuration
+nginx.conf           # Custom Nginx server configuration
+
 ```
 
-**Edit a file directly in GitHub**
+---
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 📬 Contact
 
-**Use GitHub Codespaces**
+* **Website:** [muhammadhananbaloch.dev](https://www.google.com/url?sa=E&source=gmail&q=https://muhammadhananbaloch.dev)
+* **LinkedIn:** [Muhammad Hanan Baloch](https://www.linkedin.com/in/muhammadhananbaloch/)
+* **Email:** [contact@muhammadhananbaloch.dev](mailto:contact@muhammadhananbaloch.dev)
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+---
 
-## What technologies are used for this project?
+*© 2026 Muhammad Hanan Baloch. Licensed under MIT.*
 
-This project is built with:
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+```
