@@ -75,9 +75,9 @@ const projects: Project[] = [
   },
   {
     id: "freight-voice",
-    title: "TFM",
+    title: "Freight",
     italic: "Voice Orchestration",
-    desc: "Enterprise AI voice system qualifying a 300k+ logistics lead database for Target Freight Management. Not just a dialer — an intent-based gatekeeper that routes every call into Qualified / Retry / Disqualified / DNC and writes an executive narrative before a human ever looks at it.",
+    desc: "Enterprise AI voice system qualifying a 300k+ logistics lead database for a freight-management client. Not just a dialer — an intent-based gatekeeper that routes every call into Qualified / Retry / Disqualified / DNC and writes an executive narrative before a human ever looks at it.",
     stack: ["Synthflow V2", "GoHighLevel", "GPT-4o", "GPT-4o-mini", "Webhooks"],
     tag: "Conversational AI · Logistics",
     internal: true,
