@@ -9,6 +9,6 @@ services:
       - .:/app                  # Mirror your local files
       - /app/node_modules       # Keep node_modules inside container (clean host)
     ports:
-      - "8080:8080"
+      - "4231:4231"
     # FIXED COMMAND: Always ensure dependencies are ready before starting
     command: sh -c "npm install --legacy-peer-deps && npm run dev"

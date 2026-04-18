@@ -1,80 +1,76 @@
-import { ArrowRight, Download, Github, Linkedin, ChevronDown } from "lucide-react";
-import { motion } from "framer-motion";
+import AgentGraph from "./AgentGraph";
 
 const Hero = () => {
   return (
-    <section id="about" className="relative min-h-screen flex flex-col justify-center items-center text-center pt-20 px-6 bg-grid">
-      {/* Spotlight */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] glow-bg opacity-60 pointer-events-none" />
+    <section className="hero" id="top">
+      <div className="hero-left">
+        <div>
+          <div className="hero-kicker">
+            <span><b>Essay № 1</b> · On the cover</span>
+            <span className="sep"></span>
+            <span>AI Engineer</span>
+            <span className="sep"></span>
+            <span>Est. 2023</span>
+          </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
-        className="space-y-8 max-w-4xl relative z-10"
-      >
-        {/* Badge */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs font-medium text-foreground backdrop-blur-sm">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-slate-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-slate-400" />
-          </span>
-          Building Scalable AI Systems
-        </div>
+          <h1 className="display">
+            I architect <em>autonomous</em><br />
+            <span className="hl">AI systems</span> <span className="amp">&amp;</span><br />
+            agents that <em>ship<span className="dot">.</span></em>
+          </h1>
 
-        {/* IMPACTFUL HEADLINE */}
-        <h1 className="text-5xl md:text-7xl font-semibold tracking-tighter text-foreground leading-[1.1]">
-          <span className="text-muted-foreground">Architecting</span> Scalable{" "}
-          <br className="hidden md:block" />
-          AI <span className="text-muted-foreground">&</span> Autonomous Systems
-          <span className="text-green-500">.</span>
-        </h1>
+          <p className="lede">
+            Muhammad Hanan Baloch — AI Engineer at <b>JBS Americas &amp; Europe</b>.
+            I build <b>RAG pipelines</b>, <b>voice agents</b>, and <b>agentic workflows</b>
+            that sit behind real production traffic — not demos. Python-first, evals-obsessed.
+          </p>
 
-        {/* SCANNABLE DESCRIPTION */}
-        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-          Specializing in <span className="text-foreground font-medium">Deep Learning</span>,{" "}
-          <span className="text-foreground font-medium">RAG Pipelines</span>, and{" "}
-          <span className="text-foreground font-medium">Agentic Workflows</span>. 
-          I engineer robust <span className="text-foreground font-medium">Python</span> solutions that bridge complex data science with real-world utility.
-        </p>
-
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-          <a
-            href="#projects"
-            className="px-8 py-3 bg-foreground text-background font-medium rounded-full hover:opacity-90 transition-all flex items-center gap-2"
-          >
-            View Projects
-            <ArrowRight size={18} />
-          </a>
-          <a
-            href="https://drive.google.com/file/d/1FxqXKWAzpl2jAau1EkrCi8JpYJWmjcYz/view?usp=sharing"
-            target="_blank"
-            rel="noopener noreferrer"
-            id="resume-download-btn"
-            className="px-8 py-3 border border-border text-foreground font-medium rounded-full hover:bg-white/5 transition-all flex items-center gap-2"
-          >
-            <Download size={18} />
-            Download CV
-          </a>
-          <div className="flex gap-4 sm:ml-4">
-            <a href="https://github.com/muhammadhananbaloch" target="_blank" rel="noopener noreferrer" className="p-3 text-muted-foreground hover:text-foreground transition-colors" aria-label="GitHub">
-              <Github size={22} />
+          <div className="cta-row">
+            <a className="btn primary" href="#work">
+              See selected work
+              <svg className="icn" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
             </a>
-            <a href="https://www.linkedin.com/in/muhammadhananbaloch/" target="_blank" rel="noopener noreferrer" className="p-3 text-muted-foreground hover:text-foreground transition-colors" aria-label="LinkedIn">
-              <Linkedin size={22} />
+            <a
+              className="btn"
+              href="https://drive.google.com/file/d/1FxqXKWAzpl2jAau1EkrCi8JpYJWmjcYz/view?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+              id="resume-download-btn"
+            >
+              <svg className="icn" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" /></svg>
+              Résumé (PDF)
+            </a>
+            <a className="btn ghost" href="#contact">
+              <svg className="icn" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" /></svg>
+              Book 30-min
             </a>
           </div>
         </div>
-      </motion.div>
 
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.5 }}
-        transition={{ delay: 1, duration: 1 }}
-        className="mt-12 animate-bounce"
-      >
-        <ChevronDown size={24} className="text-foreground" />
-      </motion.div>
+        <div className="hero-foot">
+          <div className="chips">
+            <span>Based<b>Karachi · Remote</b></span>
+            <span>Role<b>AI Engineer, JBS</b></span>
+            <span>Writing<b>Field Notes №3 ⤏</b></span>
+          </div>
+          <div>Scroll to read ↓</div>
+        </div>
+      </div>
+
+      <div className="hero-right">
+        <div className="graph-meta">
+          <span className="live">● live · agent graph</span>
+          <span>fig. 01</span>
+        </div>
+        <AgentGraph />
+        <div className="graph-caption">
+          <p>What I build, in one picture — a model, tools, memory, and the glue that holds them together under load.</p>
+          <div className="graph-tokens">
+            <span>p50 240ms</span>
+            <span>99.4% up</span>
+          </div>
+        </div>
+      </div>
     </section>
   );
 };
