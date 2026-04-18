@@ -27,7 +27,7 @@ const QuoteContact = () => {
             </p>
           </div>
           <div className="contact-links">
-            <a href="mailto:hanan.baloch@jbs.live">
+            <a href="mailto:contact@muhammadhananbaloch.dev">
               <span>
                 Write to me <em>— contact@muhammadhananbaloch.dev</em>
               </span>
