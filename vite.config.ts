@@ -6,7 +6,7 @@ import path from "path";
 export default defineConfig(({ mode }) => ({
   server: {
     host: true, 
-    port: 8080,
+    port: 4231,
     allowedHosts: true, // Allows any host for previewing purposes
     watch: {
       usePolling: true, 

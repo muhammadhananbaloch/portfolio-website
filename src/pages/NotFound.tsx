@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import "@/styles/portfolio.css";
 
 const NotFound = () => {
   const location = useLocation();
