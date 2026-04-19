@@ -2,12 +2,12 @@ type Node = { id: string; label: string; cls: string; x: number; y: number };
 type Edge = { from: string; to: string; dashed?: boolean; pulse?: boolean };
 
 const nodes: Node[] = [
-  { id: "user", label: "user · request", cls: "user", x: 14, y: 12 },
-  { id: "llm", label: "orchestrator · LLM", cls: "llm", x: 52, y: 30 },
-  { id: "rag", label: "tool · rag_retriever", cls: "tool", x: 16, y: 50 },
-  { id: "api", label: "tool · api_caller", cls: "tool", x: 86, y: 50 },
-  { id: "mem", label: "pgvector · memory", cls: "memory", x: 52, y: 66 },
-  { id: "out", label: "response · streamed", cls: "out", x: 52, y: 82 },
+  { id: "user", label: "user · request", cls: "user", x: 50, y: 12 },
+  { id: "llm", label: "orchestrator · LLM", cls: "llm", x: 50, y: 30 },
+  { id: "rag", label: "tool · rag_retriever", cls: "tool", x: 22, y: 50 },
+  { id: "api", label: "tool · api_caller", cls: "tool", x: 78, y: 50 },
+  { id: "mem", label: "pgvector · memory", cls: "memory", x: 50, y: 70 },
+  { id: "out", label: "response · streamed", cls: "out", x: 50, y: 88 },
 ];
 
 const edges: Edge[] = [

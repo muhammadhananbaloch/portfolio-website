@@ -195,12 +195,17 @@ body.portfolio::before{
   background: var(--paper);
   overflow:hidden;
   min-height:560px;
+  display:flex;flex-direction:column;
   box-shadow: -6px 6px 0 var(--paper-3);
 }
 .hero-right .graph-meta{
-  position:absolute;top:14px;left:14px;right:14px;
+  position:relative;padding:14px 18px 0;
   display:flex;justify-content:space-between;z-index:3;
   font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);
+}
+.hero-right .graph-stage{
+  position:relative;flex:1 1 auto;min-height:0;
+  container-type: inline-size;
 }
 .hero-right .graph-meta .live{display:inline-flex;align-items:center;gap:6px;color:var(--accent)}
 .hero-right .graph-meta .live::before{content:"";width:6px;height:6px;background:var(--accent);border-radius:50%;animation:paper-pulse 2s infinite}
@@ -222,13 +227,18 @@ body.portfolio::before{
   background:var(--paper);
   border:1.5px solid var(--ink);
   border-radius:4px;
-  padding:7px 11px;
-  font-family:var(--mono);font-size:11px;font-weight:500;
+  padding: clamp(4px, 1.4cqw, 7px) clamp(6px, 2.2cqw, 11px);
+  font-family:var(--mono);
+  font-size: clamp(8.5px, 2.4cqw, 11px);
+  font-weight:500;
+  line-height:1.25;
+  max-width: 44%;
+  text-align:center;
   box-shadow: 3px 3px 0 var(--ink);
   z-index:2;
-  display:flex;align-items:center;gap:8px;
+  display:flex;align-items:center;justify-content:center;gap:8px;
   transition: transform .3s cubic-bezier(.2,.9,.3,1.2), box-shadow .3s;
-  cursor:default;white-space:nowrap;
+  cursor:default;white-space:normal;word-break:break-word;
 }
 .graph-node:hover{transform:translate(-50%,-50%) translateY(-3px);box-shadow: 3px 6px 0 var(--ink)}
 .graph-node.user{background:#fff}
@@ -240,10 +250,10 @@ body.portfolio::before{
 .graph-node.out .gl{background:var(--highlight)}
 
 .graph-caption{
-  position:absolute;left:14px;right:14px;bottom:0;z-index:3;
+  position:relative;z-index:3;
   display:flex;justify-content:space-between;align-items:flex-end;gap:14px;
   font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
-  padding:22px 10px 14px;
+  padding:18px 18px 16px;
   border-top:1px solid var(--rule-2);
   background:var(--paper);
 }
@@ -392,7 +402,7 @@ body.portfolio::before{
 }
 .reveal-diagram{
   background:var(--paper);border:1px solid var(--rule-2);border-radius:var(--paper-radius);
-  padding:18px;min-height:260px;position:relative;
+  padding:18px;min-height:260px;aspect-ratio: 5 / 4;container-type: inline-size;position:relative;
   background-image:
     linear-gradient(var(--rule) 1px, transparent 1px),
     linear-gradient(90deg, var(--rule) 1px, transparent 1px);
@@ -422,9 +432,14 @@ body.portfolio::before{
 
 .dg-box{
   position:absolute;border:1.5px solid var(--ink);background:var(--paper);
-  padding:6px 10px;font-family:var(--mono);font-size:10.5px;font-weight:500;
+  padding: clamp(3px, 1.2cqw, 6px) clamp(5px, 2cqw, 10px);
+  font-family:var(--mono);
+  font-size: clamp(8px, 2.2cqw, 10.5px);
+  font-weight:500;line-height:1.2;
+  max-width: 42%;text-align:center;
   border-radius:3px;box-shadow:2px 2px 0 var(--ink);
   transform:translate(-50%,-50%);
+  white-space:normal;word-break:break-word;
 }
 .dg-box.hi{background:var(--highlight)}
 .dg-box.bl{background:#d7ecf3}
@@ -576,7 +591,7 @@ body.portfolio::before{
 /* ------------- RESPONSIVE ------------- */
 @media (max-width: 1080px){
   .hero{grid-template-columns:1fr;gap:32px;padding-top:48px}
-  .hero-right{min-height:420px}
+  .hero-right{min-height:0;aspect-ratio: 3 / 4}
   .stats-inner{grid-template-columns:repeat(3,1fr);gap:24px}
   .stats-inner .kicker{grid-column:1 / -1}
   .now-sec,.stack-exp{grid-template-columns:1fr}
@@ -586,6 +601,7 @@ body.portfolio::before{
   .exp-col{border-left:none;padding-left:0;border-top:1px solid var(--rule-2);padding-top:24px}
   .now-content{grid-template-columns:1fr}
   .reveal-inner{grid-template-columns:1fr}
+  .work-row.open .work-reveal{max-height:3000px}
   .work-row{grid-template-columns: 36px 1fr auto;gap:16px}
   .work-row .desc, .work-row .stack{grid-column: 2 / -1;margin-top:6px}
   .work-row .title{font-size:26px}
@@ -612,8 +628,7 @@ body.portfolio::before{
   .hero-foot .chips{gap:10px 18px;row-gap:10px}
   .hero-foot .chips span{font-size:9.5px}
   .hero-foot .chips span b{font-size:13px}
-  .hero-right{min-height:360px;box-shadow:none}
-  .graph-node{font-size:9.5px;padding:4px 7px}
+  .hero-right{min-height:0;aspect-ratio: 4 / 5;box-shadow:none}
   .graph-caption p{font-size:12px;max-width:65%}
   .graph-tokens span{font-size:9px;padding:2px 5px}
 
@@ -642,8 +657,8 @@ body.portfolio::before{
   .work-row .go{width:34px;height:34px}
   .work-row.open{padding-left:10px;padding-right:10px}
   .reveal-inner{gap:18px}
-  .reveal-diagram{min-height:200px;padding:14px}
-  .dg-box{font-size:9.5px;padding:4px 7px}
+  .reveal-diagram{min-height:0;aspect-ratio: 4 / 5;padding:14px;overflow:hidden}
+  .work-row.open .work-reveal{max-height:3500px}
   .reveal-meta .pair{grid-template-columns:1fr 1fr;gap:10px 14px}
   .reveal-meta .pair div b{font-size:18px}
 

@@ -21,7 +21,7 @@ const Hero = () => {
 
           <p className="lede">
             Muhammad Hanan Baloch — AI Engineer at <b>JBS Americas &amp; Europe</b>.
-            I build <b>RAG pipelines</b>, <b>voice agents</b>, and <b>agentic workflows</b>
+            I build <b>RAG pipelines</b>, <b>voice agents</b>, and <b>agentic workflows </b>
             that sit behind real production traffic — not demos. Python-first, evals-obsessed.
           </p>
 
@@ -62,7 +62,9 @@ const Hero = () => {
           <span className="live">● live · agent graph</span>
           <span>fig. 01</span>
         </div>
-        <AgentGraph />
+        <div className="graph-stage">
+          <AgentGraph />
+        </div>
         <div className="graph-caption">
           <p>What I build, in one picture — a model, tools, memory, and the glue that holds them together under load.</p>
           <div className="graph-tokens">
