@@ -42,7 +42,7 @@ const Stats = () => {
       <div className="stats-inner">
         <div className="kicker">
           <span>— Field Report</span>
-          <b>The honest tally</b>
+          <b>By the numbers</b>
         </div>
         <div className="stat">
           <div className="n">{Math.round(projects)}</div>

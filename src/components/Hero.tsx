@@ -20,9 +20,8 @@ const Hero = () => {
           </h1>
 
           <p className="lede">
-            Muhammad Hanan Baloch — AI Engineer at <b>JBS Americas &amp; Europe</b>.
-            I build <b>RAG pipelines</b>, <b>voice agents</b>, and <b>agentic workflows </b>
-            that sit behind real production traffic — not demos.
+            AI Engineer at <b>JBS Americas &amp; Europe</b>, building <b>RAG pipelines</b>,
+            <b> voice agents</b>, and <b>agentic workflows</b> behind real production traffic, not demos.
           </p>
 
           <div className="cta-row">
