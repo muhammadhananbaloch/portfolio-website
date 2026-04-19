@@ -2,7 +2,7 @@ const items = [
   {
     tag: "shipping",
     title: "Hybrid RAG for aviation claims",
-    body: "Production LangGraph backend — SQL + pgvector paths behind one natural-language interface. Routing, token-budget guardrails, streaming CSV exports to S3.",
+    body: "Production LangGraph backend: SQL + pgvector paths behind one natural-language interface. Routing, token-budget guardrails, streaming CSV exports to S3.",
   },
   {
     tag: "building",
@@ -12,7 +12,7 @@ const items = [
   {
     tag: "learning",
     title: "Deterministic state machines over ad-hoc chains",
-    body: "Leaning harder on LangGraph — formal routes, fewer surprises in prod. Fallback paths when token budgets blow past context limits.",
+    body: "Leaning harder on LangGraph: formal routes, fewer surprises in prod. Fallback paths when token budgets blow past context limits.",
   },
   {
     tag: "reading",
@@ -31,7 +31,7 @@ const Now = () => {
       </div>
       <div className="now-content">
         <p className="now-lead">
-          A <em>living</em> page — what I'm building, learning, and reading <em>right now</em>.
+          A <em>living</em> page: what I'm building, learning, and reading <em>right now</em>.
           Updated whenever something meaningful changes.
         </p>
         {items.map((it, i) => (

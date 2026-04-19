@@ -65,7 +65,7 @@ const Hero = () => {
           <AgentGraph />
         </div>
         <div className="graph-caption">
-          <p>What I build, in one picture — a model, tools, memory, and the glue that holds them together under load.</p>
+          <p>What I build, in one picture: a model, tools, memory, and the glue that holds them together under load.</p>
           <div className="graph-tokens">
             <span>p50 240ms</span>
             <span>99.4% up</span>

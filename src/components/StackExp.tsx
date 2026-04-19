@@ -22,10 +22,10 @@ const stackGroups = [
 const experience = [
   {
     active: true,
-    date: "Oct 2025 — Present",
+    date: "Oct 2025 – Present",
     role: "AI Engineer",
     co: "JBS Americas & Europe",
-    body: "Driving enterprise innovation by architecting autonomous AI systems that solve complex operational challenges — from intelligent voice agents to automated audit pipelines that deliver measurable business value.",
+    body: "Driving enterprise innovation by architecting autonomous AI systems that solve complex operational challenges, from intelligent voice agents to automated audit pipelines that deliver measurable business value.",
   },
 ];
 
@@ -44,7 +44,7 @@ const StackExp = () => {
             <div className="stack-group" key={g.title}>
               <h4>
                 {g.title}
-                <em>— {g.italic}</em>
+                <em>· {g.italic}</em>
               </h4>
               <p>{g.body}</p>
               <div className="stack-chips">

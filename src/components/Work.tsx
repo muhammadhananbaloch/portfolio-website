@@ -22,7 +22,7 @@ const projects: Project[] = [
     id: "aviation-rag",
     title: "Aviation Claims",
     italic: "Hybrid RAG",
-    desc: "Hybrid RAG backend letting insurance adjusters query 10+ years of aviation claims in plain English — one LangGraph router, two paths (SQL + pgvector), grounded answers with a CSV export.",
+    desc: "Hybrid RAG backend letting insurance adjusters query 10+ years of aviation claims in plain English: one LangGraph router, two paths (SQL + pgvector), grounded answers with a CSV export.",
     stack: ["LangGraph", "FastAPI", "pgvector", "GPT-5.4-mini", "SQLAlchemy", "AWS"],
     tag: "Agentic Workflows · Enterprise",
     internal: true,
@@ -33,7 +33,7 @@ const projects: Project[] = [
       { n: "2 paths", l: "SQL · semantic" },
     ],
     summary:
-      "A LangGraph state machine routes each query to either a validated SQL path (sqlglot AST + schema-aware column validator + retry) or a semantic path (cosine search across three vector-indexed tables). A single router call classifies intent AND extracts prefilters. The LLM never touches the returned data — only the 2–4 sentence insight on top of it.",
+      "A LangGraph state machine routes each query to either a validated SQL path (sqlglot AST + schema-aware column validator + retry) or a semantic path (cosine search across three vector-indexed tables). A single router call classifies intent AND extracts prefilters. The LLM never touches the returned data, only the 2–4 sentence insight on top of it.",
     diagram: [
       { x: 20, y: 18, label: "adjuster · NL query", cls: "" },
       { x: 50, y: 18, label: "router · classify + filter", cls: "hi" },
@@ -48,7 +48,7 @@ const projects: Project[] = [
     id: "neuroscan",
     title: "NeuroScan",
     italic: "AI",
-    desc: "Medical web app that triages brain-tumor MRI scans into four categories in real time on CPU-only cloud — no GPU required.",
+    desc: "Medical web app that triages brain-tumor MRI scans into four categories in real time on CPU-only cloud. No GPU required.",
     stack: ["PyTorch", "EfficientNet-B0", "FastAPI", "PostgreSQL", "Cloudinary", "Docker"],
     tag: "Computer Vision · Healthcare",
     link: "https://brain-tumor-web-smiu.vercel.app/",
@@ -77,7 +77,7 @@ const projects: Project[] = [
     id: "freight-voice",
     title: "Freight",
     italic: "Voice Orchestration",
-    desc: "Enterprise AI voice system qualifying a 300k+ logistics lead database — intent-based routing into Qualified / Retry / DQ / DNC with an auto-written executive narrative per call.",
+    desc: "Enterprise AI voice system qualifying a 300k+ logistics lead database: intent-based routing into Qualified / Retry / DQ / DNC with an auto-written executive narrative per call.",
     stack: ["Synthflow V2", "GoHighLevel", "GPT-4o", "GPT-4o-mini", "Webhooks"],
     tag: "Conversational AI · Logistics",
     internal: true,
@@ -104,7 +104,7 @@ const projects: Project[] = [
     id: "marketing-ops",
     title: "Marketing Ops",
     italic: "Document Factory",
-    desc: "Autonomous Python backend that turns a master checklist into hundreds of client-specific SOPs on demand — one call spins up a Drive tree, scrapes refs, runs GPT-4 Turbo, writes .docx, and links back to the sheet.",
+    desc: "Autonomous Python backend that turns a master checklist into hundreds of client-specific SOPs on demand. One call spins up a Drive tree, scrapes refs, runs GPT-4 Turbo, writes .docx, and links back to the sheet.",
     stack: ["Python", "GPT-4 Turbo", "Playwright", "Google Drive API", "Google Sheets API", "python-docx"],
     tag: "Agentic Workflows · Operations",
     internal: true,
@@ -115,7 +115,7 @@ const projects: Project[] = [
       { n: "idempotent", l: "safe re-runs" },
     ],
     summary:
-      "Lead Python developer. OAuth 2.0 → clone master sheet → Playwright-powered headless scraper (waits on DOM signals like `data-block-id` for Notion-style JS frames) → GPT-4 Turbo generation forced into a 6-part schema (Overview, Steps, Roles, Tools, QA, Use Case) → python-docx → Drive upload with folder-tree reconciliation → URL written back into the exact sheet cell. Idempotent by design — safe to pause, restart, or re-run.",
+      "Lead Python developer. OAuth 2.0 → clone master sheet → Playwright-powered headless scraper (waits on DOM signals like `data-block-id` for Notion-style JS frames) → GPT-4 Turbo generation forced into a 6-part schema (Overview, Steps, Roles, Tools, QA, Use Case) → python-docx → Drive upload with folder-tree reconciliation → URL written back into the exact sheet cell. Idempotent by design: safe to pause, restart, or re-run.",
     diagram: [
       { x: 20, y: 18, label: "REST trigger · biz profile", cls: "" },
       { x: 50, y: 18, label: "OAuth · clone sheet", cls: "bl" },
@@ -131,7 +131,7 @@ const projects: Project[] = [
     id: "propauto",
     title: "PropAuto",
     italic: "CRM",
-    desc: "Full-stack real-estate CRM — scout distressed properties by geography, unlock owner contact on credits, and run two-way SMS campaigns with sticky attribution for inbound replies.",
+    desc: "Full-stack real-estate CRM. Scout distressed properties by geography, unlock owner contact on credits, and run two-way SMS campaigns with sticky attribution for inbound replies.",
     stack: ["React", "FastAPI", "PostgreSQL (JSONB)", "Twilio", "SQLAlchemy", "Docker"],
     tag: "Infrastructure · Enterprise",
     internal: true,
@@ -142,7 +142,7 @@ const projects: Project[] = [
       { n: "sticky", l: "context attribution" },
     ],
     summary:
-      "Built end-to-end. Credit-based unlock UX for lead enrichment, JSONB-backed normalization pipeline, batch SMS outbound engine, and a passive webhook receiver that cryptographically verifies `X-Twilio-Signature` before touching state. The clever bit: sticky context — when a phone number exists in multiple historic campaigns, SQLAlchemy queries cast JSON and mine message history to attribute the reply to the most recent active campaign.",
+      "Built end-to-end. Credit-based unlock UX for lead enrichment, JSONB-backed normalization pipeline, batch SMS outbound engine, and a passive webhook receiver that cryptographically verifies `X-Twilio-Signature` before touching state. The clever bit is sticky context: when a phone number exists in multiple historic campaigns, SQLAlchemy queries cast JSON and mine message history to attribute the reply to the most recent active campaign.",
     diagram: [
       { x: 20, y: 18, label: "React · scout UI", cls: "" },
       { x: 50, y: 18, label: "FastAPI · enrich", cls: "bl" },
@@ -265,7 +265,7 @@ const Work = () => {
               <div className="reveal-inner">
                 <Diagram nodes={p.diagram} edges={p.edges} />
                 <div className="reveal-meta">
-                  <h5>— {p.tag}</h5>
+                  <h5>· {p.tag}</h5>
                   <p>{p.summary}</p>
                   <div className="pair">
                     {p.metrics.map((m, j) => (

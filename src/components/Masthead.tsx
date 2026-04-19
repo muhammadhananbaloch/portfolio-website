@@ -9,7 +9,7 @@ const Masthead = () => {
       <div className="masthead-main">
         <a href="#top" className="masthead-logo">
           <b>Muhammad Hanan Baloch</b>
-          <span className="vol">— AI Engineer</span>
+          <span className="vol">· AI Engineer</span>
         </a>
         <nav className="masthead-nav">
           <a href="#work">Work</a>
