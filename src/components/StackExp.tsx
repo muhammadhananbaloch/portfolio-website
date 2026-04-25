@@ -3,7 +3,7 @@ const stackGroups = [
     title: "Agents",
     italic: "orchestration, tool-use",
     body: "Building graphs where a model knows when to call what, and knows how to recover when a tool lies.",
-    chips: ["LangChain", "LangGraph", "Synthflow", "function-calling", "tool-use", "reflection loops"],
+    chips: ["LangChain", "LangGraph", "n8n", "Synthflow", "function-calling", "tool-use", "reflection loops"],
   },
   {
     title: "RAG & data",
