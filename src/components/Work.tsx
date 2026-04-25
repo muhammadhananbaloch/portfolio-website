@@ -128,6 +128,33 @@ const projects: Project[] = [
     edges: [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6]],
   },
   {
+    id: "lead-enrichment",
+    title: "Lead Enrichment",
+    italic: "Outreach Engine",
+    desc: "Fully hands-free outreach pipeline: scrapes live job postings, enriches decision-maker contacts via Clay, and fires AI-personalized cold emails — a smart polling gate blocks every send until enrichment is 100% complete.",
+    stack: ["n8n", "GPT-4o", "Apify", "Clay", "Instantly.ai", "JavaScript"],
+    tag: "Agentic Workflows · Growth",
+    internal: true,
+    metrics: [
+      { n: "0", l: "sends on incomplete data" },
+      { n: "hours", l: "manual work per batch" },
+      { n: "AI-written", l: "copy per lead" },
+      { n: "waterfall", l: "multi-source enrichment" },
+    ],
+    summary:
+      "Built for a client acquiring leads from job postings. n8n orchestrates an Apify Indeed scraper, then GPT-4o compresses raw JDs (8kB+) into 1,500-character bulleted summaries — bypassing Clay's payload ceiling. The key piece: a custom polling gate that derives a `target_count` and holds the workflow in a Wait-and-Check loop until the Enriched Sheet matches it, so Clay's async enrichment always completes before a single email fires. JavaScript Code Nodes flatten wide structures (multiple contacts per posting) into individual lead rows. Instantly.ai injects AI-extracted job highlights as custom variables into cold email templates.",
+    diagram: [
+      { x: 20, y: 18, label: "Apify · Indeed scraper", cls: "" },
+      { x: 50, y: 18, label: "n8n · orchestrate", cls: "bl" },
+      { x: 80, y: 18, label: "GPT-4o · compress JD", cls: "hi" },
+      { x: 80, y: 50, label: "Clay · enrich contacts", cls: "" },
+      { x: 50, y: 50, label: "polling · wait-and-check", cls: "cr" },
+      { x: 20, y: 50, label: "Sheets · state machine", cls: "" },
+      { x: 50, y: 82, label: "Instantly.ai · personalize", cls: "dk" },
+    ],
+    edges: [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 4], [4, 6]],
+  },
+  {
     id: "propauto",
     title: "PropAuto",
     italic: "CRM",
