@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import Masthead from "@/components/Masthead";
 import Hero from "@/components/Hero";
 import Stats from "@/components/Stats";
-import Now from "@/components/Now";
 import Work from "@/components/Work";
 import StackExp from "@/components/StackExp";
 import QuoteContact from "@/components/QuoteContact";
@@ -23,7 +22,6 @@ const Index = () => {
       <Masthead />
       <Hero />
       <Stats />
-      <Now />
       <Work />
       <StackExp />
       <QuoteContact />

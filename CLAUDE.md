@@ -29,7 +29,7 @@ docker compose -f docker-compose.dev.yml up --build
 
 Single-page app with client-side routing (React Router v6). Two routes: `/` (Index) and `*` (NotFound). No backend — fully static, deployed on AWS EC2 behind Cloudflare CDN via Nginx.
 
-**Page composition** (`src/pages/Index.tsx`): Sections stacked vertically — Masthead, Hero, Stats, Now, Work, StackExp, QuoteContact. Navigation uses smooth-scroll anchor links (`#work`, `#now`, `#stack`, `#experience`, `#contact`).
+**Page composition** (`src/pages/Index.tsx`): Sections stacked vertically — Masthead, Hero, Stats, Work, StackExp, QuoteContact. Navigation uses smooth-scroll anchor links (`#work`, `#stack`, `#experience`, `#contact`).
 
 **Styling**: Single editorial stylesheet at `src/styles/portfolio.css` — warm cream paper theme with Fraunces / Instrument Serif / JetBrains Mono / Inter. Scoped under a `.portfolio` class that `Index.tsx` and `NotFound.tsx` toggle on `<html>` and `<body>` on mount, so the stylesheet's `body.portfolio{…}` rules don't leak to other apps.
 

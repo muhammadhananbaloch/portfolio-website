@@ -497,6 +497,14 @@ body.portfolio::before{
   font-family:var(--italic-serif);font-style:italic;font-size:16px;line-height:1.5;color:var(--ink-2);margin:0;
   max-width:480px;
 }
+.exp-highlights{
+  list-style:none;padding:0;margin:12px 0 0;max-width:480px;
+}
+.exp-highlights li{
+  font-family:var(--body-sans);font-size:14px;line-height:1.5;color:var(--ink-2);
+  padding:4px 0;border-bottom:1px solid var(--rule-1);
+}
+.exp-highlights li:last-child{border-bottom:none}
 
 /* ------------- QUOTE ------------- */
 .quote-band{

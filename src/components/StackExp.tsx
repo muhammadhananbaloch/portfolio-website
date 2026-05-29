@@ -25,7 +25,14 @@ const experience = [
     date: "Oct 2025 – Present",
     role: "AI Engineer",
     co: "JBS Americas & Europe",
-    body: "Driving enterprise innovation by architecting autonomous AI systems that solve complex operational challenges, from intelligent voice agents to automated audit pipelines that deliver measurable business value.",
+    body: "Building production AI systems for enterprise clients, replacing manual workflows with automated, API-driven solutions using Python, LLMs, and cloud infrastructure.",
+    highlights: [
+      "Multi-tenant AI claims chatbot (LangGraph, pgvector, PostgreSQL). 14 client aliases, dual SQL/semantic query paths",
+      "AI voice agent. 300k+ logistics prospects, intent-based routing, fail-safe extraction",
+      "Marketing audit agent. 4 hours to under 5 minutes",
+      "SOP generator. 62+ hours of manual work eliminated",
+      "GoHighLevel to n8n migration. $3,000–$6,000 saved",
+    ],
   },
 ];
 
@@ -33,7 +40,7 @@ const StackExp = () => {
   return (
     <section className="stack-exp" id="stack">
       <div className="sec-head">
-        <span className="num">№ 04</span>
+        <span className="num">№ 03</span>
         The Stack <span style={{ color: "var(--ink-3)" }}>&amp;</span> Path
         <b>How &amp; where</b>
       </div>
@@ -64,6 +71,13 @@ const StackExp = () => {
               <h3>{e.role}</h3>
               <div className="co">{e.co}</div>
               <p>{e.body}</p>
+              {e.highlights && (
+                <ul className="exp-highlights">
+                  {e.highlights.map((h, j) => (
+                    <li key={j}>{h}</li>
+                  ))}
+                </ul>
+              )}
             </div>
           ))}
         </div>

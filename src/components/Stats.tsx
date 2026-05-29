@@ -34,7 +34,6 @@ const Stats = () => {
   }, []);
 
   const projects = useCountUp(7, seen);
-  const languages = useCountUp(4, seen);
   const years = useCountUp(2, seen);
 
   return (
@@ -47,13 +46,6 @@ const Stats = () => {
         <div className="stat">
           <div className="n">{Math.round(projects)}</div>
           <div className="l">projects shipped</div>
-        </div>
-        <div className="stat">
-          <div className="n">
-            {Math.round(languages)}
-            <em>+</em>
-          </div>
-          <div className="l">languages &amp; frameworks</div>
         </div>
         <div className="stat">
           <div className="n">

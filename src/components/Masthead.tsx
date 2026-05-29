@@ -33,7 +33,6 @@ const Masthead = () => {
         </a>
         <nav className="masthead-nav">
           <a href="#work">Work</a>
-          <a href="#now">Now</a>
           <a href="#stack">Stack</a>
           <a href="#experience">Experience</a>
           <a href="#contact" className="cta">Get in touch ↗</a>
