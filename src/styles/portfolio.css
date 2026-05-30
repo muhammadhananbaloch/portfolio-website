@@ -1569,6 +1569,14 @@ body.portfolio::before {
 }
 
 @media (max-width: 720px) {
+
+  [id="work"],
+  [id="stack"],
+  [id="experience"],
+  [id="contact"] {
+    scroll-margin-top: 120px
+  }
+
   .masthead-top {
     font-size: 9.5px;
     gap: 10px;
