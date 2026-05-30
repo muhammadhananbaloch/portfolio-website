@@ -1241,21 +1241,32 @@ body.portfolio::before {
 .exp-highlights {
   list-style: none;
   padding: 0;
-  margin: 12px 0 0;
+  margin: 14px 0 0;
   max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .exp-highlights li {
-  font-family: var(--body-sans);
-  font-size: 14px;
+  font-family: var(--sans);
+  font-size: 13.5px;
   line-height: 1.5;
-  color: var(--ink-2);
-  padding: 4px 0;
-  border-bottom: 1px solid var(--rule-1);
+  color: var(--ink-3);
+  padding: 0 0 10px;
+  border-bottom: 1px solid var(--rule);
 }
 
 .exp-highlights li:last-child {
-  border-bottom: none
+  border-bottom: none;
+  padding-bottom: 0
+}
+
+.exp-highlights li b {
+  font-family: var(--serif);
+  font-weight: 500;
+  color: var(--ink);
+  font-size: 14px
 }
 
 /* ------------- QUOTE ------------- */

@@ -27,11 +27,11 @@ const experience = [
     co: "JBS Americas & Europe",
     body: "Building production AI systems for enterprise clients, replacing manual workflows with automated, API-driven solutions using Python, LLMs, and cloud infrastructure.",
     highlights: [
-      "Multi-tenant AI claims chatbot (LangGraph, pgvector, PostgreSQL). 14 client aliases, dual SQL/semantic query paths",
-      "AI voice agent. 300k+ logistics prospects, intent-based routing, fail-safe extraction",
-      "Marketing audit agent. 4 hours to under 5 minutes",
-      "SOP generator. 62+ hours of manual work eliminated",
-      "GoHighLevel to n8n migration. $3,000–$6,000 saved",
+      { label: "Multi-tenant AI claims chatbot", detail: "(LangGraph, pgvector, PostgreSQL). 14 client aliases, dual SQL/semantic query paths" },
+      { label: "AI voice agent", detail: "300k+ logistics prospects, intent-based routing, fail-safe extraction" },
+      { label: "Marketing audit agent", detail: "4 hours to under 5 minutes" },
+      { label: "SOP generator", detail: "62+ hours of manual work eliminated" },
+      { label: "GoHighLevel to n8n migration", detail: "$3,000–$6,000 saved" },
     ],
   },
 ];
@@ -74,7 +74,7 @@ const StackExp = () => {
               {e.highlights && (
                 <ul className="exp-highlights">
                   {e.highlights.map((h, j) => (
-                    <li key={j}>{h}</li>
+                    <li key={j}><b>{h.label}</b> {h.detail}</li>
                   ))}
                 </ul>
               )}
