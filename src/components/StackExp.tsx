@@ -40,9 +40,7 @@ const StackExp = () => {
   return (
     <section className="stack-exp" id="stack">
       <div className="sec-head">
-        <span className="num">№ 03</span>
-        The Stack <span style={{ color: "var(--ink-3)" }}>&amp;</span> Path
-        <b>How &amp; where</b>
+        Stack
       </div>
       <div className="se-body">
         <div>

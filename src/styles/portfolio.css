@@ -1,29 +1,27 @@
 /* =================================================================
    Muhammad Hanan Baloch — Portfolio
-   Editorial + Agent-graph hybrid · warm cream, ink, single accent
+   Dark theme · engineered · single accent (electric blue)
    ================================================================= */
 
 :root {
-  --paper: #f3ede1;
-  --paper-2: #eae2d0;
-  --paper-3: #e0d6c0;
-  --ink: #181716;
-  --ink-2: #3b3833;
-  --ink-3: #6b6660;
-  --ink-4: #9c968b;
-  --rule: #1817161a;
-  --rule-2: #18171633;
-  --accent: #c24a1c;
-  --accent-2: #2b6cb0;
-  --highlight: #fff2a8;
-  --dark: #141311;
-  --dark-2: #1f1d1a;
-  --cream-on-dark: #f3ede1;
+  --paper: #0a0a0a;
+  --paper-2: #111111;
+  --paper-3: #1a1a1a;
+  --ink: #e5e5e5;
+  --ink-2: #999999;
+  --ink-3: #666666;
+  --ink-4: #555555;
+  --rule: rgba(255, 255, 255, 0.06);
+  --rule-2: rgba(255, 255, 255, 0.12);
+  --accent: #3b82f6;
+  --accent-2: #60a5fa;
+  --highlight: #3b82f6;
+  --dark: #0a0a0a;
+  --dark-2: #111111;
+  --cream-on-dark: #e5e5e5;
 
-  --serif: "Fraunces", ui-serif, Georgia, serif;
-  --italic-serif: "Instrument Serif", ui-serif, Georgia, serif;
-  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
   --paper-radius: 6px;
   --maxw: 1240px;
@@ -49,8 +47,7 @@ html.portfolio {
 body.portfolio {
   background: var(--paper);
   color: var(--ink);
-  font-family: var(--serif);
-  font-feature-settings: "ss01", "ss02", "ss03";
+  font-family: var(--sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -66,24 +63,9 @@ body.portfolio {
   cursor: pointer
 }
 
-body.portfolio::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 100;
-  background-image:
-    radial-gradient(rgba(24, 23, 22, .07) 1px, transparent 1px),
-    radial-gradient(rgba(24, 23, 22, .04) 1px, transparent 1px);
-  background-size: 3px 3px, 7px 7px;
-  background-position: 0 0, 1px 1px;
-  mix-blend-mode: multiply;
-  opacity: .6;
-}
-
 /* ------------- MASTHEAD ------------- */
 .masthead {
-  border-bottom: 1px solid var(--ink);
+  border-bottom: 1px solid var(--rule-2);
   background: var(--paper);
   position: sticky;
   top: 0;
@@ -102,7 +84,7 @@ body.portfolio::before {
   font-size: 10.5px;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--ink-2);
+  color: var(--ink-3);
   border-bottom: 1px solid var(--rule);
 }
 
@@ -118,21 +100,21 @@ body.portfolio::before {
   height: 7px;
   border-radius: 50%;
   background: var(--accent);
-  box-shadow: 0 0 0 0 rgba(194, 74, 28, .6);
-  animation: paper-pulse 2s cubic-bezier(.4, 0, .6, 1) infinite;
+  box-shadow: 0 0 0 0 rgba(59, 130, 246, .6);
+  animation: pulse 2s cubic-bezier(.4, 0, .6, 1) infinite;
 }
 
-@keyframes paper-pulse {
+@keyframes pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(194, 74, 28, .55)
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, .55)
   }
 
   70% {
-    box-shadow: 0 0 0 10px rgba(194, 74, 28, 0)
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0)
   }
 
   100% {
-    box-shadow: 0 0 0 0 rgba(194, 74, 28, 0)
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0)
   }
 }
 
@@ -147,9 +129,8 @@ body.portfolio::before {
 }
 
 .masthead-logo {
-  font-family: var(--serif);
-  font-weight: 400;
-  font-style: italic;
+  font-family: var(--sans);
+  font-weight: 600;
   font-size: 26px;
   letter-spacing: -.01em;
   line-height: 1;
@@ -160,8 +141,7 @@ body.portfolio::before {
 }
 
 .masthead-logo b {
-  font-weight: 500;
-  font-style: normal
+  font-weight: 600
 }
 
 .masthead-logo .vol {
@@ -170,7 +150,7 @@ body.portfolio::before {
   color: var(--ink-3);
   letter-spacing: .12em;
   text-transform: uppercase;
-  font-style: normal;
+  font-weight: 400;
 }
 
 .masthead-nav {
@@ -198,13 +178,13 @@ body.portfolio::before {
 }
 
 .masthead-nav a.cta {
-  background: var(--ink);
-  color: var(--paper)
+  background: var(--accent);
+  color: #0a0a0a
 }
 
 .masthead-nav a.cta:hover {
-  background: var(--accent);
-  color: var(--paper)
+  background: var(--accent-2);
+  color: #0a0a0a
 }
 
 /* ------------- HERO ------------- */
@@ -252,34 +232,29 @@ body.portfolio::before {
 }
 
 .display {
-  font-family: var(--serif);
-  font-weight: 300;
+  font-family: var(--sans);
+  font-weight: 600;
   font-size: clamp(52px, 7.2vw, 108px);
   line-height: .92;
   letter-spacing: -.035em;
   margin: 30px 0 22px;
   color: var(--ink);
-  font-variation-settings: "opsz" 144, "SOFT" 50;
 }
 
 .display em {
-  font-style: italic;
+  font-style: normal;
   font-weight: 400;
-  font-family: var(--italic-serif);
-  font-variation-settings: normal;
   letter-spacing: -.01em;
 }
 
 .display .hl {
-  background-image: linear-gradient(transparent 66%, var(--highlight) 66%, var(--highlight) 96%, transparent 96%);
+  background-image: linear-gradient(transparent 66%, rgba(59, 130, 246, .25) 66%, rgba(59, 130, 246, .25) 96%, transparent 96%);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   padding: 0 .05em;
 }
 
 .display .amp {
-  font-family: var(--italic-serif);
-  font-style: italic;
   color: var(--accent);
   font-weight: 400;
   padding: 0 .05em;
@@ -290,8 +265,7 @@ body.portfolio::before {
 }
 
 .lede {
-  font-family: var(--italic-serif);
-  font-style: italic;
+  font-family: var(--sans);
   font-size: clamp(17px, 1.3vw, 21px);
   line-height: 1.45;
   color: var(--ink-2);
@@ -300,8 +274,6 @@ body.portfolio::before {
 }
 
 .lede b {
-  font-family: var(--serif);
-  font-style: normal;
   font-weight: 500;
   color: var(--ink)
 }
@@ -318,8 +290,8 @@ body.portfolio::before {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  border: 1px solid var(--ink);
-  background: var(--paper);
+  border: 1px solid var(--ink-3);
+  background: transparent;
   color: var(--ink);
   padding: 11px 20px;
   border-radius: 999px;
@@ -329,33 +301,35 @@ body.portfolio::before {
   letter-spacing: .01em;
   text-decoration: none;
   cursor: pointer;
-  transition: background .2s, color .2s, transform .15s;
+  transition: background .2s, color .2s, border-color .2s, transform .15s;
 }
 
 .btn:hover {
   background: var(--ink);
-  color: var(--paper)
+  color: var(--paper);
+  border-color: var(--ink)
 }
 
 .btn.primary {
-  background: var(--ink);
-  color: var(--paper)
+  background: var(--accent);
+  color: #0a0a0a;
+  border-color: var(--accent)
 }
 
 .btn.primary:hover {
-  background: var(--accent);
-  border-color: var(--accent)
+  background: var(--accent-2);
+  border-color: var(--accent-2)
 }
 
 .btn.accent {
   background: var(--accent);
-  color: var(--paper);
+  color: #0a0a0a;
   border-color: var(--accent)
 }
 
 .btn.accent:hover {
-  background: var(--ink);
-  border-color: var(--ink)
+  background: var(--accent-2);
+  border-color: var(--accent-2)
 }
 
 .btn.ghost {
@@ -366,7 +340,7 @@ body.portfolio::before {
 .btn.ghost:hover {
   background: transparent;
   color: var(--ink);
-  border-color: var(--ink)
+  border-color: var(--ink-3)
 }
 
 .btn .icn {
@@ -400,7 +374,7 @@ body.portfolio::before {
 .hero-foot .chips span b {
   color: var(--ink);
   display: block;
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 15px;
   letter-spacing: 0;
   text-transform: none;
@@ -410,14 +384,13 @@ body.portfolio::before {
 
 .hero-right {
   position: relative;
-  border: 1px solid var(--ink);
+  border: 1px solid var(--rule-2);
   border-radius: var(--paper-radius);
-  background: var(--paper);
+  background: var(--paper-2);
   overflow: hidden;
   min-height: 560px;
   display: flex;
   flex-direction: column;
-  box-shadow: -6px 6px 0 var(--paper-3);
 }
 
 .hero-right .graph-meta {
@@ -453,7 +426,7 @@ body.portfolio::before {
   height: 6px;
   background: var(--accent);
   border-radius: 50%;
-  animation: paper-pulse 2s infinite
+  animation: pulse 2s infinite
 }
 
 .hero-right::before {
@@ -480,8 +453,8 @@ body.portfolio::before {
 .graph-node {
   position: absolute;
   transform: translate(-50%, -50%);
-  background: var(--paper);
-  border: 1.5px solid var(--ink);
+  background: var(--paper-3);
+  border: 1.5px solid var(--ink-3);
   border-radius: 4px;
   padding: clamp(4px, 1.4cqw, 7px) clamp(6px, 2.2cqw, 11px);
   font-family: var(--mono);
@@ -490,7 +463,7 @@ body.portfolio::before {
   line-height: 1.25;
   max-width: 44%;
   text-align: center;
-  box-shadow: 3px 3px 0 var(--ink);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, .5);
   z-index: 2;
   display: flex;
   align-items: center;
@@ -504,29 +477,29 @@ body.portfolio::before {
 
 .graph-node:hover {
   transform: translate(-50%, -50%) translateY(-3px);
-  box-shadow: 3px 6px 0 var(--ink)
+  box-shadow: 3px 6px 0 rgba(0, 0, 0, .5)
 }
 
 .graph-node.user {
-  background: #fff
+  background: var(--paper-3)
 }
 
 .graph-node.llm {
-  background: var(--highlight)
+  background: #1a2744
 }
 
 .graph-node.tool {
-  background: #d7ecf3
+  background: #152a35
 }
 
 .graph-node.memory {
-  background: #e6dfc8
+  background: #252015
 }
 
 .graph-node.out {
-  background: var(--ink);
-  color: var(--paper);
-  border-color: var(--ink)
+  background: var(--accent);
+  color: #0a0a0a;
+  border-color: var(--accent)
 }
 
 .graph-node .gl {
@@ -535,12 +508,12 @@ body.portfolio::before {
   border-radius: 50%;
   background: var(--accent);
   display: inline-block;
-  box-shadow: 0 0 0 0 rgba(194, 74, 28, .5);
-  animation: paper-pulse 2.2s infinite
+  box-shadow: 0 0 0 0 rgba(59, 130, 246, .5);
+  animation: pulse 2.2s infinite
 }
 
 .graph-node.out .gl {
-  background: var(--highlight)
+  background: #e5e5e5
 }
 
 .graph-caption {
@@ -557,7 +530,7 @@ body.portfolio::before {
   color: var(--ink-3);
   padding: 18px 18px 16px;
   border-top: 1px solid var(--rule-2);
-  background: var(--paper);
+  background: var(--paper-2);
 }
 
 .graph-caption p {
@@ -565,8 +538,7 @@ body.portfolio::before {
   max-width: 60%;
   text-transform: none;
   letter-spacing: 0;
-  font-family: var(--italic-serif);
-  font-style: italic;
+  font-family: var(--sans);
   font-size: 14px;
   color: var(--ink-2);
   line-height: 1.3
@@ -579,14 +551,14 @@ body.portfolio::before {
 }
 
 .graph-tokens span {
-  background: var(--paper);
+  background: var(--paper-3);
   border: 1px solid var(--rule-2);
   padding: 2px 6px;
   border-radius: 3px
 }
 
 .edge {
-  stroke: var(--ink);
+  stroke: var(--ink-3);
   stroke-width: 1.25;
   fill: none;
   opacity: .55
@@ -601,10 +573,10 @@ body.portfolio::before {
   stroke-width: 2;
   fill: none;
   stroke-dasharray: 6 14;
-  animation: paper-dash 1.8s linear infinite;
+  animation: dash 1.8s linear infinite;
 }
 
-@keyframes paper-dash {
+@keyframes dash {
   to {
     stroke-dashoffset: -40
   }
@@ -612,8 +584,8 @@ body.portfolio::before {
 
 /* ------------- STATS BAND ------------- */
 .stats-band {
-  border-top: 1px solid var(--ink);
-  border-bottom: 1px solid var(--ink);
+  border-top: 1px solid var(--rule-2);
+  border-bottom: 1px solid var(--rule-2);
   background: var(--paper-2);
 }
 
@@ -639,8 +611,7 @@ body.portfolio::before {
   color: var(--ink);
   font-weight: 500;
   display: block;
-  font-family: var(--italic-serif);
-  font-style: italic;
+  font-family: var(--sans);
   font-size: 19px;
   letter-spacing: 0;
   text-transform: none;
@@ -656,7 +627,7 @@ body.portfolio::before {
 }
 
 .stat .n {
-  font-family: var(--serif);
+  font-family: var(--mono);
   font-weight: 400;
   font-size: 44px;
   line-height: 1;
@@ -665,8 +636,7 @@ body.portfolio::before {
 }
 
 .stat .n em {
-  font-family: var(--italic-serif);
-  font-style: italic;
+  font-style: normal;
   font-weight: 400;
   font-size: 26px;
   color: var(--ink-3);
@@ -713,13 +683,12 @@ body.portfolio::before {
 
 .sec-head b {
   display: block;
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 28px;
   color: var(--ink);
   text-transform: none;
   letter-spacing: -.02em;
-  font-weight: 400;
-  font-style: italic;
+  font-weight: 600;
   margin-top: 2px
 }
 
@@ -731,8 +700,7 @@ body.portfolio::before {
 
 .now-lead {
   grid-column: 1 / -1;
-  font-family: var(--italic-serif);
-  font-style: italic;
+  font-family: var(--sans);
   font-size: 22px;
   line-height: 1.4;
   color: var(--ink-2);
@@ -741,12 +709,11 @@ body.portfolio::before {
 }
 
 .now-lead em {
-  color: var(--accent);
-  font-style: italic
+  color: var(--accent)
 }
 
 .now-item h4 {
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-weight: 500;
   font-size: 18px;
   margin: 0 0 6px;
@@ -768,8 +735,7 @@ body.portfolio::before {
 }
 
 .now-item p {
-  font-family: var(--italic-serif);
-  font-style: italic;
+  font-family: var(--sans);
   font-size: 16px;
   line-height: 1.5;
   color: var(--ink-2);
@@ -789,12 +755,12 @@ body.portfolio::before {
   gap: 40px;
   align-items: flex-end;
   padding-bottom: 18px;
-  border-bottom: 1px solid var(--ink);
+  border-bottom: 1px solid var(--rule-2);
 }
 
 .work-head h2 {
-  font-family: var(--serif);
-  font-weight: 300;
+  font-family: var(--sans);
+  font-weight: 600;
   font-size: clamp(44px, 5vw, 72px);
   letter-spacing: -.03em;
   line-height: .95;
@@ -802,9 +768,8 @@ body.portfolio::before {
 }
 
 .work-head h2 em {
-  font-style: italic;
+  font-style: normal;
   color: var(--ink-3);
-  font-family: var(--italic-serif);
   font-weight: 400
 }
 
@@ -828,9 +793,9 @@ body.portfolio::before {
 
 .work-filters button:hover,
 .work-filters button.active {
-  background: var(--ink);
-  color: var(--paper);
-  border-color: var(--ink)
+  background: var(--accent);
+  color: #0a0a0a;
+  border-color: var(--accent)
 }
 
 .work-list {
@@ -843,7 +808,7 @@ body.portfolio::before {
   gap: 32px;
   align-items: center;
   padding: 26px 0;
-  border-bottom: 1px solid var(--rule-2);
+  border-bottom: 1px solid var(--rule);
   cursor: pointer;
   position: relative;
   transition: padding .25s ease, background .25s ease;
@@ -862,8 +827,8 @@ body.portfolio::before {
 }
 
 .work-row .title {
-  font-family: var(--serif);
-  font-weight: 400;
+  font-family: var(--sans);
+  font-weight: 500;
   font-size: 32px;
   line-height: 1.05;
   letter-spacing: -.02em;
@@ -871,15 +836,13 @@ body.portfolio::before {
 }
 
 .work-row .title em {
-  font-style: italic;
-  font-family: var(--italic-serif);
+  font-style: normal;
   color: var(--ink-3);
   font-weight: 400
 }
 
 .work-row .desc {
-  font-family: var(--italic-serif);
-  font-style: italic;
+  font-family: var(--sans);
   font-size: 17px;
   line-height: 1.4;
   color: var(--ink-2);
@@ -899,7 +862,7 @@ body.portfolio::before {
   border: 1px solid var(--rule-2);
   border-radius: 3px;
   color: var(--ink-2);
-  background: var(--paper);
+  background: var(--paper-3);
 }
 
 .work-row .go {
@@ -907,18 +870,18 @@ body.portfolio::before {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 1px solid var(--ink);
+  border: 1px solid var(--ink-3);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background .2s, transform .2s;
-  background: var(--paper);
+  transition: background .2s, transform .2s, border-color .2s;
+  background: transparent;
 }
 
 .work-row:hover .go {
   background: var(--accent);
   border-color: var(--accent);
-  color: var(--paper);
+  color: #0a0a0a;
   transform: rotate(-45deg)
 }
 
@@ -968,8 +931,9 @@ body.portfolio::before {
 }
 
 .work-row.open .go {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--accent);
+  color: #0a0a0a;
+  border-color: var(--accent);
   transform: rotate(45deg)
 }
 
@@ -981,7 +945,7 @@ body.portfolio::before {
 }
 
 .reveal-diagram {
-  background: var(--paper);
+  background: var(--paper-3);
   border: 1px solid var(--rule-2);
   border-radius: var(--paper-radius);
   padding: 18px;
@@ -1004,7 +968,7 @@ body.portfolio::before {
   letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--ink-3);
-  background: var(--paper);
+  background: var(--paper-3);
   padding: 0 6px;
 }
 
@@ -1019,11 +983,10 @@ body.portfolio::before {
 }
 
 .reveal-meta p {
-  font-family: var(--italic-serif);
-  font-style: italic;
+  font-family: var(--sans);
   font-size: 17px;
   line-height: 1.5;
-  color: var(--ink);
+  color: var(--ink-2);
   margin: 0 0 14px;
 }
 
@@ -1036,7 +999,7 @@ body.portfolio::before {
 
 .reveal-meta .pair div b {
   display: block;
-  font-family: var(--serif);
+  font-family: var(--mono);
   font-weight: 500;
   font-size: 22px;
   letter-spacing: -.02em;
@@ -1062,8 +1025,8 @@ body.portfolio::before {
 
 .dg-box {
   position: absolute;
-  border: 1.5px solid var(--ink);
-  background: var(--paper);
+  border: 1.5px solid var(--ink-3);
+  background: var(--paper-3);
   padding: clamp(3px, 1.2cqw, 6px) clamp(5px, 2cqw, 10px);
   font-family: var(--mono);
   font-size: clamp(8px, 2.2cqw, 10.5px);
@@ -1072,27 +1035,27 @@ body.portfolio::before {
   max-width: 42%;
   text-align: center;
   border-radius: 3px;
-  box-shadow: 2px 2px 0 var(--ink);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, .5);
   transform: translate(-50%, -50%);
   white-space: normal;
   word-break: break-word;
 }
 
 .dg-box.hi {
-  background: var(--highlight)
+  background: #1a2744
 }
 
 .dg-box.bl {
-  background: #d7ecf3
+  background: #152a35
 }
 
 .dg-box.cr {
-  background: #e6dfc8
+  background: #252015
 }
 
 .dg-box.dk {
-  background: var(--ink);
-  color: var(--paper)
+  background: var(--accent);
+  color: #0a0a0a
 }
 
 /* ------------- STACK + EXP ------------- */
@@ -1103,7 +1066,7 @@ body.portfolio::before {
   display: grid;
   grid-template-columns: 180px 1fr;
   gap: 40px;
-  border-top: 1px solid var(--ink);
+  border-top: 1px solid var(--rule-2);
 }
 
 .se-body {
@@ -1113,9 +1076,8 @@ body.portfolio::before {
 }
 
 .se-heading {
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 400;
+  font-family: var(--sans);
+  font-weight: 600;
   font-size: 28px;
   margin: 0 0 18px;
   letter-spacing: -.02em;
@@ -1126,7 +1088,7 @@ body.portfolio::before {
 }
 
 .stack-group h4 {
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-weight: 500;
   font-size: 21px;
   margin: 0 0 6px;
@@ -1134,8 +1096,7 @@ body.portfolio::before {
 }
 
 .stack-group h4 em {
-  font-family: var(--italic-serif);
-  font-style: italic;
+  font-style: normal;
   color: var(--ink-3);
   font-weight: 400;
   font-size: 17px;
@@ -1143,8 +1104,7 @@ body.portfolio::before {
 }
 
 .stack-group p {
-  font-family: var(--italic-serif);
-  font-style: italic;
+  font-family: var(--sans);
   font-size: 15px;
   line-height: 1.5;
   color: var(--ink-2);
@@ -1165,14 +1125,14 @@ body.portfolio::before {
   border: 1px solid var(--rule-2);
   border-radius: 3px;
   color: var(--ink-2);
-  background: var(--paper);
+  background: var(--paper-3);
   transition: all .2s;
 }
 
 .stack-chips .chip:hover {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: var(--paper)
+  border-color: var(--accent);
+  background: rgba(59, 130, 246, .1);
+  color: var(--ink)
 }
 
 .exp-col {
@@ -1193,14 +1153,14 @@ body.portfolio::before {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--paper);
-  border: 2px solid var(--ink);
+  background: var(--paper-3);
+  border: 2px solid var(--ink-3);
 }
 
 .exp-entry.active::before {
   background: var(--accent);
   border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(194, 74, 28, .15)
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, .15)
 }
 
 .exp-entry .date {
@@ -1213,24 +1173,21 @@ body.portfolio::before {
 }
 
 .exp-entry h3 {
-  font-family: var(--serif);
-  font-weight: 500;
+  font-family: var(--sans);
+  font-weight: 600;
   font-size: 24px;
   letter-spacing: -.01em;
   margin: 0 0 2px;
 }
 
 .exp-entry .co {
-  font-family: var(--italic-serif);
-  font-style: italic;
   color: var(--accent);
   font-size: 18px;
   margin-bottom: 8px;
 }
 
 .exp-entry p {
-  font-family: var(--italic-serif);
-  font-style: italic;
+  font-family: var(--sans);
   font-size: 16px;
   line-height: 1.5;
   color: var(--ink-2);
@@ -1263,16 +1220,16 @@ body.portfolio::before {
 }
 
 .exp-highlights li b {
-  font-family: var(--serif);
-  font-weight: 500;
+  font-family: var(--sans);
+  font-weight: 600;
   color: var(--ink);
   font-size: 14px
 }
 
 /* ------------- QUOTE ------------- */
 .quote-band {
-  background: var(--dark);
-  color: var(--cream-on-dark);
+  background: var(--paper-2);
+  color: var(--ink);
   padding: 80px 32px;
   text-align: center;
   position: relative;
@@ -1285,13 +1242,13 @@ body.portfolio::before {
   inset: 0;
   opacity: .04;
   pointer-events: none;
-  background-image: radial-gradient(var(--cream-on-dark) 1px, transparent 1px);
+  background-image: radial-gradient(var(--ink-3) 1px, transparent 1px);
   background-size: 14px 14px;
 }
 
 .quote-band blockquote {
-  font-family: var(--serif);
-  font-weight: 300;
+  font-family: var(--sans);
+  font-weight: 600;
   font-size: clamp(32px, 4vw, 56px);
   line-height: 1.08;
   letter-spacing: -.02em;
@@ -1301,10 +1258,9 @@ body.portfolio::before {
 }
 
 .quote-band blockquote em {
-  font-family: var(--italic-serif);
-  font-style: italic;
-  color: var(--highlight);
-  font-weight: 400
+  font-style: normal;
+  color: #ffffff;
+  font-weight: 600
 }
 
 .quote-band .qmark {
@@ -1312,12 +1268,11 @@ body.portfolio::before {
   top: -70px;
   left: 50%;
   transform: translateX(-50%);
-  font-family: var(--italic-serif);
-  font-style: italic;
+  font-family: var(--sans);
   font-size: 180px;
   line-height: 1;
   color: var(--accent);
-  opacity: .8;
+  opacity: .3;
 }
 
 .quote-band .attrib {
@@ -1325,25 +1280,25 @@ body.portfolio::before {
   font-size: 11px;
   letter-spacing: .16em;
   text-transform: uppercase;
-  color: var(--ink-4);
+  color: var(--ink-3);
   margin-top: 36px;
 }
 
 .quote-band .attrib em {
-  font-family: var(--italic-serif);
-  font-style: italic;
+  font-style: normal;
   letter-spacing: 0;
   text-transform: none;
-  color: var(--paper-3);
+  color: var(--ink-2);
   font-size: 15px;
   margin-left: 8px
 }
 
 /* ------------- CONTACT ------------- */
 .contact-sec {
-  background: var(--dark-2);
-  color: var(--cream-on-dark);
+  background: var(--paper);
+  color: var(--ink);
   padding: 80px 32px 40px;
+  border-top: 1px solid var(--rule-2);
 }
 
 .contact-inner {
@@ -1356,8 +1311,8 @@ body.portfolio::before {
 }
 
 .contact-inner h2 {
-  font-family: var(--serif);
-  font-weight: 300;
+  font-family: var(--sans);
+  font-weight: 600;
   font-size: clamp(52px, 7vw, 104px);
   line-height: .92;
   letter-spacing: -.035em;
@@ -1365,20 +1320,17 @@ body.portfolio::before {
 }
 
 .contact-inner h2 em {
-  font-family: var(--italic-serif);
-  font-style: italic;
-  color: var(--highlight);
+  font-style: normal;
+  color: var(--accent);
   font-weight: 400
 }
 
 .contact-inner h2 .amp {
-  font-family: var(--italic-serif);
-  font-style: italic;
   color: var(--accent)
 }
 
 .contact-inner p.lede {
-  color: #c7bfb0;
+  color: var(--ink-2);
   margin-top: 24px;
   max-width: 500px
 }
@@ -1394,11 +1346,11 @@ body.portfolio::before {
   justify-content: space-between;
   align-items: center;
   text-decoration: none;
-  color: var(--cream-on-dark);
+  color: var(--ink);
   padding: 18px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, .1);
-  font-family: var(--serif);
-  font-weight: 400;
+  border-bottom: 1px solid var(--rule-2);
+  font-family: var(--sans);
+  font-weight: 500;
   font-size: 28px;
   letter-spacing: -.01em;
   transition: padding .25s, color .2s;
@@ -1406,13 +1358,12 @@ body.portfolio::before {
 
 .contact-links a:hover {
   padding-left: 16px;
-  color: var(--highlight)
+  color: var(--accent)
 }
 
 .contact-links a em {
-  font-family: var(--italic-serif);
-  font-style: italic;
-  color: #8a847a;
+  font-style: normal;
+  color: var(--ink-3);
   font-size: 13px
 }
 
@@ -1430,7 +1381,7 @@ body.portfolio::before {
   max-width: var(--maxw);
   margin: 60px auto 0;
   padding-top: 24px;
-  border-top: 1px solid rgba(255, 255, 255, .1);
+  border-top: 1px solid var(--rule-2);
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -1439,7 +1390,7 @@ body.portfolio::before {
   font-size: 10.5px;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: #807a70;
+  color: var(--ink-3);
 }
 
 /* ------------- NOT FOUND ------------- */
@@ -1462,8 +1413,8 @@ body.portfolio::before {
 }
 
 .notfound-title {
-  font-family: var(--serif);
-  font-weight: 300;
+  font-family: var(--sans);
+  font-weight: 600;
   font-size: clamp(52px, 8vw, 112px);
   line-height: .92;
   letter-spacing: -.035em;
@@ -1471,15 +1422,13 @@ body.portfolio::before {
 }
 
 .notfound-title em {
-  font-family: var(--italic-serif);
-  font-style: italic;
+  font-style: normal;
   color: var(--accent);
   font-weight: 400
 }
 
 .notfound-lede {
-  font-family: var(--italic-serif);
-  font-style: italic;
+  font-family: var(--sans);
   font-size: 19px;
   line-height: 1.45;
   color: var(--ink-2);

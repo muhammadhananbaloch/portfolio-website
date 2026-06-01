@@ -40,7 +40,6 @@ const Stats = () => {
     <section className="stats-band" ref={ref}>
       <div className="stats-inner">
         <div className="kicker">
-          <span>· Field Report</span>
           <b>By the numbers</b>
         </div>
         <div className="stat">

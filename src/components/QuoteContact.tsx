@@ -9,7 +9,7 @@ const QuoteContact = () => {
           on the <em>glue</em>.
         </blockquote>
         <div className="attrib">
-          · From Field Notes № 3 <em>· "The boring half of building with LLMs"</em>
+          — Muhammad Hanan Baloch
         </div>
       </section>
 
@@ -19,9 +19,9 @@ const QuoteContact = () => {
             <h2>
               Let's build<br />
               something<br />
-              that <em>ships.</em>
+              that ships.
             </h2>
-            <p className="lede" style={{ color: "#c7bfb0" }}>
+            <p className="lede">
               Currently building at JBS. Always happy to trade notes on agents,
               RAG, and the unglamorous parts of shipping AI. Reach out any time.
             </p>
@@ -67,7 +67,7 @@ const QuoteContact = () => {
 
         <div className="contact-foot">
           <div>© 2026 · Muhammad Hanan Baloch · All work original</div>
-          <div>Set in Fraunces · Instrument Serif · JetBrains Mono</div>
+          <div>Set in Inter · JetBrains Mono</div>
           <div>
             <a href="#top" style={{ textDecoration: "none", color: "inherit" }}>
               Back to top ↑

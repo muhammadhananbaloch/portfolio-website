@@ -6,17 +6,13 @@ const Hero = () => {
       <div className="hero-left">
         <div>
           <div className="hero-kicker">
-            <span><b>Essay № 1</b> · On the cover</span>
-            <span className="sep"></span>
             <span>AI Engineer</span>
-            <span className="sep"></span>
-            <span>Est. 2023</span>
           </div>
 
           <h1 className="display">
-            I architect <em>autonomous</em><br />
-            <span className="hl">AI systems</span> <span className="amp">&amp;</span><br />
-            agents that <em>ship<span className="dot">.</span></em>
+            I architect autonomous<br />
+            AI systems &amp;<br />
+            agents that ship.
           </h1>
 
           <p className="lede">
@@ -50,16 +46,14 @@ const Hero = () => {
           <div className="chips">
             <span>Based<b>Karachi · Remote</b></span>
             <span>Role<b>AI Engineer, JBS</b></span>
-            <span>Writing<b>Field Notes №3 ⤏</b></span>
           </div>
-          <div>Scroll to read ↓</div>
+          <div>Scroll ↓</div>
         </div>
       </div>
 
       <div className="hero-right">
         <div className="graph-meta">
           <span className="live">● live · agent graph</span>
-          <span>fig. 01</span>
         </div>
         <div className="graph-stage">
           <AgentGraph />

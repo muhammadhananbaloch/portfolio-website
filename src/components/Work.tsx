@@ -194,7 +194,7 @@ const Diagram = ({ nodes, edges }: { nodes: DiagramNode[]; edges: [number, numbe
       >
         <defs>
           <marker id="arr-r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
-            <path d="M0,0 L10,5 L0,10 z" fill="#181716" />
+            <path d="M0,0 L10,5 L0,10 z" fill="#666666" />
           </marker>
         </defs>
         {edges.map((e, i) => {
@@ -208,7 +208,7 @@ const Diagram = ({ nodes, edges }: { nodes: DiagramNode[]; edges: [number, numbe
             <path
               key={i}
               d={d}
-              stroke="#181716"
+              stroke="#666666"
               strokeWidth="0.4"
               fill="none"
               markerEnd="url(#arr-r)"
@@ -247,13 +247,10 @@ const Work = () => {
     <section className="work-sec" id="work">
       <div className="work-head">
         <div className="sec-head" style={{ position: "static" }}>
-          <span className="num">№ 02</span>
           Selected Work
-          <b>Case files</b>
         </div>
         <h2>
-          Things I've <em>shipped</em>
-          <br />
+          Things I've shipped<br />
           and kept running.
         </h2>
         <div className="work-filters">
@@ -272,9 +269,9 @@ const Work = () => {
             className={`work-row ${open === p.id ? "open" : ""}`}
             onClick={() => setOpen(open === p.id ? null : p.id)}
           >
-            <span className="idx">№ 00{i + 1}</span>
+            <span className="idx">{String(i + 1).padStart(2, '0')}</span>
             <div className="title">
-              {p.title} <em>{p.italic}</em>
+              {p.title} {p.italic}
             </div>
             <div className="desc">{p.desc}</div>
             <div className="stack">
