@@ -29,9 +29,11 @@ docker compose -f docker-compose.dev.yml up --build
 
 Single-page app with client-side routing (React Router v6). Two routes: `/` (Index) and `*` (NotFound). No backend — fully static, deployed on AWS EC2 behind Cloudflare CDN via Nginx.
 
-**Page composition** (`src/pages/Index.tsx`): Sections stacked vertically — Masthead, Hero, Stats, Work, StackExp, QuoteContact. Navigation uses smooth-scroll anchor links (`#work`, `#stack`, `#experience`, `#contact`).
+**Page composition** (`src/pages/Index.tsx`): Full-viewport scenes stacked vertically — Hero (agent graph centerpiece), Projects (per-project interactive demos), Stack (tech constellation + experience timeline), Quote (scroll-pinned cinematic), Contact (terminal-inspired). Navigation uses smooth-scroll with a scroll progress indicator.
 
-**Styling**: Single editorial stylesheet at `src/styles/portfolio.css` — warm cream paper theme with Fraunces / Instrument Serif / JetBrains Mono / Inter. Scoped under a `.portfolio` class that `Index.tsx` and `NotFound.tsx` toggle on `<html>` and `<body>` on mount, so the stylesheet's `body.portfolio{…}` rules don't leak to other apps.
+**Styling**: Dark theme. See Design Tokens below for exact values. No serif fonts. No editorial framing.
+
+**Component architecture**: Each project has its OWN demo component (AviationClaimsDemo.tsx, FreightVoiceDemo.tsx, etc.) — not a shared template. Each demo is self-contained with its own animation logic, state, and scripted content.
 
 **Interactive moments**: animated SVG agent-graph in hero (`AgentGraph.tsx`), scroll-triggered count-up stats (`Stats.tsx`, IntersectionObserver + rAF), click-to-expand system diagrams on work rows (`Work.tsx`), filter buttons on work list.
 
@@ -45,7 +47,7 @@ Single-page app with client-side routing (React Router v6). Two routes: `/` (Ind
 
 ## Design Direction (Revamp)
 
-See PORTFOLIO_REVAMP_BRIEF.md for full design brief and section-by-section direction.
+See PORTFOLIO_REVAMP_BRIEF_V2.md for full design brief and section-by-section direction. This is an experience-first structural rebuild, not a reskin. Every section has its own unique interaction model.
 
 ## Design Constraints
 

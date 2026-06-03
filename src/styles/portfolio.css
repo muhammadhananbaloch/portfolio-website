@@ -203,6 +203,130 @@ body.portfolio {
   color: #0a0a0a
 }
 
+/* ------------- SCENES (full-viewport skeleton) ------------- */
+.scene {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid var(--rule-2);
+}
+
+.scene--hero {
+  background: var(--paper);
+}
+
+.scene--projects {
+  background: var(--paper);
+  min-height: 200vh;
+}
+
+.scene--stack {
+  background: var(--paper);
+}
+
+.scene--quote {
+  background: var(--paper-2);
+  min-height: 200vh;
+}
+
+.scene--contact {
+  background: var(--paper);
+}
+
+.scene__label {
+  position: absolute;
+  top: 32px;
+  left: 32px;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.scene__number {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.scene__name {
+  color: var(--ink-3);
+}
+
+.scene__placeholder {
+  max-width: 600px;
+  padding: 32px;
+  border: 1px dashed var(--rule-2);
+  border-radius: 4px;
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  text-align: center;
+}
+
+.scene__sub-items {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.scene__sub-item {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .04em;
+  color: var(--ink-3);
+  padding: 8px 12px;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+}
+
+.scene__footer {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 24px 32px;
+  border-top: 1px solid var(--rule-2);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 18px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .scene__label {
+    top: 20px;
+    left: 20px;
+  }
+
+  .scene__placeholder {
+    margin: 0 20px;
+    font-size: 14px;
+  }
+
+  .scene__footer {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+    padding: 24px 20px;
+  }
+}
+
 /* ------------- HERO ------------- */
 .hero {
   max-width: var(--maxw);
