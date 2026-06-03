@@ -293,30 +293,43 @@ type Filter = (typeof filters)[number];
 
 const revealEase = [0.22, 1, 0.36, 1] as const;
 
+const techMatches = (stack: string[], tech: string | null) => {
+  if (!tech) return false;
+  const t = tech.toLowerCase();
+  return stack.some((s) => s.toLowerCase().includes(t) || t.includes(s.toLowerCase()));
+};
+
+const exitEase = [0.55, 0, 1, 0.45] as const;
+
 const WorkRow = ({
   p,
   i,
   isOpen,
   onToggle,
   delay,
+  highlightedTech,
 }: {
   p: Project;
   i: number;
   isOpen: boolean;
   onToggle: () => void;
   delay: number;
+  highlightedTech: string | null;
 }) => {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.15 });
+  const matched = techMatches(p.stack, highlightedTech);
 
   return (
     <motion.article
       ref={ref}
-      className={`work-row ${isOpen ? "open" : ""}`}
+      className={`work-row ${isOpen ? "open" : ""} ${matched ? "tech-match" : ""}`}
       onClick={onToggle}
+      layout="position"
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-      transition={{ duration: 0.3, ease: revealEase, delay }}
+      exit={{ opacity: 0, y: -10, transition: { duration: 0.2, ease: exitEase } }}
+      transition={{ duration: 0.3, ease: revealEase, delay, layout: { duration: 0.25, ease: revealEase } }}
     >
       <span className="idx">{String(i + 1).padStart(2, "0")}</span>
       <div className="title">
@@ -388,7 +401,7 @@ const WorkRow = ({
   );
 };
 
-const Work = () => {
+const Work = ({ highlightedTech }: { highlightedTech: string | null }) => {
   const [open, setOpen] = useState<string | null>(null);
   const [filter, setFilter] = useState<Filter>("All");
   const headRef = useRef<HTMLDivElement>(null);
@@ -431,16 +444,19 @@ const Work = () => {
       </motion.div>
 
       <div className="work-list">
-        {filtered.map((p, i) => (
-          <WorkRow
-            key={p.id}
-            p={p}
-            i={i}
-            isOpen={open === p.id}
-            onToggle={() => setOpen(open === p.id ? null : p.id)}
-            delay={i * 0.06}
-          />
-        ))}
+        <AnimatePresence>
+          {filtered.map((p, i) => (
+            <WorkRow
+              key={p.id}
+              p={p}
+              i={i}
+              isOpen={open === p.id}
+              onToggle={() => setOpen(open === p.id ? null : p.id)}
+              delay={i * 0.06}
+              highlightedTech={highlightedTech}
+            />
+          ))}
+        </AnimatePresence>
       </div>
     </section>
   );

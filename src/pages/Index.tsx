@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Masthead from "@/components/Masthead";
 import Hero from "@/components/Hero";
 import Stats from "@/components/Stats";
@@ -8,6 +8,8 @@ import QuoteContact from "@/components/QuoteContact";
 import "@/styles/portfolio.css";
 
 const Index = () => {
+  const [highlightedTech, setHighlightedTech] = useState<string | null>(null);
+
   useEffect(() => {
     document.documentElement.classList.add("portfolio");
     document.body.classList.add("portfolio");
@@ -22,8 +24,8 @@ const Index = () => {
       <Masthead />
       <Hero />
       <Stats />
-      <Work />
-      <StackExp />
+      <Work highlightedTech={highlightedTech} />
+      <StackExp onHighlightTech={setHighlightedTech} />
       <QuoteContact />
     </>
   );

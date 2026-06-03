@@ -66,14 +66,14 @@ const experience = [
 
 const revealEase = [0.22, 1, 0.36, 1] as const;
 
-const StackChip = ({ chip }: { chip: Chip }) => {
+const StackChip = ({ chip, onHighlight }: { chip: Chip; onHighlight?: (tech: string | null) => void }) => {
   const [show, setShow] = useState(false);
 
   return (
     <span
       className="chip"
-      onMouseEnter={() => setShow(true)}
-      onMouseLeave={() => setShow(false)}
+      onMouseEnter={() => { setShow(true); onHighlight?.(chip.label); }}
+      onMouseLeave={() => { setShow(false); onHighlight?.(null); }}
       onClick={() => setShow(!show)}
     >
       {chip.label}
@@ -94,7 +94,7 @@ const StackChip = ({ chip }: { chip: Chip }) => {
   );
 };
 
-const StackExp = () => {
+const StackExp = ({ onHighlightTech }: { onHighlightTech: (tech: string | null) => void }) => {
   const sectionRef = useRef<HTMLElement>(null);
   const sectionInView = useInView(sectionRef, { once: true, amount: 0.15 });
 
@@ -131,7 +131,7 @@ const StackExp = () => {
               <p>{g.body}</p>
               <div className="stack-chips">
                 {g.chips.map((c) => (
-                  <StackChip key={c.label} chip={c} />
+                  <StackChip key={c.label} chip={c} onHighlight={onHighlightTech} />
                 ))}
               </div>
             </motion.div>

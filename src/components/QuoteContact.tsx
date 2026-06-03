@@ -79,6 +79,11 @@ const QuoteContact = () => {
               Currently building at JBS. Always happy to trade notes on agents,
               RAG, and the unglamorous parts of shipping AI. Reach out any time.
             </p>
+            <a href="mailto:contact@muhammadhananbaloch.dev" className="terminal-prompt">
+              <span className="terminal-chr">~</span>
+              <span>What are you building?</span>
+              <span className="cta-cursor" />
+            </a>
           </div>
           <div className="contact-links">
             <a href="mailto:contact@muhammadhananbaloch.dev">

@@ -886,6 +886,18 @@ body.portfolio {
   background: var(--paper-2)
 }
 
+.work-row.tech-match {
+  background: rgba(59, 130, 246, .04)
+}
+
+.work-row.tech-match .chip {
+  opacity: 1
+}
+
+.work-row.tech-match .title {
+  color: var(--accent-2)
+}
+
 .work-row .chip {
   opacity: .6;
   transition: opacity .2s ease
@@ -1321,9 +1333,10 @@ body.portfolio {
 }
 
 .exp-entry.active::before {
-  background: var(--accent);
+  background: transparent;
   border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, .15)
+  box-shadow: 0 0 0 0 rgba(59, 130, 246, .6);
+  animation: pulse 2s cubic-bezier(.4, 0, .6, 1) infinite
 }
 
 .exp-entry .date {
@@ -1458,6 +1471,38 @@ body.portfolio {
   color: var(--ink-2);
   font-size: 15px;
   margin-left: 8px
+}
+
+/* ------------- TERMINAL PROMPT ------------- */
+.terminal-prompt {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+  padding: 12px 18px;
+  background: var(--paper-3);
+  border: 1px solid var(--rule-2);
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--ink-3);
+  text-decoration: none;
+  transition: border-color .2s, color .2s;
+  cursor: pointer
+}
+
+.terminal-prompt:hover {
+  border-color: var(--accent);
+  color: var(--ink)
+}
+
+.terminal-prompt .terminal-chr {
+  color: var(--accent);
+  font-weight: 600
+}
+
+.terminal-prompt .cta-cursor {
+  height: .9em
 }
 
 /* ------------- CONTACT ------------- */
