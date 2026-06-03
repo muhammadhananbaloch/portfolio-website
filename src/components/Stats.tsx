@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
 
-const useCountUp = (target: number, trigger: boolean, duration = 1200) => {
+const useCountUp = (target: number, trigger: boolean, duration = 800) => {
   const [v, setV] = useState(0);
   useEffect(() => {
     if (!trigger) return;
@@ -19,25 +20,26 @@ const useCountUp = (target: number, trigger: boolean, duration = 1200) => {
   return v;
 };
 
+const revealTransition = {
+  duration: 0.3,
+  ease: [0.22, 1, 0.36, 1] as const,
+};
+
 const Stats = () => {
-  const ref = useRef<HTMLElement | null>(null);
-  const [seen, setSeen] = useState(false);
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.4 });
 
-  useEffect(() => {
-    if (!ref.current) return;
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.isIntersecting && setSeen(true)),
-      { threshold: 0.4 },
-    );
-    io.observe(ref.current);
-    return () => io.disconnect();
-  }, []);
-
-  const projects = useCountUp(7, seen);
-  const years = useCountUp(2, seen);
+  const projects = useCountUp(7, inView);
+  const years = useCountUp(2, inView);
 
   return (
-    <section className="stats-band" ref={ref}>
+    <motion.section
+      className="stats-band"
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={revealTransition}
+    >
       <div className="stats-inner">
         <div className="kicker">
           <b>By the numbers</b>
@@ -54,7 +56,7 @@ const Stats = () => {
           <div className="l">building with AI</div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

@@ -172,9 +172,25 @@ body.portfolio {
   position: relative;
 }
 
+.masthead-nav a:not(.cta)::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  left: 12px;
+  right: 12px;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .2s ease
+}
+
+.masthead-nav a:not(.cta):hover::after {
+  transform: scaleX(1)
+}
+
 .masthead-nav a:hover {
-  color: var(--ink);
-  background: var(--paper-2)
+  color: var(--ink)
 }
 
 .masthead-nav a.cta {
@@ -191,10 +207,10 @@ body.portfolio {
 .hero {
   max-width: var(--maxw);
   margin: 0 auto;
-  padding: 72px 32px 60px;
+  padding: clamp(36px, 6vw, 72px) clamp(20px, 4vw, 32px) clamp(40px, 5vw, 60px);
   display: grid;
   grid-template-columns: 1.25fr .95fr;
-  gap: 56px;
+  gap: clamp(24px, 5vw, 56px);
   align-items: stretch;
   position: relative;
 }
@@ -470,7 +486,7 @@ body.portfolio {
   justify-content: center;
   gap: 8px;
   transition: transform .3s cubic-bezier(.2, .9, .3, 1.2), box-shadow .3s;
-  cursor: default;
+  cursor: pointer;
   white-space: normal;
   word-break: break-word;
 }
@@ -506,14 +522,25 @@ body.portfolio {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--accent);
+  background: #22c55e;
   display: inline-block;
-  box-shadow: 0 0 0 0 rgba(59, 130, 246, .5);
-  animation: pulse 2.2s infinite
+  flex-shrink: 0;
+  position: relative
 }
 
-.graph-node.out .gl {
-  background: #e5e5e5
+.graph-node .gl::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: rgba(34, 197, 94, .4);
+  animation: glow-pulse 2.4s ease-out infinite
+}
+
+@keyframes glow-pulse {
+  0% { transform: scale(1); opacity: .6 }
+  70% { transform: scale(2.5); opacity: 0 }
+  100% { transform: scale(2.5); opacity: 0 }
 }
 
 .graph-caption {
@@ -564,22 +591,61 @@ body.portfolio {
   opacity: .55
 }
 
-.edge.dashed {
-  stroke-dasharray: 4 3
-}
-
-.edge-pulse {
+.edge-flow {
   stroke: var(--accent);
-  stroke-width: 2;
+  stroke-width: 1.5;
   fill: none;
+  opacity: .45;
   stroke-dasharray: 6 14;
-  animation: dash 1.8s linear infinite;
+  animation: dash 2.4s linear infinite
 }
 
 @keyframes dash {
   to {
     stroke-dashoffset: -40
   }
+}
+
+/* ------------- GRAPH TOOLTIPS ------------- */
+.graph-tooltip {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: min(200px, 60cqw);
+  padding: 8px 12px;
+  background: #111111;
+  border: 1px solid #333333;
+  border-radius: 4px;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #e5e5e5;
+  white-space: normal;
+  word-break: normal;
+  text-align: left;
+  pointer-events: none;
+  z-index: 10
+}
+
+.graph-tooltip.below {
+  top: calc(100% + 10px)
+}
+
+.graph-tooltip.above {
+  bottom: calc(100% + 10px)
+}
+
+.graph-tooltip.align-left {
+  left: 0;
+  transform: none
+}
+
+.graph-tooltip.align-right {
+  left: auto;
+  right: 0;
+  transform: none
 }
 
 /* ------------- STATS BAND ------------- */
@@ -592,10 +658,10 @@ body.portfolio {
 .stats-inner {
   max-width: var(--maxw);
   margin: 0 auto;
-  padding: 28px 32px;
+  padding: clamp(20px, 3vw, 28px) clamp(20px, 4vw, 32px);
   display: grid;
   grid-template-columns: 1.4fr repeat(3, 1fr);
-  gap: 40px;
+  gap: clamp(14px, 3vw, 40px);
   align-items: center;
 }
 
@@ -629,7 +695,7 @@ body.portfolio {
 .stat .n {
   font-family: var(--mono);
   font-weight: 400;
-  font-size: 44px;
+  font-size: clamp(28px, 4.5vw, 44px);
   line-height: 1;
   letter-spacing: -.03em;
   color: var(--ink);
@@ -638,7 +704,7 @@ body.portfolio {
 .stat .n em {
   font-style: normal;
   font-weight: 400;
-  font-size: 26px;
+  font-size: clamp(14px, 2.5vw, 26px);
   color: var(--ink-3);
   margin-left: 2px
 }
@@ -746,7 +812,7 @@ body.portfolio {
 .work-sec {
   max-width: var(--maxw);
   margin: 0 auto;
-  padding: 40px 32px 80px;
+  padding: clamp(32px, 5vw, 40px) clamp(20px, 4vw, 32px) clamp(48px, 8vw, 80px);
 }
 
 .work-head {
@@ -811,13 +877,22 @@ body.portfolio {
   border-bottom: 1px solid var(--rule);
   cursor: pointer;
   position: relative;
-  transition: padding .25s ease, background .25s ease;
+  transition: padding .2s ease, background .2s ease;
 }
 
 .work-row:hover {
   padding-left: 14px;
   padding-right: 14px;
   background: var(--paper-2)
+}
+
+.work-row .chip {
+  opacity: .6;
+  transition: opacity .2s ease
+}
+
+.work-row:hover .chip {
+  opacity: 1
 }
 
 .work-row .idx {
@@ -829,7 +904,7 @@ body.portfolio {
 .work-row .title {
   font-family: var(--sans);
   font-weight: 500;
-  font-size: 32px;
+  font-size: clamp(20px, 3vw, 32px);
   line-height: 1.05;
   letter-spacing: -.02em;
   color: var(--ink);
@@ -843,7 +918,7 @@ body.portfolio {
 
 .work-row .desc {
   font-family: var(--sans);
-  font-size: 17px;
+  font-size: clamp(14px, 1.5vw, 17px);
   line-height: 1.4;
   color: var(--ink-2);
 }
@@ -879,10 +954,7 @@ body.portfolio {
 }
 
 .work-row:hover .go {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #0a0a0a;
-  transform: rotate(-45deg)
+  border-color: var(--ink-2)
 }
 
 .work-row .go svg {
@@ -893,7 +965,7 @@ body.portfolio {
 }
 
 .work-row:hover .go svg {
-  transform: rotate(45deg)
+  transform: translateX(4px)
 }
 
 .work-row .lock {
@@ -939,8 +1011,8 @@ body.portfolio {
 
 .reveal-inner {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 32px;
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+  gap: clamp(18px, 3vw, 32px);
   padding: 0 6px 12px;
 }
 
@@ -1023,6 +1095,19 @@ body.portfolio {
   margin-top: 8px
 }
 
+.dg-edge-flow {
+  stroke: var(--accent);
+  stroke-width: 1;
+  fill: none;
+  opacity: .35;
+  stroke-dasharray: 4 10;
+  animation: dash 2.8s linear infinite
+}
+
+.reveal-diagram.paused .dg-edge-flow {
+  animation-play-state: paused
+}
+
 .dg-box {
   position: absolute;
   border: 1.5px solid var(--ink-3);
@@ -1039,6 +1124,12 @@ body.portfolio {
   transform: translate(-50%, -50%);
   white-space: normal;
   word-break: break-word;
+  cursor: pointer;
+  transition: border-color .2s ease
+}
+
+.dg-box:hover {
+  border-color: var(--accent)
 }
 
 .dg-box.hi {
@@ -1058,21 +1149,66 @@ body.portfolio {
   color: #0a0a0a
 }
 
+.dg-box.dk:hover {
+  border-color: #e5e5e5
+}
+
+.dg-tooltip {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: min(200px, 60cqw);
+  padding: 8px 12px;
+  background: #111111;
+  border: 1px solid #333333;
+  border-radius: 4px;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #e5e5e5;
+  white-space: normal;
+  word-break: normal;
+  text-align: left;
+  pointer-events: none;
+  z-index: 10
+}
+
+.dg-tooltip.below {
+  top: calc(100% + 10px)
+}
+
+.dg-tooltip.above {
+  bottom: calc(100% + 10px)
+}
+
+.dg-tooltip.align-left {
+  left: 0;
+  transform: none
+}
+
+.dg-tooltip.align-right {
+  left: auto;
+  right: 0;
+  transform: none
+}
+
 /* ------------- STACK + EXP ------------- */
 .stack-exp {
   max-width: var(--maxw);
   margin: 0 auto;
-  padding: 40px 32px 80px;
+  padding: clamp(32px, 5vw, 40px) clamp(20px, 4vw, 32px) clamp(48px, 8vw, 80px);
   display: grid;
   grid-template-columns: 180px 1fr;
-  gap: 40px;
+  gap: clamp(24px, 4vw, 40px);
   border-top: 1px solid var(--rule-2);
 }
 
 .se-body {
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 48px
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+  gap: clamp(32px, 5vw, 48px)
 }
 
 .se-heading {
@@ -1126,13 +1262,40 @@ body.portfolio {
   border-radius: 3px;
   color: var(--ink-2);
   background: var(--paper-3);
-  transition: all .2s;
+  transition: border-color .2s, background .2s, color .2s;
+  position: relative;
+  cursor: pointer
 }
 
 .stack-chips .chip:hover {
   border-color: var(--accent);
   background: rgba(59, 130, 246, .1);
   color: var(--ink)
+}
+
+.chip-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: min(220px, 80vw);
+  padding: 7px 11px;
+  background: #111111;
+  border: 1px solid #333333;
+  border-radius: 4px;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #e5e5e5;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: normal;
+  word-break: normal;
+  text-align: left;
+  pointer-events: none;
+  z-index: 10
 }
 
 .exp-col {
@@ -1230,7 +1393,7 @@ body.portfolio {
 .quote-band {
   background: var(--paper-2);
   color: var(--ink);
-  padding: 80px 32px;
+  padding: clamp(48px, 8vw, 80px) clamp(20px, 4vw, 32px);
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -1257,6 +1420,10 @@ body.portfolio {
   position: relative;
 }
 
+.quote-line {
+  display: block
+}
+
 .quote-band blockquote em {
   font-style: normal;
   color: #ffffff;
@@ -1265,11 +1432,11 @@ body.portfolio {
 
 .quote-band .qmark {
   position: absolute;
-  top: -70px;
+  top: clamp(-46px, -5vw, -70px);
   left: 50%;
   transform: translateX(-50%);
   font-family: var(--sans);
-  font-size: 180px;
+  font-size: clamp(110px, 16vw, 180px);
   line-height: 1;
   color: var(--accent);
   opacity: .3;
@@ -1297,7 +1464,7 @@ body.portfolio {
 .contact-sec {
   background: var(--paper);
   color: var(--ink);
-  padding: 80px 32px 40px;
+  padding: clamp(48px, 8vw, 80px) clamp(20px, 4vw, 32px) clamp(28px, 4vw, 40px);
   border-top: 1px solid var(--rule-2);
 }
 
@@ -1305,8 +1472,8 @@ body.portfolio {
   max-width: var(--maxw);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 60px;
+  grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr));
+  gap: clamp(32px, 5vw, 60px);
   align-items: end;
 }
 
@@ -1323,6 +1490,21 @@ body.portfolio {
   font-style: normal;
   color: var(--accent);
   font-weight: 400
+}
+
+.cta-cursor {
+  display: inline-block;
+  width: 3px;
+  height: .85em;
+  background: var(--accent);
+  margin-left: 6px;
+  vertical-align: baseline;
+  animation: blink-cursor 1s step-end infinite
+}
+
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1 }
+  50% { opacity: 0 }
 }
 
 .contact-inner h2 .amp {
@@ -1351,7 +1533,7 @@ body.portfolio {
   border-bottom: 1px solid var(--rule-2);
   font-family: var(--sans);
   font-weight: 500;
-  font-size: 28px;
+  font-size: clamp(18px, 2.5vw, 28px);
   letter-spacing: -.01em;
   transition: padding .25s, color .2s;
 }
@@ -1439,9 +1621,7 @@ body.portfolio {
 /* ------------- RESPONSIVE ------------- */
 @media (max-width: 1080px) {
   .hero {
-    grid-template-columns: 1fr;
-    gap: 32px;
-    padding-top: 48px
+    grid-template-columns: 1fr
   }
 
   .hero-right {
@@ -1450,8 +1630,7 @@ body.portfolio {
   }
 
   .stats-inner {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px
+    grid-template-columns: repeat(3, 1fr)
   }
 
   .stats-inner .kicker {
@@ -1472,11 +1651,6 @@ body.portfolio {
     position: static
   }
 
-  .se-body {
-    grid-template-columns: 1fr;
-    gap: 32px
-  }
-
   .exp-col {
     border-left: none;
     padding-left: 0;
@@ -1485,10 +1659,6 @@ body.portfolio {
   }
 
   .now-content {
-    grid-template-columns: 1fr
-  }
-
-  .reveal-inner {
     grid-template-columns: 1fr
   }
 
@@ -1506,15 +1676,6 @@ body.portfolio {
     grid-column: 2 / -1;
     margin-top: 6px
   }
-
-  .work-row .title {
-    font-size: 26px
-  }
-
-  .contact-inner {
-    grid-template-columns: 1fr;
-    gap: 32px
-  }
 }
 
 @media (max-width: 720px) {
@@ -1527,10 +1688,7 @@ body.portfolio {
   }
 
   .masthead-top {
-    font-size: 9.5px;
-    gap: 10px;
-    flex-wrap: wrap;
-    padding: 8px 20px
+    flex-wrap: wrap
   }
 
   .masthead-top>div {
@@ -1538,90 +1696,22 @@ body.portfolio {
     min-width: 0
   }
 
-  .masthead-nav {
-    gap: 2px
-  }
-
   .masthead-nav a:not(.cta) {
     display: none
-  }
-
-  .masthead-main {
-    padding: 12px 20px;
-    gap: 12px
-  }
-
-  .masthead-logo {
-    font-size: 20px
   }
 
   .masthead-logo .vol {
     display: none
   }
 
-  .hero,
-  .now-sec,
-  .work-sec,
-  .stack-exp,
-  .contact-inner {
-    padding-left: 20px;
-    padding-right: 20px
-  }
-
-  .hero {
-    padding-top: 36px;
-    padding-bottom: 40px;
-    gap: 24px
-  }
-
   .hero-left {
     min-height: auto
-  }
-
-  .display {
-    font-size: clamp(38px, 11vw, 60px) !important;
-    line-height: .96;
-    letter-spacing: -.03em;
-    margin: 18px 0 14px
-  }
-
-  .display .hl {
-    padding: 0
-  }
-
-  .lede {
-    font-size: 16px;
-    line-height: 1.45
-  }
-
-  .cta-row {
-    gap: 8px
-  }
-
-  .btn {
-    padding: 9px 14px;
-    font-size: 12.5px
   }
 
   .hero-foot {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
-    padding-top: 14px;
-    margin-top: 24px
-  }
-
-  .hero-foot .chips {
-    gap: 10px 18px;
-    row-gap: 10px
-  }
-
-  .hero-foot .chips span {
-    font-size: 9.5px
-  }
-
-  .hero-foot .chips span b {
-    font-size: 13px
+    gap: 12px
   }
 
   .hero-right {
@@ -1630,144 +1720,12 @@ body.portfolio {
     box-shadow: none
   }
 
-  .graph-caption p {
-    font-size: 12px;
-    max-width: 65%
-  }
-
-  .graph-tokens span {
-    font-size: 9px;
-    padding: 2px 5px
-  }
-
-  .stats-inner {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-    padding: 20px 18px
-  }
-
-  .stats-inner .kicker {
-    grid-column: 1 / -1;
-    margin-bottom: -4px
-  }
-
-  .stat {
-    padding-left: 10px;
-    gap: 0
-  }
-
-  .stat .n {
-    font-size: 28px;
-    letter-spacing: -.02em
-  }
-
-  .stat .n em {
-    font-size: 14px
-  }
-
-  .stat .l {
-    font-size: 9px;
-    letter-spacing: .08em;
-    line-height: 1.25;
-    margin-top: 4px
-  }
-
-  .sec-head {
-    padding-bottom: 8px
-  }
-
-  .sec-head b {
-    font-size: 24px
-  }
-
-  .now-lead {
-    font-size: 18px;
-    padding-bottom: 14px
-  }
-
-  .now-item h4 {
-    flex-wrap: wrap;
-    font-size: 17px
-  }
-
-  .now-item p {
-    font-size: 15px
-  }
-
-  .work-head {
-    padding-bottom: 14px
-  }
-
-  .work-head h2 {
-    font-size: 36px !important
-  }
-
   .work-filters {
     flex-wrap: wrap
   }
 
-  .work-row {
-    padding: 20px 0;
-    gap: 14px
-  }
-
-  .work-row .idx {
-    font-size: 10.5px
-  }
-
-  .work-row .title {
-    font-size: 22px
-  }
-
-  .work-row .desc {
-    font-size: 15px
-  }
-
-  .work-row .stack {
-    gap: 4px
-  }
-
-  .work-row .chip {
-    font-size: 9.5px;
-    padding: 2px 6px
-  }
-
-  .work-row .go {
-    width: 34px;
-    height: 34px
-  }
-
-  .work-row.open {
-    padding-left: 10px;
-    padding-right: 10px
-  }
-
-  .reveal-inner {
-    gap: 18px
-  }
-
-  .reveal-diagram {
-    min-height: 0;
-    aspect-ratio: 4 / 5;
-    padding: 14px;
-    overflow: hidden
-  }
-
   .work-row.open .work-reveal {
     max-height: 3500px
-  }
-
-  .reveal-meta .pair {
-    grid-template-columns: 1fr 1fr;
-    gap: 10px 14px
-  }
-
-  .reveal-meta .pair div b {
-    font-size: 18px
-  }
-
-  .stack-group h4 {
-    font-size: 19px
   }
 
   .stack-group h4 em {
@@ -1776,43 +1734,7 @@ body.portfolio {
     margin-top: 2px
   }
 
-  .exp-entry h3 {
-    font-size: 22px
-  }
-
-  .exp-entry p {
-    font-size: 15px
-  }
-
-  .quote-band {
-    padding: 56px 20px
-  }
-
-  .quote-band blockquote {
-    font-size: clamp(26px, 6.5vw, 38px)
-  }
-
-  .quote-band .qmark {
-    font-size: 110px;
-    top: -46px
-  }
-
-  .quote-band .attrib {
-    font-size: 10px;
-    line-height: 1.6
-  }
-
-  .contact-sec {
-    padding: 56px 20px 28px
-  }
-
-  .contact-inner h2 {
-    font-size: clamp(44px, 11vw, 64px)
-  }
-
   .contact-links a {
-    font-size: 18px;
-    padding: 14px 0;
     flex-wrap: wrap;
     gap: 6px
   }
@@ -1827,7 +1749,6 @@ body.portfolio {
   .contact-foot {
     flex-direction: column;
     gap: 8px;
-    align-items: flex-start;
-    font-size: 9.5px
+    align-items: flex-start
   }
 }

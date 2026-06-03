@@ -1,6 +1,7 @@
-import { useState, MouseEvent } from "react";
+import { useState, useRef, MouseEvent, RefObject } from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 
-type DiagramNode = { x: number; y: number; label: string; cls: string };
+type DiagramNode = { x: number; y: number; label: string; cls: string; tooltip: string };
 type Project = {
   id: string;
   title: string;
@@ -35,12 +36,12 @@ const projects: Project[] = [
     summary:
       "Insurance adjusters were manually searching across 10+ years of claims data in multiple systems. This hybrid RAG backend lets them query everything in plain English. A LangGraph state machine routes each query to either a validated SQL path (sqlglot AST + schema-aware column validator + retry) or a semantic path (cosine search across three vector-indexed tables). A single router call classifies intent AND extracts prefilters. The LLM never touches the returned data, only the 2–4 sentence insight on top of it.",
     diagram: [
-      { x: 20, y: 18, label: "adjuster · NL query", cls: "" },
-      { x: 50, y: 18, label: "router · classify + filter", cls: "hi" },
-      { x: 20, y: 50, label: "SQL node · validate", cls: "bl" },
-      { x: 80, y: 50, label: "vector node · pgvector", cls: "bl" },
-      { x: 50, y: 70, label: "insight + CSV", cls: "cr" },
-      { x: 50, y: 86, label: "answer · S3 download", cls: "dk" },
+      { x: 20, y: 18, label: "adjuster · NL query", cls: "", tooltip: "Plain-English question from an insurance adjuster" },
+      { x: 50, y: 18, label: "router · classify + filter", cls: "hi", tooltip: "Single LLM call that classifies intent and extracts date/client prefilters" },
+      { x: 20, y: 50, label: "SQL node · validate", cls: "bl", tooltip: "Validates query against schema, retries on column mismatch" },
+      { x: 80, y: 50, label: "vector node · pgvector", cls: "bl", tooltip: "Cosine similarity search across three vector-indexed claims tables" },
+      { x: 50, y: 70, label: "insight + CSV", cls: "cr", tooltip: "LLM writes a 2-4 sentence insight; raw data stays untouched in the CSV" },
+      { x: 50, y: 86, label: "answer · S3 download", cls: "dk", tooltip: "Final response with a signed S3 link for the CSV export" },
     ],
     edges: [[0, 1], [1, 2], [1, 3], [2, 4], [3, 4], [4, 5]],
   },
@@ -61,13 +62,13 @@ const projects: Project[] = [
     summary:
       "A freight management client needed to qualify 300k+ cold logistics leads without hiring an SDR team. Lead architect. Built a custom Decision Node that categorizes on intent and professional cooperation, not call duration. A GPT-4o-mini fail-safe reconstructs shipment data (origin, destination, weight, date) from transcripts when the primary API loses fields. A Max-2-calls + 30-min retry state machine protects brand reputation; the inbound path keeps conversation context 24/7 for callbacks.",
     diagram: [
-      { x: 20, y: 18, label: "300k lead DB", cls: "cr" },
-      { x: 50, y: 18, label: "Synthflow · outbound", cls: "bl" },
-      { x: 80, y: 18, label: "GPT-4o · intent", cls: "hi" },
-      { x: 80, y: 50, label: "Decision Node", cls: "" },
-      { x: 50, y: 70, label: "Qualified / Retry / DQ / DNC", cls: "" },
-      { x: 20, y: 50, label: "fail-safe · 4o-mini", cls: "" },
-      { x: 50, y: 86, label: "GHL · audit + narrative", cls: "dk" },
+      { x: 20, y: 18, label: "300k lead DB", cls: "cr", tooltip: "Master logistics lead database segmented by region and freight type" },
+      { x: 50, y: 18, label: "Synthflow · outbound", cls: "bl", tooltip: "Voice agent that cold-calls leads with dynamic script branching" },
+      { x: 80, y: 18, label: "GPT-4o · intent", cls: "hi", tooltip: "Classifies caller intent: interested, callback, not interested, do-not-call" },
+      { x: 80, y: 50, label: "Decision Node", cls: "", tooltip: "Custom routing logic based on intent and professional cooperation signals" },
+      { x: 50, y: 70, label: "Qualified / Retry / DQ / DNC", cls: "", tooltip: "Four outcome buckets with max-2-calls and 30-min retry guard" },
+      { x: 20, y: 50, label: "fail-safe · 4o-mini", cls: "", tooltip: "Reconstructs shipment details from transcript when primary API drops fields" },
+      { x: 50, y: 86, label: "GHL · audit + narrative", cls: "dk", tooltip: "Posts an under-80-word executive narrative and full audit trail to CRM" },
     ],
     edges: [[0, 1], [1, 2], [2, 3], [3, 4], [2, 5], [5, 4], [4, 6]],
   },
@@ -88,13 +89,13 @@ const projects: Project[] = [
     summary:
       "Client teams spent 60+ hours per client manually assembling SOPs from scattered references across the web. Lead Python developer. OAuth 2.0 → clone master sheet → Playwright-powered headless scraper (waits on DOM signals like `data-block-id` for Notion-style JS frames) → GPT-4 Turbo generation forced into a 6-part schema (Overview, Steps, Roles, Tools, QA, Use Case) → python-docx → Drive upload with folder-tree reconciliation → URL written back into the exact sheet cell. Idempotent by design: safe to pause, restart, or re-run.",
     diagram: [
-      { x: 20, y: 18, label: "REST trigger · biz profile", cls: "" },
-      { x: 50, y: 18, label: "OAuth · clone sheet", cls: "bl" },
-      { x: 80, y: 18, label: "Playwright · scrape refs", cls: "hi" },
-      { x: 80, y: 50, label: "GPT-4 Turbo · 6-part SOP", cls: "" },
-      { x: 50, y: 50, label: "python-docx", cls: "cr" },
-      { x: 20, y: 50, label: "Drive tree · upload", cls: "" },
-      { x: 50, y: 82, label: "write link → source cell", cls: "dk" },
+      { x: 20, y: 18, label: "REST trigger · biz profile", cls: "", tooltip: "Incoming API call with the client's business profile and checklist ID" },
+      { x: 50, y: 18, label: "OAuth · clone sheet", cls: "bl", tooltip: "OAuth 2.0 handshake, then clones the master checklist for this client" },
+      { x: 80, y: 18, label: "Playwright · scrape refs", cls: "hi", tooltip: "Headless browser waits on DOM signals to scrape JS-rendered reference pages" },
+      { x: 80, y: 50, label: "GPT-4 Turbo · 6-part SOP", cls: "", tooltip: "Generates each SOP forced into a 6-part schema: Overview, Steps, Roles, Tools, QA, Use Case" },
+      { x: 50, y: 50, label: "python-docx", cls: "cr", tooltip: "Builds formatted .docx files from the generated SOP content" },
+      { x: 20, y: 50, label: "Drive tree · upload", cls: "", tooltip: "Creates a 4-level folder hierarchy and uploads each document" },
+      { x: 50, y: 82, label: "write link → source cell", cls: "dk", tooltip: "Writes the Drive URL back into the exact cell in the source spreadsheet" },
     ],
     edges: [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6]],
   },
@@ -115,13 +116,13 @@ const projects: Project[] = [
     summary:
       "Real estate investors needed a single system to scout distressed properties, unlock owner contacts, and run two-way SMS campaigns with reply tracking. Built end-to-end. Credit-based unlock UX for lead enrichment, JSONB-backed normalization pipeline, batch SMS outbound engine, and a passive webhook receiver that cryptographically verifies `X-Twilio-Signature` before touching state. The clever bit is sticky context: when a phone number exists in multiple historic campaigns, SQLAlchemy queries cast JSON and mine message history to attribute the reply to the most recent active campaign.",
     diagram: [
-      { x: 20, y: 18, label: "React · scout UI", cls: "" },
-      { x: 50, y: 18, label: "FastAPI · enrich", cls: "bl" },
-      { x: 80, y: 18, label: "Postgres · JSONB", cls: "cr" },
-      { x: 80, y: 50, label: "Twilio · outbound", cls: "hi" },
-      { x: 50, y: 50, label: "signed webhook in", cls: "" },
-      { x: 20, y: 50, label: "sticky attribution", cls: "" },
-      { x: 50, y: 82, label: "stateful inbox · poll", cls: "dk" },
+      { x: 20, y: 18, label: "React · scout UI", cls: "", tooltip: "Map-based interface for filtering distressed properties by geography" },
+      { x: 50, y: 18, label: "FastAPI · enrich", cls: "bl", tooltip: "Credit-gated endpoint that unlocks owner contact details on demand" },
+      { x: 80, y: 18, label: "Postgres · JSONB", cls: "cr", tooltip: "Normalized lead store using JSONB for flexible multi-source schemas" },
+      { x: 80, y: 50, label: "Twilio · outbound", cls: "hi", tooltip: "Batch SMS engine with per-campaign rate limiting and delivery tracking" },
+      { x: 50, y: 50, label: "signed webhook in", cls: "", tooltip: "Verifies X-Twilio-Signature cryptographically before processing replies" },
+      { x: 20, y: 50, label: "sticky attribution", cls: "", tooltip: "Attributes inbound replies to the most recent active campaign for that number" },
+      { x: 50, y: 82, label: "stateful inbox · poll", cls: "dk", tooltip: "Real-time inbox that polls for new replies with campaign context attached" },
     ],
     edges: [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6]],
   },
@@ -142,13 +143,13 @@ const projects: Project[] = [
     summary:
       "A client needed to turn raw job postings into enriched, ready-to-send cold outreach without manual research. n8n orchestrates an Apify Indeed scraper, then GPT-4o compresses raw JDs (8kB+) into 1,500-character bulleted summaries, bypassing Clay's payload ceiling. The key piece: a custom polling gate that derives a `target_count` and holds the workflow in a Wait-and-Check loop until the Enriched Sheet matches it, so Clay's async enrichment always completes before a single email fires. JavaScript Code Nodes flatten wide structures (multiple contacts per posting) into individual lead rows. Instantly.ai injects AI-extracted job highlights as custom variables into cold email templates.",
     diagram: [
-      { x: 20, y: 18, label: "Apify · Indeed scraper", cls: "" },
-      { x: 50, y: 18, label: "n8n · orchestrate", cls: "bl" },
-      { x: 80, y: 18, label: "GPT-4o · compress JD", cls: "hi" },
-      { x: 80, y: 50, label: "Clay · enrich contacts", cls: "" },
-      { x: 50, y: 50, label: "polling · wait-and-check", cls: "cr" },
-      { x: 20, y: 50, label: "Sheets · state machine", cls: "" },
-      { x: 50, y: 82, label: "Instantly.ai · personalize", cls: "dk" },
+      { x: 20, y: 18, label: "Apify · Indeed scraper", cls: "", tooltip: "Scrapes live job postings from Indeed with structured field extraction" },
+      { x: 50, y: 18, label: "n8n · orchestrate", cls: "bl", tooltip: "Workflow engine coordinating scrape, compress, enrich, and send stages" },
+      { x: 80, y: 18, label: "GPT-4o · compress JD", cls: "hi", tooltip: "Compresses 8kB+ job descriptions to 1,500 chars to fit Clay's payload limit" },
+      { x: 80, y: 50, label: "Clay · enrich contacts", cls: "", tooltip: "5-source waterfall that finds decision-maker email and LinkedIn" },
+      { x: 50, y: 50, label: "polling · wait-and-check", cls: "cr", tooltip: "Holds the workflow until enriched row count matches target, zero incomplete sends" },
+      { x: 20, y: 50, label: "Sheets · state machine", cls: "", tooltip: "Tracks enrichment status per row, source of truth for the polling gate" },
+      { x: 50, y: 82, label: "Instantly.ai · personalize", cls: "dk", tooltip: "Injects AI-extracted job highlights as variables into cold email templates" },
     ],
     edges: [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 4], [4, 6]],
   },
@@ -171,21 +172,37 @@ const projects: Project[] = [
     summary:
       "Final-year project. I led the AI pipeline, backend, and DevOps; my partner built the Next.js PWA. Chose EfficientNet-B0 over heavier nets (VGG16) so the full container runs on cheap CPU-only Render instances. Decoupled image storage via Cloudinary, async FastAPI + SQLModel for concurrency, JWT + Argon2 for the auth flow.",
     diagram: [
-      { x: 20, y: 18, label: "MRI upload · PWA", cls: "" },
-      { x: 50, y: 18, label: "FastAPI · async", cls: "bl" },
-      { x: 80, y: 18, label: "JWT + Argon2", cls: "" },
-      { x: 80, y: 50, label: "Cloudinary · blobs", cls: "cr" },
-      { x: 50, y: 50, label: "EfficientNet-B0", cls: "hi" },
-      { x: 20, y: 50, label: "Postgres · SQLModel", cls: "" },
-      { x: 50, y: 82, label: "4-class · Docker / Render", cls: "dk" },
+      { x: 20, y: 18, label: "MRI upload · PWA", cls: "", tooltip: "Next.js progressive web app where clinicians upload MRI scans" },
+      { x: 50, y: 18, label: "FastAPI · async", cls: "bl", tooltip: "Async endpoint that queues inference without blocking the upload response" },
+      { x: 80, y: 18, label: "JWT + Argon2", cls: "", tooltip: "Stateless auth with Argon2 password hashing and short-lived JWTs" },
+      { x: 80, y: 50, label: "Cloudinary · blobs", cls: "cr", tooltip: "Decoupled image storage so the API server stays stateless" },
+      { x: 50, y: 50, label: "EfficientNet-B0", cls: "hi", tooltip: "5.3M-param model chosen over VGG16 to run on CPU-only cloud instances" },
+      { x: 20, y: 50, label: "Postgres · SQLModel", cls: "", tooltip: "Stores scan metadata, results history, and user records" },
+      { x: 50, y: 82, label: "4-class · Docker / Render", cls: "dk", tooltip: "Containerized inference returning one of four tumor classifications" },
     ],
     edges: [[0, 1], [1, 2], [1, 3], [1, 4], [4, 5], [4, 6]],
   },
 ];
 
-const Diagram = ({ nodes, edges }: { nodes: DiagramNode[]; edges: [number, number][] }) => {
+const Diagram = ({
+  projectId,
+  nodes,
+  edges,
+}: {
+  projectId: string;
+  nodes: DiagramNode[];
+  edges: [number, number][];
+}) => {
+  const [hoveredNode, setHoveredNode] = useState<number | null>(null);
+  const dgRef = useRef<HTMLDivElement>(null);
+  const dgVisible = useInView(dgRef as RefObject<Element>, { amount: 0.1 });
+
   return (
-    <div className="reveal-diagram">
+    <div
+      ref={dgRef}
+      className={`reveal-diagram ${dgVisible ? "" : "paused"}`}
+      onClick={(e) => e.stopPropagation()}
+    >
       <span className="dg-label">system diagram</span>
       <svg
         viewBox="0 0 100 100"
@@ -193,7 +210,15 @@ const Diagram = ({ nodes, edges }: { nodes: DiagramNode[]; edges: [number, numbe
         style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
       >
         <defs>
-          <marker id="arr-r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+          <marker
+            id={`arr-${projectId}`}
+            viewBox="0 0 10 10"
+            refX="8"
+            refY="5"
+            markerWidth="5"
+            markerHeight="5"
+            orient="auto"
+          >
             <path d="M0,0 L10,5 L0,10 z" fill="#666666" />
           </marker>
         </defs>
@@ -205,25 +230,60 @@ const Diagram = ({ nodes, edges }: { nodes: DiagramNode[]; edges: [number, numbe
           const my = (a.y + b.y) / 2 - 6;
           const d = `M ${a.x} ${a.y} Q ${mx} ${my}, ${b.x} ${b.y}`;
           return (
-            <path
-              key={i}
-              d={d}
-              stroke="#666666"
-              strokeWidth="0.4"
-              fill="none"
-              markerEnd="url(#arr-r)"
-              vectorEffect="non-scaling-stroke"
-              strokeDasharray="1.2 0.9"
-              opacity=".5"
-            />
+            <g key={i}>
+              <path
+                d={d}
+                stroke="#666666"
+                strokeWidth="0.4"
+                fill="none"
+                markerEnd={`url(#arr-${projectId})`}
+                vectorEffect="non-scaling-stroke"
+                strokeDasharray="1.2 0.9"
+                opacity=".5"
+              />
+              <path
+                d={d}
+                className="dg-edge-flow"
+                vectorEffect="non-scaling-stroke"
+                style={{ animationDelay: `${i * -0.5}s` }}
+              />
+            </g>
           );
         })}
       </svg>
-      {nodes.map((n, i) => (
-        <div key={i} className={`dg-box ${n.cls}`} style={{ left: `${n.x}%`, top: `${n.y}%` }}>
-          {n.label}
-        </div>
-      ))}
+      {nodes.map((n, i) => {
+        const isAbove = n.y > 60;
+        const align = n.x < 30 ? "align-left" : n.x > 70 ? "align-right" : "";
+
+        return (
+          <div
+            key={i}
+            className={`dg-box ${n.cls}`}
+            style={{ left: `${n.x}%`, top: `${n.y}%` }}
+            onMouseEnter={() => setHoveredNode(i)}
+            onMouseLeave={() => setHoveredNode(null)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setHoveredNode(hoveredNode === i ? null : i);
+            }}
+          >
+            {n.label}
+            <AnimatePresence>
+              {hoveredNode === i && (
+                <motion.div
+                  className={`dg-tooltip ${isAbove ? "above" : "below"} ${align}`}
+                  initial={{ opacity: 0, y: isAbove ? 4 : -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: isAbove ? 4 : -4 }}
+                  transition={{ duration: 0.15, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  {n.tooltip}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        );
+      })}
     </div>
   );
 };
@@ -231,9 +291,108 @@ const Diagram = ({ nodes, edges }: { nodes: DiagramNode[]; edges: [number, numbe
 const filters = ["All", "AI/ML", "Agents", "Infrastructure"] as const;
 type Filter = (typeof filters)[number];
 
+const revealEase = [0.22, 1, 0.36, 1] as const;
+
+const WorkRow = ({
+  p,
+  i,
+  isOpen,
+  onToggle,
+  delay,
+}: {
+  p: Project;
+  i: number;
+  isOpen: boolean;
+  onToggle: () => void;
+  delay: number;
+}) => {
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.15 });
+
+  return (
+    <motion.article
+      ref={ref}
+      className={`work-row ${isOpen ? "open" : ""}`}
+      onClick={onToggle}
+      initial={{ opacity: 0, y: 20 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.3, ease: revealEase, delay }}
+    >
+      <span className="idx">{String(i + 1).padStart(2, "0")}</span>
+      <div className="title">
+        {p.title} {p.italic}
+      </div>
+      <div className="desc">{p.desc}</div>
+      <div className="stack">
+        {p.stack.slice(0, 4).map((t) => (
+          <span key={t} className="chip">
+            {t}
+          </span>
+        ))}
+      </div>
+      <div className="go" aria-label="Expand">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M7 17L17 7M7 7h10v10" />
+        </svg>
+      </div>
+
+      <div className="work-reveal">
+        <div className="reveal-inner">
+          <Diagram projectId={p.id} nodes={p.diagram} edges={p.edges} />
+          <div className="reveal-meta">
+            <h5>· {p.tag}</h5>
+            <p>{p.summary}</p>
+            <div className="pair">
+              {p.metrics.map((m, j) => (
+                <div key={j}>
+                  <b>{m.n}</b>
+                  <span>{m.l}</span>
+                </div>
+              ))}
+            </div>
+            <div className="reveal-links">
+              {p.internal ? (
+                <span className="lock">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                    <rect x="3" y="11" width="18" height="11" rx="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                  </svg>
+                  Internal · client work
+                </span>
+              ) : (
+                <a
+                  className="btn"
+                  href={p.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e: MouseEvent) => e.stopPropagation()}
+                >
+                  {p.linkLabel}
+                </a>
+              )}
+              <button
+                type="button"
+                className="btn ghost"
+                onClick={(e: MouseEvent) => {
+                  e.stopPropagation();
+                  onToggle();
+                }}
+              >
+                Collapse
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.article>
+  );
+};
+
 const Work = () => {
   const [open, setOpen] = useState<string | null>(null);
   const [filter, setFilter] = useState<Filter>("All");
+  const headRef = useRef<HTMLDivElement>(null);
+  const headInView = useInView(headRef, { once: true, amount: 0.3 });
 
   const match = (p: Project) => {
     if (filter === "All") return true;
@@ -243,14 +402,23 @@ const Work = () => {
     return true;
   };
 
+  const filtered = projects.filter(match);
+
   return (
     <section className="work-sec" id="work">
-      <div className="work-head">
+      <motion.div
+        className="work-head"
+        ref={headRef}
+        initial={{ opacity: 0, y: 20 }}
+        animate={headInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        transition={{ duration: 0.3, ease: revealEase }}
+      >
         <div className="sec-head" style={{ position: "static" }}>
           Selected Work
         </div>
         <h2>
-          Things I've shipped<br />
+          Things I've shipped
+          <br />
           and kept running.
         </h2>
         <div className="work-filters">
@@ -260,80 +428,18 @@ const Work = () => {
             </button>
           ))}
         </div>
-      </div>
+      </motion.div>
 
       <div className="work-list">
-        {projects.filter(match).map((p, i) => (
-          <article
+        {filtered.map((p, i) => (
+          <WorkRow
             key={p.id}
-            className={`work-row ${open === p.id ? "open" : ""}`}
-            onClick={() => setOpen(open === p.id ? null : p.id)}
-          >
-            <span className="idx">{String(i + 1).padStart(2, '0')}</span>
-            <div className="title">
-              {p.title} {p.italic}
-            </div>
-            <div className="desc">{p.desc}</div>
-            <div className="stack">
-              {p.stack.slice(0, 4).map((t) => (
-                <span key={t} className="chip">{t}</span>
-              ))}
-            </div>
-            <div className="go" aria-label="Expand">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M7 17L17 7M7 7h10v10" />
-              </svg>
-            </div>
-
-            <div className="work-reveal">
-              <div className="reveal-inner">
-                <Diagram nodes={p.diagram} edges={p.edges} />
-                <div className="reveal-meta">
-                  <h5>· {p.tag}</h5>
-                  <p>{p.summary}</p>
-                  <div className="pair">
-                    {p.metrics.map((m, j) => (
-                      <div key={j}>
-                        <b>{m.n}</b>
-                        <span>{m.l}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="reveal-links">
-                    {p.internal ? (
-                      <span className="lock">
-                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                          <rect x="3" y="11" width="18" height="11" rx="2" />
-                          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                        </svg>
-                        Internal · client work
-                      </span>
-                    ) : (
-                      <a
-                        className="btn"
-                        href={p.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e: MouseEvent) => e.stopPropagation()}
-                      >
-                        {p.linkLabel}
-                      </a>
-                    )}
-                    <button
-                      type="button"
-                      className="btn ghost"
-                      onClick={(e: MouseEvent) => {
-                        e.stopPropagation();
-                        setOpen(null);
-                      }}
-                    >
-                      Collapse
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
+            p={p}
+            i={i}
+            isOpen={open === p.id}
+            onToggle={() => setOpen(open === p.id ? null : p.id)}
+            delay={i * 0.06}
+          />
         ))}
       </div>
     </section>
