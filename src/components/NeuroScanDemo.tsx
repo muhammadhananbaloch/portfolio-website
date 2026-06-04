@@ -38,8 +38,8 @@ const tumorClasses: TumorClass[] = [
   {
     id: "no-tumor",
     label: "NRM",
-    color: "#8b5cf6",
-    bgColor: "rgba(139, 92, 246, 0.15)",
+    color: "#38bdf8",
+    bgColor: "rgba(56, 189, 248, 0.15)",
     confidence: 96.8,
     result: "No Tumor",
   },
