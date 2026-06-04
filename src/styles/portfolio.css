@@ -3960,7 +3960,7 @@ body.portfolio {
 
 .demo-sms__phone-body {
   padding: 12px;
-  min-height: 240px;
+  min-height: 360px;
   display: flex;
   flex-direction: column;
   gap: 8px;
