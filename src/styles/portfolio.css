@@ -234,7 +234,11 @@ body.portfolio {
 
 .scene--hero {
   background: var(--paper);
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: clamp(100px, 14vh, 160px) clamp(32px, 5vw, 80px) clamp(40px, 5vh, 64px);
   overflow: hidden;
 }
 
@@ -255,9 +259,7 @@ body.portfolio {
 }
 
 .hero-identity {
-  position: absolute;
-  top: clamp(100px, 14vh, 160px);
-  left: clamp(32px, 5vw, 80px);
+  position: relative;
   z-index: 5;
   max-width: min(540px, 44vw);
 }
@@ -280,23 +282,20 @@ body.portfolio {
 }
 
 .hero-ctas {
-  position: absolute;
-  bottom: clamp(80px, 11vh, 120px);
-  left: clamp(32px, 5vw, 80px);
+  position: relative;
   z-index: 5;
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+  margin-top: 32px;
 }
 
 .hero-meta {
-  position: absolute;
-  bottom: clamp(24px, 3vh, 40px);
-  left: clamp(32px, 5vw, 80px);
-  right: clamp(32px, 5vw, 80px);
+  position: relative;
   z-index: 5;
   display: flex;
   gap: 24px;
+  margin-top: 32px;
   font-family: var(--mono);
   font-size: 10.5px;
   letter-spacing: .12em;
@@ -2744,10 +2743,11 @@ body.portfolio {
 }
 
 @media (max-width: 768px) {
+  .scene--hero {
+    padding: 80px 24px 16px;
+  }
+
   .hero-identity {
-    top: 80px;
-    left: 24px;
-    right: 24px;
     max-width: none;
   }
 
@@ -2779,16 +2779,7 @@ body.portfolio {
     display: none;
   }
 
-  .hero-ctas {
-    bottom: 56px;
-    left: 24px;
-    right: 24px;
-  }
-
   .hero-meta {
-    bottom: 16px;
-    left: 24px;
-    right: 24px;
     font-size: 9px;
   }
 
