@@ -1870,6 +1870,13 @@ body.portfolio {
   border-radius: 3px;
   color: var(--ink-2);
   background: var(--paper-3);
+  transition: border-color .2s ease, background .2s ease, color .2s ease;
+}
+
+.work-row .chip:hover {
+  border-color: var(--accent);
+  background: rgba(59, 130, 246, .1);
+  color: var(--ink);
 }
 
 .work-row .go {
@@ -2919,6 +2926,13 @@ body.portfolio {
   border-radius: 3px;
   color: var(--ink-2);
   background: var(--paper-3);
+  transition: border-color .2s ease, background .2s ease, color .2s ease;
+}
+
+.project-case__pill:hover {
+  border-color: var(--accent);
+  background: rgba(59, 130, 246, .1);
+  color: var(--ink);
 }
 
 .project-case__access {
