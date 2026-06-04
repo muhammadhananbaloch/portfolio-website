@@ -31,14 +31,19 @@ const Index = () => {
 
       <ContactScene />
 
-      <footer className="scene__footer">
-        <div>&copy; 2026 &middot; Muhammad Hanan Baloch &middot; All work original</div>
-        <div>Set in Inter &middot; JetBrains Mono</div>
-        <div>
-          <a href="#top" style={{ textDecoration: "none", color: "inherit" }}>
-            Back to top &uarr;
-          </a>
-        </div>
+      <footer className="site-footer">
+        <span>&copy; 2026 Muhammad Hanan Baloch</span>
+        <nav className="site-footer__links">
+          <a href="mailto:contact@muhammadhananbaloch.dev">Email</a>
+          <span className="site-footer__sep">&middot;</span>
+          <a href="https://github.com/muhammadhananbaloch" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <span className="site-footer__sep">&middot;</span>
+          <a href="https://www.linkedin.com/in/muhammadhananbaloch/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <span className="site-footer__sep">&middot;</span>
+          <a href="https://x.com/muhammadhanann" target="_blank" rel="noopener noreferrer">Twitter</a>
+          <span className="site-footer__sep">&middot;</span>
+          <a href="#top" className="site-footer__top">Back to top &uarr;</a>
+        </nav>
       </footer>
     </>
   );
