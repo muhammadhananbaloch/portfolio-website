@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import Masthead from "@/components/Masthead";
 import HeroScene from "@/components/HeroScene";
+import ProjectsScene from "@/components/ProjectsScene";
 import "@/styles/portfolio.css";
 
 const Index = () => {
@@ -19,23 +20,7 @@ const Index = () => {
 
       <HeroScene />
 
-      <section className="scene scene--projects" id="work">
-        <div className="scene__label">
-          <span className="scene__number">02</span>
-          <span className="scene__name">PROJECTS</span>
-        </div>
-        <div className="scene__placeholder">
-          6 project case studies, each with unique interactive demo. Pinned header with filters.
-          <div className="scene__sub-items">
-            <div className="scene__sub-item">01 Aviation Claims — Query Router Demo</div>
-            <div className="scene__sub-item">02 Freight Voice — Live Call Trace</div>
-            <div className="scene__sub-item">03 Marketing Ops — Before / After</div>
-            <div className="scene__sub-item">04 PropAuto CRM — SMS Flow</div>
-            <div className="scene__sub-item">05 Lead Enrichment — Pipeline Waterfall</div>
-            <div className="scene__sub-item">06 NeuroScan AI — Classification Live View</div>
-          </div>
-        </div>
-      </section>
+      <ProjectsScene />
 
       <section className="scene scene--stack" id="stack">
         <div className="scene__label">
