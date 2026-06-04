@@ -41,7 +41,7 @@ html.portfolio {
 [id="stack"],
 [id="experience"],
 [id="contact"] {
-  scroll-margin-top: 90px
+  scroll-margin-top: 60px
 }
 
 body.portfolio {
@@ -65,11 +65,17 @@ body.portfolio {
 
 /* ------------- MASTHEAD ------------- */
 .masthead {
-  border-bottom: 1px solid var(--rule-2);
-  background: rgba(10, 10, 10, .85);
   position: sticky;
   top: 0;
   z-index: 50;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background .3s ease, border-color .3s ease;
+}
+
+.masthead--scrolled {
+  background: rgba(10, 10, 10, .8);
+  border-bottom-color: var(--rule-2);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
@@ -87,55 +93,17 @@ body.portfolio {
   z-index: 51;
 }
 
-.masthead-top {
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 10px 32px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  border-bottom: 1px solid var(--rule);
-}
-
-.masthead-top .pulse {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  color: var(--accent)
-}
-
-.masthead-top .pulse-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 0 rgba(59, 130, 246, .6);
-  animation: pulse 2s cubic-bezier(.4, 0, .6, 1) infinite;
-}
-
 @keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(59, 130, 246, .55)
-  }
-
-  70% {
-    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0)
-  }
-
-  100% {
-    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0)
-  }
+  0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, .55) }
+  70% { box-shadow: 0 0 0 8px rgba(59, 130, 246, 0) }
+  100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0) }
 }
 
-.masthead-main {
+.masthead-inner {
   max-width: var(--maxw);
   margin: 0 auto;
-  padding: 14px 32px;
+  padding: 0 clamp(24px, 4vw, 48px);
+  height: 52px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -144,45 +112,33 @@ body.portfolio {
 
 .masthead-logo {
   font-family: var(--sans);
-  font-weight: 600;
-  font-size: clamp(20px, 2.5vw, 26px);
+  font-weight: 500;
+  font-size: 15px;
   letter-spacing: -.01em;
   line-height: 1;
   display: flex;
-  align-items: baseline;
-  gap: 10px;
+  align-items: center;
+  gap: 8px;
   text-decoration: none;
-}
-
-.masthead-logo b {
-  font-weight: 600
-}
-
-.masthead-logo .vol {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--ink-3);
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  font-weight: 400;
+  color: var(--ink);
 }
 
 .masthead-nav {
   display: flex;
-  gap: 6px;
-  align-items: center
+  gap: 4px;
+  align-items: center;
 }
 
 .masthead-nav a {
   text-decoration: none;
   font-family: var(--mono);
   font-size: 11px;
-  letter-spacing: .1em;
+  letter-spacing: .08em;
   text-transform: uppercase;
-  color: var(--ink-2);
-  padding: 6px 12px;
+  color: var(--ink-3);
+  padding: 6px 10px;
   border-radius: 3px;
-  transition: all .2s;
+  transition: color .2s ease;
   position: relative;
 }
 
@@ -190,33 +146,46 @@ body.portfolio {
   content: "";
   position: absolute;
   bottom: 2px;
-  left: 12px;
-  right: 12px;
+  left: 10px;
+  right: 10px;
   height: 1px;
   background: var(--accent);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform .2s ease
+  transition: transform .2s ease;
 }
 
 .masthead-nav a:not(.cta):hover::after,
 .masthead-nav a:not(.cta).active::after {
-  transform: scaleX(1)
+  transform: scaleX(1);
 }
 
 .masthead-nav a:hover,
 .masthead-nav a.active {
-  color: var(--ink)
+  color: var(--ink);
 }
 
 .masthead-nav a.cta {
-  background: var(--accent);
-  color: #0a0a0a
+  border: 1px solid var(--rule-2);
+  border-radius: 4px;
+  padding: 5px 12px;
+  margin-left: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--ink);
+  transition: border-color .2s ease, color .2s ease;
+}
+
+.masthead-nav a.cta .icn {
+  width: 12px;
+  height: 12px;
+  stroke-width: 2;
 }
 
 .masthead-nav a.cta:hover {
-  background: var(--accent-2);
-  color: #0a0a0a
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 /* ------------- SCENES (full-viewport skeleton) ------------- */
@@ -2662,24 +2631,11 @@ body.portfolio {
   [id="stack"],
   [id="experience"],
   [id="contact"] {
-    scroll-margin-top: 120px
-  }
-
-  .masthead-top {
-    flex-wrap: wrap
-  }
-
-  .masthead-top>div {
-    flex: 1 1 auto;
-    min-width: 0
+    scroll-margin-top: 60px
   }
 
   .masthead-nav a:not(.cta) {
-    display: none
-  }
-
-  .masthead-logo .vol {
-    display: none
+    display: none;
   }
 
   .hero-left {

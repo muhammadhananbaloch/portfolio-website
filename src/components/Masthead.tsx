@@ -1,8 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
 
-const formatTime = (d: Date) =>
-  d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
-
 const NAV_LINKS = [
   { id: "work", href: "#work", label: "Work" },
   { id: "stack", href: "#stack", label: "Stack" },
@@ -10,19 +7,15 @@ const NAV_LINKS = [
 ];
 
 const Masthead = () => {
-  const [now, setNow] = useState(() => new Date());
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
-
-  useEffect(() => {
-    const id = setInterval(() => setNow(new Date()), 30_000);
-    return () => clearInterval(id);
-  }, []);
 
   const handleScroll = useCallback(() => {
     const scrollTop = window.scrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     setScrollProgress(docHeight > 0 ? scrollTop / docHeight : 0);
+    setScrolled(scrollTop > 100);
 
     const threshold = window.innerHeight * 0.35;
     let current: string | null = null;
@@ -33,15 +26,11 @@ const Masthead = () => {
       if (el.getBoundingClientRect().top <= threshold) current = id;
     }
 
-    // Experience is inside the Stack scene; only highlight it
-    // when the timeline is scrolled well past the top (stacked layout)
     const expEl = document.getElementById("experience");
     if (expEl) {
       const expTop = expEl.getBoundingClientRect().top;
       const stackEl = document.getElementById("stack");
       const stackTop = stackEl ? stackEl.getBoundingClientRect().top : 0;
-      // Only switch to Experience when the experience div is significantly
-      // below the stack start AND has scrolled past threshold
       if (expTop - stackTop > 200 && expTop <= threshold) {
         current = "experience";
       }
@@ -56,22 +45,15 @@ const Masthead = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  const localTime = formatTime(now);
-
   return (
-    <header className="masthead">
+    <header className={`masthead${scrolled ? " masthead--scrolled" : ""}`}>
       <div
         className="masthead-progress"
         style={{ transform: `scaleX(${scrollProgress})` }}
       />
-      <div className="masthead-top">
-        <div className="pulse"><span className="pulse-dot"></span> Currently at JBS</div>
-        <div>Karachi · Remote · Your time <b>{localTime}</b></div>
-      </div>
-      <div className="masthead-main">
+      <div className="masthead-inner">
         <a href="#top" className="masthead-logo">
-          <b>Muhammad Hanan Baloch</b>
-          <span className="vol">AI Engineer</span>
+          Muhammad Hanan Baloch
         </a>
         <nav className="masthead-nav">
           {NAV_LINKS.map((s) => (
@@ -87,7 +69,17 @@ const Masthead = () => {
             href="#contact"
             className={`cta${activeSection === "contact" ? " active" : ""}`}
           >
-            Get in touch ↗
+            Get in touch
+            <svg
+              className="icn"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M7 17L17 7M7 7h10v10" />
+            </svg>
           </a>
         </nav>
       </div>
