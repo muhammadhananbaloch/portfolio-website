@@ -28,7 +28,7 @@ const MarketingOpsDemo = ({ isVisible }: { isVisible: boolean }) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const x = clientX - rect.left;
-    const pct = Math.max(8, Math.min(92, (x / rect.width) * 100));
+    const pct = Math.max(0, Math.min(100, (x / rect.width) * 100));
     setSliderPos(pct);
   }, []);
 
