@@ -1,165 +1,346 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-type Node = {
+interface NodeDef {
   id: string;
   label: string;
   cls: string;
   x: number;
   y: number;
-  tooltip: string;
-};
+  description: string;
+  tier: number;
+}
 
-type Edge = { from: string; to: string };
+interface EdgeDef {
+  from: string;
+  to: string;
+  tier: number;
+}
 
-const nodes: Node[] = [
-  { id: "user", label: "user · request", cls: "user", x: 50, y: 12, tooltip: "Incoming natural-language query from the end user" },
-  { id: "llm", label: "orchestrator · LLM", cls: "llm", x: 50, y: 30, tooltip: "Routes queries to SQL or semantic search based on intent classification" },
-  { id: "rag", label: "tool · rag_retriever", cls: "tool", x: 22, y: 50, tooltip: "Retrieves relevant context from vector store using semantic similarity" },
-  { id: "api", label: "tool · api_caller", cls: "tool", x: 78, y: 50, tooltip: "Executes structured API calls for real-time data lookups" },
-  { id: "mem", label: "pgvector · memory", cls: "memory", x: 50, y: 70, tooltip: "Stores and retrieves conversation history and document embeddings" },
-  { id: "out", label: "response · streamed", cls: "out", x: 50, y: 88, tooltip: "Token-by-token streamed response back to the client" },
+const NODES: NodeDef[] = [
+  {
+    id: "user",
+    label: "user · request",
+    cls: "user",
+    x: 66,
+    y: 14,
+    tier: 0,
+    description:
+      "Incoming queries via REST API or WebSocket. Rate-limited and authenticated before hitting the orchestrator.",
+  },
+  {
+    id: "llm",
+    label: "orchestrator · LLM",
+    cls: "llm",
+    x: 66,
+    y: 30,
+    tier: 1,
+    description:
+      "Routes each query to SQL or semantic search. A single LLM call classifies intent and extracts prefilters. The model never touches raw data.",
+  },
+  {
+    id: "rag",
+    label: "tool · rag_retriever",
+    cls: "tool",
+    x: 46,
+    y: 50,
+    tier: 2,
+    description:
+      "Hybrid search over pgvector — dense embeddings for semantics, sparse BM25 for keywords. Top-k results reranked before reaching the LLM.",
+  },
+  {
+    id: "api",
+    label: "tool · api_caller",
+    cls: "tool",
+    x: 86,
+    y: 50,
+    tier: 2,
+    description:
+      "Structured API calls with retries, circuit breaking, and response normalization. Each call sandboxed with timeout enforcement.",
+  },
+  {
+    id: "mem",
+    label: "pgvector · memory",
+    cls: "memory",
+    x: 66,
+    y: 68,
+    tier: 3,
+    description:
+      "pgvector-backed store for document embeddings, conversation history, and extracted entities. Serves both retriever and orchestrator.",
+  },
+  {
+    id: "out",
+    label: "response · streamed",
+    cls: "out",
+    x: 66,
+    y: 85,
+    tier: 4,
+    description:
+      "Token-by-token streamed response via SSE. Includes source citations and execution metadata for observability.",
+  },
 ];
 
-const edges: Edge[] = [
-  { from: "user", to: "llm" },
-  { from: "llm", to: "rag" },
-  { from: "llm", to: "api" },
-  { from: "rag", to: "mem" },
-  { from: "api", to: "mem" },
-  { from: "mem", to: "out" },
+const EDGES: EdgeDef[] = [
+  { from: "user", to: "llm", tier: 1 },
+  { from: "llm", to: "rag", tier: 2 },
+  { from: "llm", to: "api", tier: 2 },
+  { from: "rag", to: "mem", tier: 3 },
+  { from: "api", to: "mem", tier: 3 },
+  { from: "mem", to: "out", tier: 4 },
 ];
 
-const byId: Record<string, Node> = Object.fromEntries(nodes.map((n) => [n.id, n]));
+const BY_ID = Object.fromEntries(
+  NODES.map((n) => [n.id, n])
+) as Record<string, NodeDef>;
 
-const CYCLE = 4000;
-const FLASH = 300;
+const BOOT_STAGGER = 120;
+const EDGE_DRAW_MS = 500;
+const BOOT_TOTAL = 4 * BOOT_STAGGER + EDGE_DRAW_MS + 100;
 
-const cascade = [
-  { ids: ["user"], at: 0 },
-  { ids: ["llm"], at: 600 },
-  { ids: ["rag", "api"], at: 1200 },
-  { ids: ["mem"], at: 1800 },
-  { ids: ["out"], at: 2400 },
+const PACKET_PATHS = [
+  ["user", "llm", "rag", "mem", "out"],
+  ["user", "llm", "api", "mem", "out"],
 ];
+const PACKET_CYCLE = 5500;
+const PACKET_TRAVEL = 4000;
 
-const restBorder: Record<string, string> = {
-  user: "#666666", llm: "#666666", rag: "#666666",
-  api: "#666666", mem: "#666666", out: "#3b82f6",
-};
+function cubicBez(
+  t: number,
+  p0: number,
+  p1: number,
+  p2: number,
+  p3: number
+): number {
+  const u = 1 - t;
+  return (
+    u * u * u * p0 +
+    3 * u * u * t * p1 +
+    3 * u * t * t * p2 +
+    t * t * t * p3
+  );
+}
 
-const litBorder: Record<string, string> = {
-  user: "#3b82f6", llm: "#3b82f6", rag: "#3b82f6",
-  api: "#3b82f6", mem: "#3b82f6", out: "#60a5fa",
-};
+function ctrlPts(a: NodeDef, b: NodeDef) {
+  const my = (a.y + b.y) / 2;
+  const dx = b.x - a.x;
+  const cv = Math.abs(dx) * 0.3;
+  return {
+    c1x: a.x,
+    c1y: my - (a.x > b.x ? cv : -cv) * 0.3,
+    c2x: b.x,
+    c2y: my,
+  };
+}
+
+function edgePath(a: NodeDef, b: NodeDef): string {
+  const { c1x, c1y, c2x, c2y } = ctrlPts(a, b);
+  return `M ${a.x} ${a.y} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${b.x} ${b.y}`;
+}
+
+function posOnEdge(
+  fromId: string,
+  toId: string,
+  t: number
+): { x: number; y: number } {
+  const a = BY_ID[fromId],
+    b = BY_ID[toId];
+  const { c1x, c1y, c2x, c2y } = ctrlPts(a, b);
+  return {
+    x: cubicBez(t, a.x, c1x, c2x, b.x),
+    y: cubicBez(t, a.y, c1y, c2y, b.y),
+  };
+}
+
+const EASE_ENTER: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 const AgentGraph = () => {
-  const [activeNode, setActiveNode] = useState<string | null>(null);
-  const [lit, setLit] = useState<Set<string>>(new Set());
+  const [tier, setTier] = useState(-1);
+  const [booted, setBooted] = useState(false);
+  const [selected, setSelected] = useState<string | null>(null);
 
+  const nodeEls = useRef<Record<string, HTMLDivElement | null>>({});
+  const packetEl = useRef<HTMLDivElement>(null);
+  const rafId = useRef(0);
+  const flashedInCycle = useRef(new Set<string>());
+
+  // Boot sequence: reveal tiers sequentially
   useEffect(() => {
-    let alive = true;
+    const ids: ReturnType<typeof setTimeout>[] = [];
+    for (let t = 0; t <= 4; t++) {
+      ids.push(setTimeout(() => setTier(t), t * BOOT_STAGGER));
+    }
+    ids.push(setTimeout(() => setBooted(true), BOOT_TOTAL));
+    return () => ids.forEach(clearTimeout);
+  }, []);
 
-    const tick = () => {
+  const flash = useCallback((id: string) => {
+    const el = nodeEls.current[id];
+    if (!el || el.classList.contains("hero-node--lit")) return;
+    el.classList.add("hero-node--lit");
+    setTimeout(() => el?.classList.remove("hero-node--lit"), 300);
+  }, []);
+
+  // Data packet animation
+  useEffect(() => {
+    if (!booted) return;
+    let alive = true;
+    const t0 = performance.now();
+
+    const tick = (now: number) => {
       if (!alive) return;
-      for (const { ids, at } of cascade) {
-        setTimeout(() => {
-          if (!alive) return;
-          setLit((prev) => {
-            const s = new Set(prev);
-            ids.forEach((id) => s.add(id));
-            return s;
-          });
-        }, at);
-        setTimeout(() => {
-          if (!alive) return;
-          setLit((prev) => {
-            const s = new Set(prev);
-            ids.forEach((id) => s.delete(id));
-            return s;
-          });
-        }, at + FLASH);
+      const total = now - t0;
+      const cycle = Math.floor(total / PACKET_CYCLE);
+      const elapsed = total - cycle * PACKET_CYCLE;
+      const path = PACKET_PATHS[cycle % PACKET_PATHS.length];
+
+      if (elapsed < PACKET_TRAVEL) {
+        const segs = path.length - 1;
+        const segDur = PACKET_TRAVEL / segs;
+        const si = Math.min(Math.floor(elapsed / segDur), segs - 1);
+        const t = (elapsed - si * segDur) / segDur;
+        const pos = posOnEdge(path[si], path[si + 1], t);
+
+        if (packetEl.current) {
+          packetEl.current.style.left = `${pos.x}%`;
+          packetEl.current.style.top = `${pos.y}%`;
+          packetEl.current.style.opacity = "1";
+        }
+
+        if (si === 0 && t < 0.05 && !flashedInCycle.current.has(path[0])) {
+          flash(path[0]);
+          flashedInCycle.current.add(path[0]);
+        }
+        if (t > 0.88 && !flashedInCycle.current.has(path[si + 1])) {
+          flash(path[si + 1]);
+          flashedInCycle.current.add(path[si + 1]);
+        }
+      } else {
+        if (packetEl.current) packetEl.current.style.opacity = "0";
+        flashedInCycle.current.clear();
       }
+
+      rafId.current = requestAnimationFrame(tick);
     };
 
-    tick();
-    const iv = setInterval(tick, CYCLE);
-    return () => { alive = false; clearInterval(iv); };
-  }, []);
+    rafId.current = requestAnimationFrame(tick);
+    return () => {
+      alive = false;
+      cancelAnimationFrame(rafId.current);
+    };
+  }, [booted, flash]);
+
+  // Close panel on outside click
+  useEffect(() => {
+    if (!selected) return;
+    const handler = (e: MouseEvent) => {
+      const t = e.target as HTMLElement;
+      if (!t.closest(".hero-node") && !t.closest(".node-panel")) {
+        setSelected(null);
+      }
+    };
+    document.addEventListener("click", handler);
+    return () => document.removeEventListener("click", handler);
+  }, [selected]);
 
   return (
     <>
-      <svg className="graph-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-        <defs>
-          <marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
-            <path d="M0,0 L10,5 L0,10 z" fill="#666666" />
-          </marker>
-        </defs>
-        {edges.map((e, i) => {
-          const a = byId[e.from];
-          const b = byId[e.to];
-          const my = (a.y + b.y) / 2;
-          const dx = b.x - a.x;
-          const curve = Math.abs(dx) * 0.3;
-          const c1x = a.x;
-          const c1y = my - (a.x > b.x ? curve : -curve) * 0.3;
-          const c2x = b.x;
-          const c2y = my;
-          const d = `M ${a.x} ${a.y} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${b.x} ${b.y}`;
+      <svg
+        className="hero-graph-svg"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+      >
+        {EDGES.map((e, i) => {
+          const d = edgePath(BY_ID[e.from], BY_ID[e.to]);
+          const drawn = tier >= e.tier;
           return (
             <g key={i}>
-              <path d={d} className="edge" markerEnd="url(#arr2)" vectorEffect="non-scaling-stroke" />
               <path
                 d={d}
-                className="edge-flow"
+                className="hero-edge"
+                pathLength={1}
+                strokeDasharray={1}
+                strokeDashoffset={drawn ? 0 : 1}
+                style={{
+                  transition: `stroke-dashoffset ${EDGE_DRAW_MS}ms cubic-bezier(0.22,1,0.36,1)`,
+                }}
                 vectorEffect="non-scaling-stroke"
-                style={{ animationDelay: `${i * -0.4}s` }}
               />
+              {booted && (
+                <path
+                  d={d}
+                  className="hero-edge-flow"
+                  vectorEffect="non-scaling-stroke"
+                  style={{ animationDelay: `${i * -0.5}s` }}
+                />
+              )}
             </g>
           );
         })}
       </svg>
-      {nodes.map((n) => {
-        const isAbove = n.y > 60;
-        const align = n.x < 35 ? "align-left" : n.x > 65 ? "align-right" : "";
-        const flashing = lit.has(n.id);
+
+      {NODES.map((n) => {
+        const show = tier >= n.tier;
+        const isSel = selected === n.id;
+        const panelBelow = n.y < 60;
+        const panelAlign =
+          n.x > 70
+            ? "node-panel--align-left"
+            : n.x < 40
+              ? "node-panel--align-right"
+              : "";
 
         return (
           <motion.div
             key={n.id}
-            className={`graph-node ${n.cls}`}
+            ref={(el: HTMLDivElement | null) => {
+              nodeEls.current[n.id] = el;
+            }}
+            className={`hero-node hero-node--${n.cls}${isSel ? " hero-node--selected" : ""}`}
             style={{ left: `${n.x}%`, top: `${n.y}%` }}
+            initial={{ opacity: 0, scale: 0.7, x: "-50%", y: "-50%" }}
             animate={{
-              borderColor: flashing ? litBorder[n.id] : restBorder[n.id],
+              opacity: show ? 1 : 0,
+              scale: show ? 1 : 0.7,
+              x: "-50%",
+              y: "-50%",
             }}
-            transition={{
-              borderColor: {
-                duration: flashing ? 0.08 : 0.25,
-                ease: "easeOut",
-              },
+            transition={{ duration: 0.35, ease: EASE_ENTER }}
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelected(isSel ? null : n.id);
             }}
-            onMouseEnter={() => setActiveNode(n.id)}
-            onMouseLeave={() => setActiveNode(null)}
-            onClick={() => setActiveNode(activeNode === n.id ? null : n.id)}
           >
-            <span className="gl" />
+            <span className="hero-node__dot" />
             {n.label}
+
             <AnimatePresence>
-              {activeNode === n.id && (
+              {isSel && (
                 <motion.div
-                  className={`graph-tooltip ${isAbove ? "above" : "below"} ${align}`}
-                  initial={{ opacity: 0, y: isAbove ? 4 : -4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: isAbove ? 4 : -4 }}
-                  transition={{ duration: 0.15, ease: [0.22, 1, 0.36, 1] }}
+                  className={`node-panel ${panelBelow ? "node-panel--below" : "node-panel--above"} ${panelAlign}`}
+                  initial={{
+                    opacity: 0,
+                    y: panelBelow ? -8 : 8,
+                    scale: 0.96,
+                  }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{
+                    opacity: 0,
+                    y: panelBelow ? -8 : 8,
+                    scale: 0.96,
+                  }}
+                  transition={{ duration: 0.2, ease: EASE_ENTER }}
+                  onClick={(e) => e.stopPropagation()}
                 >
-                  {n.tooltip}
+                  <div className="node-panel__label">{n.label}</div>
+                  <p className="node-panel__desc">{n.description}</p>
                 </motion.div>
               )}
             </AnimatePresence>
           </motion.div>
         );
       })}
+
+      <div ref={packetEl} className="hero-packet" />
     </>
   );
 };

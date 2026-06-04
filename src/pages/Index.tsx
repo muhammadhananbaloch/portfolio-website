@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import Masthead from "@/components/Masthead";
+import HeroScene from "@/components/HeroScene";
 import "@/styles/portfolio.css";
 
 const Index = () => {
@@ -16,15 +17,7 @@ const Index = () => {
     <>
       <Masthead />
 
-      <section className="scene scene--hero" id="top">
-        <div className="scene__label">
-          <span className="scene__number">01</span>
-          <span className="scene__name">HERO</span>
-        </div>
-        <div className="scene__placeholder">
-          Agent graph centerpiece, identity overlay top-left, CTAs bottom-left
-        </div>
-      </section>
+      <HeroScene />
 
       <section className="scene scene--projects" id="work">
         <div className="scene__label">
