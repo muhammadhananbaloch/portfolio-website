@@ -3,6 +3,8 @@ import Masthead from "@/components/Masthead";
 import HeroScene from "@/components/HeroScene";
 import ProjectsScene from "@/components/ProjectsScene";
 import StackScene from "@/components/StackScene";
+import QuoteScene from "@/components/QuoteScene";
+import ContactScene from "@/components/ContactScene";
 import "@/styles/portfolio.css";
 
 const Index = () => {
@@ -25,33 +27,16 @@ const Index = () => {
 
       <StackScene />
 
-      <section className="scene scene--quote">
-        <div className="scene__label">
-          <span className="scene__number">04</span>
-          <span className="scene__name">QUOTE</span>
-        </div>
-        <div className="scene__placeholder">
-          Scroll-pinned cinematic. ~200vh tall, sticky content center.
-          Three lines revealed by scroll position.
-        </div>
-      </section>
+      <QuoteScene />
 
-      <section className="scene scene--contact" id="contact">
-        <div className="scene__label">
-          <span className="scene__number">05</span>
-          <span className="scene__name">CONTACT</span>
-        </div>
-        <div className="scene__placeholder">
-          Terminal-inspired interface. Headline + cursor left, command list right.
-        </div>
-      </section>
+      <ContactScene />
 
       <footer className="scene__footer">
-        <div>© 2026 · Muhammad Hanan Baloch · All work original</div>
-        <div>Set in Inter · JetBrains Mono</div>
+        <div>&copy; 2026 &middot; Muhammad Hanan Baloch &middot; All work original</div>
+        <div>Set in Inter &middot; JetBrains Mono</div>
         <div>
           <a href="#top" style={{ textDecoration: "none", color: "inherit" }}>
-            Back to top ↑
+            Back to top &uarr;
           </a>
         </div>
       </footer>
