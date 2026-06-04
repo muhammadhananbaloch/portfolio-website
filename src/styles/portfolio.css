@@ -3492,24 +3492,22 @@ body.portfolio {
 .demo-freight__replay {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   align-self: flex-end;
-  margin: 12px 16px;
+  margin: 8px 12px;
   background: transparent;
-  border: 1px solid var(--rule-2);
-  border-radius: 3px;
-  padding: 6px 12px;
+  border: none;
+  padding: 3px 0;
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--ink-3);
   cursor: pointer;
-  transition: border-color .2s, color .2s;
+  transition: color .2s ease;
 }
 
 .demo-freight__replay:hover {
-  border-color: var(--accent);
   color: var(--ink);
 }
 
@@ -4117,23 +4115,21 @@ body.portfolio {
 .demo-sms__replay {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   align-self: flex-end;
   background: transparent;
-  border: 1px solid var(--rule-2);
-  border-radius: 3px;
-  padding: 6px 12px;
+  border: none;
+  padding: 3px 0;
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--ink-3);
   cursor: pointer;
-  transition: border-color .2s, color .2s;
+  transition: color .2s ease;
 }
 
 .demo-sms__replay:hover {
-  border-color: var(--accent);
   color: var(--ink);
 }
 
@@ -4395,23 +4391,21 @@ body.portfolio {
 .demo-pipeline__replay {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   align-self: flex-end;
   background: transparent;
-  border: 1px solid var(--rule-2);
-  border-radius: 3px;
-  padding: 6px 12px;
+  border: none;
+  padding: 3px 0;
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--ink-3);
   cursor: pointer;
-  transition: border-color .2s, color .2s;
+  transition: color .2s ease;
 }
 
 .demo-pipeline__replay:hover {
-  border-color: var(--accent);
   color: var(--ink);
 }
 
