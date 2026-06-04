@@ -804,17 +804,7 @@ body.portfolio {
 }
 
 .quote-mark {
-  position: absolute;
-  top: clamp(-40px, -5vw, -64px);
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: var(--sans);
-  font-size: clamp(100px, 14vw, 160px);
-  line-height: 1;
-  color: var(--accent);
-  opacity: .25;
-  pointer-events: none;
-  user-select: none;
+  display: none;
 }
 
 .quote-scroll-line {
