@@ -201,6 +201,7 @@ const ProjectCase = ({ project }: { project: Project }) => {
   return (
     <motion.article
       ref={ref}
+      id={`project-${project.id}`}
       className="project-case"
       initial={{ opacity: 0 }}
       animate={inView ? { opacity: 1 } : { opacity: 0 }}

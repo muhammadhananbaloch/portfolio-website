@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Masthead from "@/components/Masthead";
 import HeroScene from "@/components/HeroScene";
 import ProjectsScene from "@/components/ProjectsScene";
+import StackScene from "@/components/StackScene";
 import "@/styles/portfolio.css";
 
 const Index = () => {
@@ -22,15 +23,7 @@ const Index = () => {
 
       <ProjectsScene />
 
-      <section className="scene scene--stack" id="stack">
-        <div className="scene__label">
-          <span className="scene__number">03</span>
-          <span className="scene__name">STACK</span>
-        </div>
-        <div className="scene__placeholder">
-          Tech constellation left (55%), experience timeline right (45%)
-        </div>
-      </section>
+      <StackScene />
 
       <section className="scene scene--quote">
         <div className="scene__label">
