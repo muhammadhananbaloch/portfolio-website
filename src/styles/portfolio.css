@@ -2752,10 +2752,6 @@ body.portfolio {
   max-width: var(--maxw);
   margin: 0 auto;
   padding: 80px 32px 0;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: var(--paper);
   border-bottom: 1px solid var(--rule-2);
 }
 
@@ -2839,7 +2835,7 @@ body.portfolio {
   flex-direction: column;
   gap: 16px;
   position: sticky;
-  top: 180px;
+  top: 68px;
 }
 
 .project-case__num {
