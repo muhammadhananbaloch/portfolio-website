@@ -161,7 +161,7 @@ const PropAutoCRMDemo = ({ isVisible }: { isVisible: boolean }) => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
         >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg className="replay-icn" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
             <polyline points="1 4 1 10 7 10" />
             <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
           </svg>

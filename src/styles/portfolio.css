@@ -37,6 +37,10 @@ html.portfolio {
   scroll-behavior: smooth
 }
 
+button {
+  font: inherit;
+}
+
 [id="work"],
 [id="stack"],
 [id="experience"],
@@ -3492,14 +3496,14 @@ body.portfolio {
 .demo-freight__replay {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   align-self: flex-end;
   margin: 8px 12px;
   background: transparent;
   border: none;
   padding: 3px 0;
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 10px;
   letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--ink-3);
@@ -3509,6 +3513,12 @@ body.portfolio {
 
 .demo-freight__replay:hover {
   color: var(--ink);
+}
+
+.replay-icn {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
 }
 
 /* =================================================================
@@ -4115,13 +4125,13 @@ body.portfolio {
 .demo-sms__replay {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   align-self: flex-end;
   background: transparent;
   border: none;
   padding: 3px 0;
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 10px;
   letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--ink-3);
@@ -4391,13 +4401,13 @@ body.portfolio {
 .demo-pipeline__replay {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   align-self: flex-end;
   background: transparent;
   border: none;
   padding: 3px 0;
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 10px;
   letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--ink-3);
