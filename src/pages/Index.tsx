@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import Masthead from "@/components/Masthead";
-import HeroScene from "@/components/HeroScene";
-import ProjectsScene from "@/components/ProjectsScene";
+import BeatGenesis from "@/components/beats/BeatGenesis";
+import BeatProjects from "@/components/beats/BeatProjects";
+import BeatPhilosophy from "@/components/beats/BeatPhilosophy";
 import StackScene from "@/components/StackScene";
-import QuoteScene from "@/components/QuoteScene";
 import ContactScene from "@/components/ContactScene";
 import "@/styles/portfolio.css";
 
@@ -20,17 +20,11 @@ const Index = () => {
   return (
     <>
       <Masthead />
-
-      <HeroScene />
-
-      <ProjectsScene />
-
+      <BeatGenesis />
+      <BeatProjects />
+      <BeatPhilosophy />
       <StackScene />
-
-      <QuoteScene />
-
       <ContactScene />
-
       <footer className="site-footer">
         <span>&copy; 2026 Muhammad Hanan Baloch</span>
         <nav className="site-footer__links">
@@ -42,7 +36,7 @@ const Index = () => {
           <span className="site-footer__sep">&middot;</span>
           <a href="https://x.com/muhammadhanann" target="_blank" rel="noopener noreferrer">Twitter</a>
           <span className="site-footer__sep">&middot;</span>
-          <a href="#top" className="site-footer__top">Back to top &uarr;</a>
+          <a href="#hero" className="site-footer__top">Back to top ↑</a>
         </nav>
       </footer>
     </>
