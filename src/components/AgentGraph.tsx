@@ -22,7 +22,7 @@ const NODES: NodeDef[] = [
     id: "user",
     label: "user · request",
     cls: "user",
-    x: 66,
+    x: 50,
     y: 14,
     tier: 0,
     description:
@@ -32,7 +32,7 @@ const NODES: NodeDef[] = [
     id: "llm",
     label: "orchestrator · LLM",
     cls: "llm",
-    x: 66,
+    x: 50,
     y: 30,
     tier: 1,
     description:
@@ -42,7 +42,7 @@ const NODES: NodeDef[] = [
     id: "rag",
     label: "tool · rag_retriever",
     cls: "tool",
-    x: 46,
+    x: 26,
     y: 50,
     tier: 2,
     description:
@@ -52,7 +52,7 @@ const NODES: NodeDef[] = [
     id: "api",
     label: "tool · api_caller",
     cls: "tool",
-    x: 86,
+    x: 74,
     y: 50,
     tier: 2,
     description:
@@ -62,8 +62,8 @@ const NODES: NodeDef[] = [
     id: "mem",
     label: "pgvector · memory",
     cls: "memory",
-    x: 66,
-    y: 68,
+    x: 50,
+    y: 66,
     tier: 3,
     description:
       "pgvector-backed store for document embeddings, conversation history, and extracted entities. Serves both retriever and orchestrator.",
@@ -72,8 +72,8 @@ const NODES: NodeDef[] = [
     id: "out",
     label: "response · streamed",
     cls: "out",
-    x: 66,
-    y: 85,
+    x: 50,
+    y: 80,
     tier: 4,
     description:
       "Token-by-token streamed response via SSE. Includes source citations and execution metadata for observability.",
