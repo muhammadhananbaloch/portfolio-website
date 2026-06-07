@@ -13,12 +13,12 @@ export interface EdgeDef {
 }
 
 export const NODES: NodeDef[] = [
-  { id: "user", label: "user · request", x: 50, y: 14, tier: 0 },
-  { id: "llm", label: "orchestrator · LLM", x: 50, y: 30, tier: 1 },
-  { id: "rag", label: "tool · rag_retriever", x: 26, y: 50, tier: 2 },
-  { id: "api", label: "tool · api_caller", x: 74, y: 50, tier: 2 },
-  { id: "mem", label: "pgvector · memory", x: 50, y: 66, tier: 3 },
-  { id: "out", label: "response · streamed", x: 50, y: 80, tier: 4 },
+  { id: "user", label: "user · request", x: 50, y: 20, tier: 0 },
+  { id: "llm", label: "orchestrator · LLM", x: 50, y: 36, tier: 1 },
+  { id: "rag", label: "tool · rag_retriever", x: 24, y: 54, tier: 2 },
+  { id: "api", label: "tool · api_caller", x: 76, y: 54, tier: 2 },
+  { id: "mem", label: "pgvector · memory", x: 50, y: 70, tier: 3 },
+  { id: "out", label: "response · streamed", x: 50, y: 84, tier: 4 },
 ];
 
 export const EDGES: EdgeDef[] = [

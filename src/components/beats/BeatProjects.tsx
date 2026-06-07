@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { AnimatePresence, useMotionValueEvent, MotionValue } from "framer-motion";
+import { motion, AnimatePresence, useMotionValueEvent, MotionValue } from "framer-motion";
 import ScrollBeat from "@/components/scroll/ScrollBeat";
 import SystemGraph from "@/components/graph/SystemGraph";
 import ProjectReveal from "@/components/projects/ProjectReveal";
@@ -16,15 +16,15 @@ const BeatProjectsInner = ({ progress }: { progress: MotionValue<number> }) => {
   const [openDemo, setOpenDemo] = useState<ProjectDemoType | null>(null);
 
   useMotionValueEvent(progress, "change", (p) => {
-    if (p <= 0.02) {
+    if (p <= 0.01) {
       setActiveIndex(-1);
       return;
     }
     const raw = Math.floor(p / SUB_BEAT);
     const idx = Math.min(raw, PROJECT_COUNT - 1);
-
     const subProgress = (p - idx * SUB_BEAT) / SUB_BEAT;
-    if (subProgress < 0.15 || subProgress > 0.9) {
+
+    if (subProgress < 0.08 || subProgress > 0.95) {
       setActiveIndex(-1);
     } else {
       setActiveIndex(idx);
@@ -46,6 +46,31 @@ const BeatProjectsInner = ({ progress }: { progress: MotionValue<number> }) => {
 
   return (
     <div className="beat-projects">
+      <div className="beat-projects__graph-bg">
+        <SystemGraph
+          visibleTier={4}
+          highlightedNodes={highlightedNodes}
+          packetsActive={activeIndex >= 0}
+        />
+      </div>
+
+      <div className="beat-projects__grain" />
+
+      <AnimatePresence mode="wait">
+        {activeProject && (
+          <motion.div
+            key={`wm-${activeProject.id}`}
+            className="beat-projects__watermark"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            {activeProject.num}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="beat-projects__content">
         <AnimatePresence mode="wait">
           {activeProject && (
@@ -53,18 +78,11 @@ const BeatProjectsInner = ({ progress }: { progress: MotionValue<number> }) => {
               key={activeProject.id}
               project={activeProject}
               visible={true}
+              index={activeIndex}
               onDemoClick={() => handleDemoClick(activeProject.demo)}
             />
           )}
         </AnimatePresence>
-      </div>
-
-      <div className="beat-projects__graph">
-        <SystemGraph
-          visibleTier={4}
-          highlightedNodes={highlightedNodes}
-          packetsActive={activeIndex >= 0}
-        />
       </div>
 
       <ProjectDemoOverlay demo={openDemo} onClose={handleCloseDemo} />
@@ -73,7 +91,7 @@ const BeatProjectsInner = ({ progress }: { progress: MotionValue<number> }) => {
 };
 
 const BeatProjects = () => (
-  <ScrollBeat scrollHeight={1500} id="work">
+  <ScrollBeat scrollHeight={1800} id="work">
     {(progress) => <BeatProjectsInner progress={progress} />}
   </ScrollBeat>
 );

@@ -9,6 +9,7 @@ interface GraphNodeProps {
   highlighted?: boolean;
   dimmed?: boolean;
   pulsing?: boolean;
+  genesis?: boolean;
   nodeRef?: (el: HTMLDivElement | null) => void;
 }
 
@@ -22,25 +23,35 @@ const GraphNode = ({
   visible,
   highlighted = false,
   dimmed = false,
-  pulsing = false,
+  genesis = false,
   nodeRef,
 }: GraphNodeProps) => {
+  const cls = [
+    "sg-node",
+    highlighted && "sg-node--highlighted",
+    dimmed && "sg-node--dimmed",
+    genesis && "sg-node--genesis",
+  ].filter(Boolean).join(" ");
+
   return (
     <motion.div
       ref={nodeRef}
-      className={`sg-node${highlighted ? " sg-node--highlighted" : ""}${dimmed ? " sg-node--dimmed" : ""}${pulsing ? " sg-node--pulsing" : ""}`}
+      className={cls}
       data-node={id}
       style={{ left: `${x}%`, top: `${y}%` }}
-      initial={{ opacity: 0, scale: 0.7, x: "-50%", y: "-50%" }}
+      initial={{ opacity: 0, scale: 0.3, x: "-50%", y: "-50%" }}
       animate={{
-        opacity: visible ? (dimmed ? 0.4 : 1) : 0,
-        scale: visible ? (highlighted ? 1.15 : 1) : 0.7,
+        opacity: visible ? (dimmed ? 0.3 : 1) : 0,
+        scale: visible ? (highlighted ? 1.2 : 1) : 0.3,
         x: "-50%",
         y: "-50%",
       }}
-      transition={{ duration: 0.35, ease: EASE_ENTER }}
+      transition={{ duration: 0.5, ease: EASE_ENTER }}
     >
-      <span className="sg-node__dot" />
+      <span className="sg-node__glow" />
+      <span className="sg-node__ring sg-node__ring--outer" />
+      <span className="sg-node__ring sg-node__ring--inner" />
+      <span className="sg-node__core" />
       <span className="sg-node__label">{label}</span>
     </motion.div>
   );

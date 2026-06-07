@@ -9,6 +9,7 @@ interface SystemGraphProps {
   highlightedNodes?: string[];
   dimmed?: boolean;
   packetsActive?: boolean;
+  genesisNode?: string;
   style?: React.CSSProperties;
   className?: string;
 }
@@ -18,6 +19,7 @@ const SystemGraph = ({
   highlightedNodes = [],
   dimmed = false,
   packetsActive = false,
+  genesisNode,
   style,
   className = "",
 }: SystemGraphProps) => {
@@ -61,6 +63,7 @@ const SystemGraph = ({
           visible={visibleTier >= n.tier}
           highlighted={hasHighlights && highlightedNodes.includes(n.id)}
           dimmed={dimmed || (hasHighlights && !highlightedNodes.includes(n.id))}
+          genesis={genesisNode === n.id}
           nodeRef={(el) => {
             nodeEls.current[n.id] = el;
           }}
