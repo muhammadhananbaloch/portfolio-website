@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 
 type TechNode = {
@@ -78,6 +78,8 @@ const clusterLabels: Record<string, { label: string; x: number; y: number }> = {
   delivery: { label: "DELIVERY", x: 84, y: 0 },
 };
 
+const clusters = ["agents", "rag", "delivery"] as const;
+
 const experience = [
   {
     active: true,
@@ -120,6 +122,15 @@ const StackScene = () => {
   const inView = useInView(sectionRef, { once: true, amount: 0.12 });
   const [hovered, setHovered] = useState<string | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
+  const [compact, setCompact] = useState(false);
+
+  useEffect(() => {
+    const mql = window.matchMedia("(max-width: 600px)");
+    setCompact(mql.matches);
+    const h = (e: MediaQueryListEvent) => setCompact(e.matches);
+    mql.addEventListener("change", h);
+    return () => mql.removeEventListener("change", h);
+  }, []);
 
   const hoveredData = hovered ? getConnected(hovered) : null;
   const activeNode = selected || hovered;
@@ -168,108 +179,156 @@ const StackScene = () => {
       transition={{ duration: 0.4, ease }}
     >
       <div className="stack-scene" onClick={handleConstellationClick}>
-        {/* Left: Tech Constellation */}
-        <div className="stack-constellation">
-          <svg className="const-svg" viewBox="0 0 100 84" preserveAspectRatio="none">
-            {edges.map((e, i) => {
-              const from = nodeById[e.from];
-              const to = nodeById[e.to];
-              if (!from || !to) return null;
-              const isHighlighted = activeData?.edges.has(i);
+        {compact ? (
+          <div className="stack-tags">
+            {clusters.map((cluster, ci) => (
+              <motion.div
+                key={cluster}
+                className="stack-tags__group"
+                initial={{ opacity: 0, y: 12 }}
+                animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+                transition={{ duration: 0.3, ease, delay: 0.1 + ci * 0.08 }}
+              >
+                <span className="stack-tags__label">
+                  {clusterLabels[cluster].label}
+                </span>
+                <div className="stack-tags__items">
+                  {nodes.filter(n => n.cluster === cluster).map(node => {
+                    const isActive = activeNode === node.id;
+                    const isConnected = activeData?.nodes.has(node.id);
+                    const isDimmed = activeNode && !isActive && !isConnected;
+                    return (
+                      <button
+                        key={node.id}
+                        className={`const-node ${isActive ? "const-node--active" : ""} ${isConnected ? "const-node--connected" : ""} ${isDimmed ? "const-node--dimmed" : ""}`}
+                        onClick={(e) => { e.stopPropagation(); handleNodeClick(node.id); }}
+                      >
+                        {node.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </motion.div>
+            ))}
+            <AnimatePresence>
+              {selected && nodeById[selected] && (
+                <motion.div
+                  className="stack-tags__detail"
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.2, ease }}
+                >
+                  <span className="const-panel__label">{nodeById[selected].label}</span>
+                  <p className="const-panel__desc">{nodeById[selected].tooltip}</p>
+                  {activeData && activeData.projects.length > 0 && (
+                    <span className="const-panel__projects">
+                      {activeData.projects.join(" · ")}
+                    </span>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        ) : (
+          <div className="stack-constellation">
+            <svg className="const-svg" viewBox="0 0 100 84" preserveAspectRatio="none">
+              {edges.map((e, i) => {
+                const from = nodeById[e.from];
+                const to = nodeById[e.to];
+                if (!from || !to) return null;
+                const isHighlighted = activeData?.edges.has(i);
+                return (
+                  <line
+                    key={i}
+                    x1={from.x}
+                    y1={from.y}
+                    x2={to.x}
+                    y2={to.y}
+                    className={`const-edge ${isHighlighted ? "const-edge--lit" : ""}`}
+                  />
+                );
+              })}
+            </svg>
+
+            {Object.entries(clusterLabels).map(([key, cl]) => (
+              <motion.span
+                key={key}
+                className="const-cluster-label"
+                style={{ left: `${cl.x}%`, top: `${cl.y}%` }}
+                initial={{ opacity: 0 }}
+                animate={inView ? { opacity: 1 } : { opacity: 0 }}
+                transition={{ duration: 0.3, ease, delay: 0.2 }}
+              >
+                {cl.label}
+              </motion.span>
+            ))}
+
+            {nodes.map((node, i) => {
+              const isActive = activeNode === node.id;
+              const isConnected = activeData?.nodes.has(node.id);
+              const isDimmed = activeNode && !isActive && !isConnected;
+
               return (
-                <line
-                  key={i}
-                  x1={from.x}
-                  y1={from.y}
-                  x2={to.x}
-                  y2={to.y}
-                  className={`const-edge ${isHighlighted ? "const-edge--lit" : ""}`}
-                />
+                <motion.button
+                  key={node.id}
+                  className={`const-node const-node--${node.cluster} ${isActive ? "const-node--active" : ""} ${isConnected ? "const-node--connected" : ""} ${isDimmed ? "const-node--dimmed" : ""}`}
+                  style={{ left: `${node.x}%`, top: `${node.y}%` }}
+                  onMouseEnter={() => handleNodeEnter(node.id)}
+                  onMouseLeave={handleNodeLeave}
+                  onClick={(e) => { e.stopPropagation(); handleNodeClick(node.id); }}
+                  initial={{ opacity: 0, scale: 0.8, x: "-50%", y: "-50%" }}
+                  animate={inView ? { opacity: 1, scale: 1, x: "-50%", y: "-50%" } : { opacity: 0, scale: 0.8, x: "-50%", y: "-50%" }}
+                  transition={{ duration: 0.3, ease, delay: 0.1 + i * 0.03 }}
+                >
+                  {node.label}
+                </motion.button>
               );
             })}
-          </svg>
 
-          {/* Cluster labels */}
-          {Object.entries(clusterLabels).map(([key, cl]) => (
-            <motion.span
-              key={key}
-              className="const-cluster-label"
-              style={{ left: `${cl.x}%`, top: `${cl.y}%` }}
-              initial={{ opacity: 0 }}
-              animate={inView ? { opacity: 1 } : { opacity: 0 }}
-              transition={{ duration: 0.3, ease, delay: 0.2 }}
-            >
-              {cl.label}
-            </motion.span>
-          ))}
+            <AnimatePresence>
+              {hovered && hoveredData && hoveredData.projects.length > 0 && !selected && (
+                <motion.div
+                  className="const-hover-label"
+                  style={{
+                    left: `${nodeById[hovered].x}%`,
+                    top: `${nodeById[hovered].y}%`,
+                  }}
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 4 }}
+                  transition={{ duration: 0.15, ease }}
+                >
+                  {hoveredData.projects.join(" · ")}
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-          {/* Nodes */}
-          {nodes.map((node, i) => {
-            const isActive = activeNode === node.id;
-            const isConnected = activeData?.nodes.has(node.id);
-            const isDimmed = activeNode && !isActive && !isConnected;
-
-            return (
-              <motion.button
-                key={node.id}
-                className={`const-node const-node--${node.cluster} ${isActive ? "const-node--active" : ""} ${isConnected ? "const-node--connected" : ""} ${isDimmed ? "const-node--dimmed" : ""}`}
-                style={{ left: `${node.x}%`, top: `${node.y}%` }}
-                onMouseEnter={() => handleNodeEnter(node.id)}
-                onMouseLeave={handleNodeLeave}
-                onClick={(e) => { e.stopPropagation(); handleNodeClick(node.id); }}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.3, ease, delay: 0.1 + i * 0.03 }}
-              >
-                {node.label}
-              </motion.button>
-            );
-          })}
-
-          {/* Hover label showing connecting projects */}
-          <AnimatePresence>
-            {hovered && hoveredData && hoveredData.projects.length > 0 && !selected && (
-              <motion.div
-                className="const-hover-label"
-                style={{
-                  left: `${nodeById[hovered].x}%`,
-                  top: `${nodeById[hovered].y}%`,
-                }}
-                initial={{ opacity: 0, y: 4 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 4 }}
-                transition={{ duration: 0.15, ease }}
-              >
-                {hoveredData.projects.join(" · ")}
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Click panel */}
-          <AnimatePresence>
-            {selected && nodeById[selected] && (
-              <motion.div
-                className="const-panel"
-                style={{
-                  left: `${Math.min(nodeById[selected].x, 70)}%`,
-                  top: `${nodeById[selected].y}%`,
-                }}
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 6 }}
-                transition={{ duration: 0.2, ease }}
-              >
-                <span className="const-panel__label">{nodeById[selected].label}</span>
-                <p className="const-panel__desc">{nodeById[selected].tooltip}</p>
-                {activeData && activeData.projects.length > 0 && (
-                  <span className="const-panel__projects">
-                    {activeData.projects.join(" · ")}
-                  </span>
-                )}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+            <AnimatePresence>
+              {selected && nodeById[selected] && (
+                <motion.div
+                  className="const-panel"
+                  style={{
+                    left: `${Math.min(nodeById[selected].x, 70)}%`,
+                    top: `${nodeById[selected].y}%`,
+                  }}
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 6 }}
+                  transition={{ duration: 0.2, ease }}
+                >
+                  <span className="const-panel__label">{nodeById[selected].label}</span>
+                  <p className="const-panel__desc">{nodeById[selected].tooltip}</p>
+                  {activeData && activeData.projects.length > 0 && (
+                    <span className="const-panel__projects">
+                      {activeData.projects.join(" · ")}
+                    </span>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        )}
 
         {/* Right: Experience Timeline */}
         <div className="stack-timeline" id="experience">

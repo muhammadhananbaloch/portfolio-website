@@ -83,6 +83,8 @@ body.portfolio {
   font-family: var(--sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   overflow-x: hidden;
 }
 
@@ -131,7 +133,7 @@ body.portfolio {
   display: flex;
   justify-content: center;
   gap: 4px;
-  padding: 14px 24px;
+  padding: 14px clamp(16px, 4vw, 24px);
   background: linear-gradient(to bottom, rgba(10, 10, 10, .85) 0%, transparent 100%);
 }
 
@@ -207,7 +209,7 @@ body.portfolio {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: clamp(16px, 4vw, 24px);
 }
 
 .demo-overlay__content {
@@ -216,7 +218,7 @@ body.portfolio {
   border: 1px solid var(--rule-2);
   border-radius: 8px;
   width: 100%;
-  max-width: 720px;
+  max-width: min(720px, 100%);
   max-height: 85vh;
   overflow-y: auto;
 }
@@ -287,11 +289,51 @@ body.portfolio {
   align-items: center;
 }
 
+/* Mobile: grouped tag layout */
+.stack-tags {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.stack-tags__group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stack-tags__label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+}
+
+.stack-tags__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.stack-tags__items > .const-node {
+  position: static;
+}
+
+.stack-tags__detail {
+  padding: 14px 16px;
+  background: var(--paper-2);
+  border: 1px solid #333333;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
 /* Constellation */
 .stack-constellation {
   position: relative;
   width: 100%;
   aspect-ratio: 100 / 84;
+  overflow: clip;
 }
 
 .const-svg {
@@ -319,7 +361,7 @@ body.portfolio {
   position: absolute;
   transform: translateX(-50%);
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: clamp(7px, 1.2vw, 9px);
   letter-spacing: .18em;
   text-transform: uppercase;
   color: var(--ink-4);
@@ -329,12 +371,11 @@ body.portfolio {
 
 .const-node {
   position: absolute;
-  transform: translate(-50%, -50%);
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: clamp(9px, 1.4vw, 11px);
   font-weight: 500;
   letter-spacing: .02em;
-  padding: 5px 12px;
+  padding: clamp(3px, 0.5vw, 5px) clamp(8px, 1vw, 12px);
   border-radius: 999px;
   border: 1px solid var(--rule-2);
   background: var(--paper-3);
@@ -400,8 +441,8 @@ body.portfolio {
 .const-panel {
   position: absolute;
   transform: translate(0, 20px);
-  width: 240px;
-  padding: 14px 16px;
+  width: clamp(180px, 22vw, 240px);
+  padding: clamp(10px, 1.5vw, 14px) clamp(12px, 2vw, 16px);
   background: var(--paper-2);
   border: 1px solid #333333;
   border-radius: 6px;
@@ -420,7 +461,7 @@ body.portfolio {
 
 .const-panel__desc {
   font-family: var(--sans);
-  font-size: 13px;
+  font-size: clamp(12px, 1.3vw, 13px);
   line-height: 1.5;
   color: var(--ink-2);
   margin: 0;
@@ -445,7 +486,7 @@ body.portfolio {
   font-family: var(--sans);
   font-weight: 700;
   font-size: clamp(28px, 3.5vw, 40px);
-  margin: 0 0 32px;
+  margin: 0 0 clamp(20px, 4vw, 32px);
   letter-spacing: -.03em;
 }
 
@@ -478,7 +519,7 @@ body.portfolio {
 
 .stack-timeline__entry {
   position: relative;
-  padding-bottom: 32px;
+  padding-bottom: clamp(20px, 4vw, 32px);
 }
 
 .stack-timeline__date {
@@ -500,7 +541,7 @@ body.portfolio {
 
 .stack-timeline__co {
   color: var(--warm-2);
-  font-size: 18px;
+  font-size: clamp(15px, 1.8vw, 18px);
   margin-bottom: 8px;
 }
 
@@ -510,14 +551,14 @@ body.portfolio {
   line-height: 1.5;
   color: var(--ink-2);
   margin: 0;
-  max-width: 480px;
+  max-width: min(480px, 100%);
 }
 
 .stack-timeline__highlights {
   list-style: none;
   padding: 0;
   margin: 14px 0 0;
-  max-width: 480px;
+  max-width: min(480px, 100%);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -563,36 +604,17 @@ body.portfolio {
   }
 
   .stack-constellation {
-    max-width: 600px;
+    max-width: min(600px, 100%);
     margin: 0 auto;
   }
 
   .stack-timeline {
     padding-left: 0;
     border-top: 1px solid var(--rule-2);
-    padding-top: 32px;
+    padding-top: clamp(20px, 4vw, 32px);
   }
 }
 
-@media (max-width: 768px) {
-  .const-node {
-    font-size: 9px;
-    padding: 3px 8px;
-  }
-
-  .const-cluster-label {
-    font-size: 8px;
-  }
-
-  .const-panel {
-    width: 200px;
-    padding: 10px 12px;
-  }
-
-  .const-panel__desc {
-    font-size: 12px;
-  }
-}
 
 /* =================================================================
    CONTACT SCENE — Terminal Interface
@@ -606,7 +628,7 @@ body.portfolio {
   justify-content: center;
   background: var(--paper);
   position: relative;
-  padding: 80px 0;
+  padding: clamp(48px, 10vw, 80px) 0;
 }
 
 .contact-scene::before {
@@ -622,7 +644,7 @@ body.portfolio {
   margin: 0 auto;
   padding: 0 clamp(24px, 4vw, 32px);
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
   gap: clamp(32px, 5vw, 64px);
   align-items: center;
   width: 100%;
@@ -631,7 +653,7 @@ body.portfolio {
 .contact-scene__headline {
   font-family: var(--sans);
   font-weight: 700;
-  font-size: clamp(36px, 5vw, 72px);
+  font-size: clamp(28px, 5vw, 72px);
   line-height: 1.05;
   letter-spacing: -.04em;
   margin: 0 0 24px;
@@ -644,7 +666,7 @@ body.portfolio {
   line-height: 1.5;
   color: var(--ink-2);
   margin: 0;
-  max-width: 440px;
+  max-width: min(440px, 100%);
 }
 
 /* Terminal block */
@@ -684,11 +706,10 @@ body.portfolio {
 }
 
 .contact-terminal__body {
-  padding: 20px;
+  padding: clamp(14px, 3vw, 20px);
   display: flex;
   flex-direction: column;
   gap: 16px;
-  min-height: 260px;
 }
 
 .contact-terminal__entry {
@@ -701,7 +722,7 @@ body.portfolio {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 13px;
+  font-size: clamp(12px, 1.5vw, 13px);
   color: var(--ink);
 }
 
@@ -732,7 +753,7 @@ body.portfolio {
 .contact-terminal__link {
   display: inline-block;
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: clamp(12px, 1.5vw, 13px);
   color: var(--ink-2);
   text-decoration: none;
   padding: 4px 8px;
@@ -751,34 +772,6 @@ body.portfolio {
   50% { opacity: 0; }
 }
 
-/* Contact scene responsive */
-@media (max-width: 768px) {
-  .contact-scene {
-    padding: 48px 0;
-  }
-
-  .contact-scene__inner {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  .contact-scene__headline {
-    font-size: clamp(28px, 7vw, 40px);
-  }
-
-  .contact-terminal__body {
-    padding: 16px;
-    min-height: auto;
-  }
-
-  .contact-terminal__prompt-line {
-    font-size: 12px;
-  }
-
-  .contact-terminal__link {
-    font-size: 12px;
-  }
-}
 
 
 /* =================================================================
@@ -817,7 +810,7 @@ body.portfolio {
 .hero-beat__name {
   font-family: var(--sans);
   font-weight: 800;
-  font-size: clamp(42px, 10.5vw, 168px);
+  font-size: clamp(32px, 10.5vw, 168px);
   line-height: .88;
   letter-spacing: -.05em;
   color: var(--ink);
@@ -851,7 +844,7 @@ body.portfolio {
 .hero-beat__statement-text {
   font-family: var(--sans);
   font-weight: 700;
-  font-size: clamp(36px, 7.5vw, 112px);
+  font-size: clamp(24px, 7.5vw, 112px);
   line-height: 1.05;
   letter-spacing: -.04em;
   color: var(--ink);
@@ -869,17 +862,19 @@ body.portfolio {
 
 .hero-beat__lower {
   position: absolute;
-  bottom: clamp(40px, 8vh, 100px);
-  left: clamp(24px, 5vw, 80px);
+  bottom: clamp(24px, 8vh, 100px);
+  left: clamp(20px, 5vw, 80px);
+  right: clamp(20px, 5vw, 80px);
   z-index: 4;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: clamp(20px, 3vw, 28px);
 }
 
 .hero-beat__stats {
   display: flex;
-  gap: clamp(32px, 5vw, 72px);
+  flex-wrap: wrap;
+  gap: clamp(16px, 3vw, 32px) clamp(24px, 5vw, 72px);
 }
 
 .hero-beat__stat {
@@ -908,7 +903,8 @@ body.portfolio {
 .hero-beat__cta {
   display: flex;
   align-items: center;
-  gap: 16px;
+  flex-wrap: wrap;
+  gap: clamp(10px, 2vw, 16px);
 }
 
 .hero-beat__resume,
@@ -918,8 +914,9 @@ body.portfolio {
   letter-spacing: .08em;
   text-transform: uppercase;
   text-decoration: none;
-  padding: 14px 32px;
+  padding: clamp(10px, 1.5vw, 14px) clamp(20px, 3vw, 32px);
   transition: background .2s ease, color .2s ease, border-color .2s ease;
+  text-align: center;
 }
 
 .hero-beat__resume {
@@ -1032,7 +1029,7 @@ body.portfolio {
   height: 100%;
   display: flex;
   align-items: center;
-  padding: 0 clamp(24px, 5vw, 80px);
+  padding: 0 clamp(16px, 5vw, 80px);
 }
 
 .project-chapters__watermark {
@@ -1042,7 +1039,7 @@ body.portfolio {
   transform: translateY(-50%);
   font-family: var(--mono);
   font-weight: 800;
-  font-size: clamp(200px, 30vw, 440px);
+  font-size: clamp(80px, 30vw, 440px);
   line-height: 1;
   color: rgba(255, 255, 255, .04);
   z-index: 1;
@@ -1054,7 +1051,7 @@ body.portfolio {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  max-width: 580px;
+  max-width: min(580px, 100%);
 }
 
 .pc-card__num {
@@ -1068,7 +1065,7 @@ body.portfolio {
 .pc-card__title {
   font-family: var(--sans);
   font-weight: 700;
-  font-size: clamp(36px, 5.5vw, 80px);
+  font-size: clamp(28px, 7vw, 80px);
   line-height: .95;
   letter-spacing: -.03em;
   margin: 0;
@@ -1090,13 +1087,13 @@ body.portfolio {
   line-height: 1.6;
   color: var(--ink-2);
   margin: 0;
-  max-width: 500px;
+  max-width: min(500px, 100%);
 }
 
 .pc-card__metrics {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px 32px;
+  gap: clamp(12px, 2vw, 16px) clamp(16px, 3vw, 32px);
 }
 
 .pc-card__metric {
@@ -1124,7 +1121,8 @@ body.portfolio {
 .pc-card__actions {
   display: flex;
   align-items: center;
-  gap: 20px;
+  flex-wrap: wrap;
+  gap: clamp(12px, 2vw, 20px);
 }
 
 .pc-card__demo-btn {
@@ -1190,9 +1188,9 @@ body.portfolio {
 .manifesto-beat__content {
   position: relative;
   z-index: 1;
-  max-width: 1000px;
+  max-width: min(1000px, 100%);
   width: 100%;
-  padding: 0 clamp(24px, 5vw, 80px);
+  padding: 0 clamp(16px, 5vw, 80px);
 }
 
 .manifesto-beat__quote {
@@ -1208,7 +1206,7 @@ body.portfolio {
   display: block;
   font-family: var(--sans);
   font-weight: 700;
-  font-size: clamp(28px, 5.5vw, 72px);
+  font-size: clamp(18px, 5.5vw, 72px);
   line-height: 1.1;
   letter-spacing: -.03em;
   color: #ffffff;
@@ -1221,7 +1219,7 @@ body.portfolio {
 }
 
 .manifesto-beat__attrib {
-  margin-top: 48px;
+  margin-top: clamp(24px, 5vw, 48px);
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: .12em;
@@ -1229,69 +1227,13 @@ body.portfolio {
   color: rgba(255, 255, 255, .4);
 }
 
-/* =================================================================
-   RESPONSIVE: New beats
-   ================================================================= */
-
-@media (max-width: 768px) {
-  .hero-beat__name {
-    font-size: clamp(32px, 13vw, 72px);
-  }
-
-  .hero-beat__statement-text {
-    font-size: clamp(28px, 9vw, 56px);
-  }
-
-  .hero-beat__lower {
-    left: 20px;
-    right: 20px;
-    bottom: 24px;
-    gap: 20px;
-  }
-
-  .hero-beat__stats {
-    flex-wrap: wrap;
-    gap: 16px 28px;
-  }
-
-  .hero-beat__cta {
-    flex-direction: column;
-    gap: 10px;
-    align-items: stretch;
-  }
-
-  .hero-beat__resume,
-  .hero-beat__consult {
-    text-align: center;
-  }
-
-  .project-chapters__content {
-    padding: 0 20px;
-  }
-
-  .project-chapters__watermark {
-    font-size: clamp(120px, 40vw, 250px);
-  }
-
-  .pc-card__title {
-    font-size: clamp(32px, 10vw, 52px);
-  }
-
-  .pc-card__metrics {
-    gap: 12px 20px;
-  }
-
-  .manifesto-beat__line {
-    font-size: clamp(22px, 7vw, 40px);
-  }
-}
 
 /* =================================================================
    AVIATION CLAIMS DEMO — Query Router
    ================================================================= */
 
 .demo-aviation {
-  padding: 20px;
+  padding: clamp(14px, 3vw, 20px);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -1391,7 +1333,7 @@ body.portfolio {
 
 .demo-aviation__paths {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr));
   gap: 10px;
 }
 
@@ -1537,7 +1479,6 @@ body.portfolio {
 .demo-freight__columns {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  min-height: 340px;
 }
 
 .demo-freight__transcript {
@@ -1823,7 +1764,7 @@ body.portfolio {
 /* Slider container */
 .demo-mktops__slider {
   position: relative;
-  height: 380px;
+  height: clamp(280px, 50vw, 380px);
   cursor: ew-resize;
   overflow: hidden;
   user-select: none;
@@ -2049,7 +1990,7 @@ body.portfolio {
    ================================================================= */
 
 .demo-sms {
-  padding: 20px;
+  padding: clamp(14px, 3vw, 20px);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -2057,7 +1998,7 @@ body.portfolio {
 }
 
 .demo-sms__phone {
-  width: 280px;
+  width: min(280px, 100%);
   background: #0a0a0a;
   border: 2px solid #333;
   border-radius: 28px;
@@ -2186,7 +2127,7 @@ body.portfolio {
 /* Attribution */
 .demo-sms__attribution {
   width: 100%;
-  max-width: 420px;
+  max-width: min(420px, 100%);
   padding: 14px 16px;
   background: var(--paper-3);
   border: 1px solid var(--rule-2);
@@ -2282,7 +2223,7 @@ body.portfolio {
    ================================================================= */
 
 .demo-pipeline {
-  padding: 20px;
+  padding: clamp(14px, 3vw, 20px);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -2558,7 +2499,7 @@ body.portfolio {
    ================================================================= */
 
 .demo-neuro {
-  padding: 20px;
+  padding: clamp(14px, 3vw, 20px);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -2726,7 +2667,7 @@ body.portfolio {
 }
 
 /* =================================================================
-   DEMO RESPONSIVE
+   DEMO RESPONSIVE — layout shifts only
    ================================================================= */
 
 @media (max-width: 768px) {
@@ -2740,21 +2681,9 @@ body.portfolio {
     max-height: 240px;
   }
 
-  .demo-mktops__slider {
-    height: 320px;
-  }
-
   .demo-mktops__sheet-table th:nth-child(n+4),
   .demo-mktops__sheet-table td:nth-child(n+4) {
     display: none;
-  }
-
-  .demo-sms__phone {
-    max-width: 100%;
-  }
-
-  .demo-sms__attribution {
-    margin: 0 12px;
   }
 
   .demo-sms__attr-flow {
@@ -2780,10 +2709,5 @@ body.portfolio {
 
   .demo-pipeline__connector-fill {
     transform-origin: top;
-  }
-
-  .demo-neuro__grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
   }
 }
