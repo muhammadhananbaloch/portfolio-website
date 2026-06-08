@@ -34,6 +34,88 @@ body.portfolio {
   padding: 0
 }
 
+/* =================================================================
+   AMBIENT GLOW — Breathing gradients + mouse-reactive light
+   ================================================================= */
+
+.ambient-glow {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  overflow: hidden;
+  mix-blend-mode: screen;
+}
+
+.ambient-glow__drift {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform;
+}
+
+.ambient-glow__drift--1 {
+  width: 60vmax;
+  height: 60vmax;
+  top: -15%;
+  left: -10%;
+  background: radial-gradient(circle, rgba(212, 117, 12, .06) 0%, transparent 70%);
+  animation: drift-1 38s ease-in-out infinite;
+}
+
+.ambient-glow__drift--2 {
+  width: 50vmax;
+  height: 50vmax;
+  bottom: -20%;
+  right: -10%;
+  background: radial-gradient(circle, rgba(196, 74, 26, .05) 0%, transparent 70%);
+  animation: drift-2 44s ease-in-out infinite;
+}
+
+.ambient-glow__drift--3 {
+  width: 40vmax;
+  height: 40vmax;
+  top: 30%;
+  left: 40%;
+  background: radial-gradient(circle, rgba(232, 147, 42, .035) 0%, transparent 65%);
+  animation: drift-3 52s ease-in-out infinite;
+}
+
+.ambient-glow__mouse {
+  position: absolute;
+  width: 50vmax;
+  height: 50vmax;
+  top: -25vmax;
+  left: -25vmax;
+  background: radial-gradient(circle, rgba(212, 117, 12, .045) 0%, transparent 60%);
+  will-change: transform;
+}
+
+@keyframes drift-1 {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(8vw, 12vh); }
+  50% { transform: translate(-5vw, 8vh); }
+  75% { transform: translate(12vw, -4vh); }
+}
+
+@keyframes drift-2 {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-10vw, -8vh); }
+  50% { transform: translate(6vw, -14vh); }
+  75% { transform: translate(-4vw, 6vh); }
+}
+
+@keyframes drift-3 {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(6vw, -10vh); }
+  50% { transform: translate(-8vw, 4vh); }
+  75% { transform: translate(4vw, 8vh); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-glow__drift { animation: none; }
+  .ambient-glow__mouse { display: none; }
+}
+
 html.portfolio {
   scroll-behavior: smooth
 }
