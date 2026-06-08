@@ -137,8 +137,25 @@ const StackScene = () => {
   }, []);
 
   const scrollToProject = useCallback((projectId: string) => {
-    const el = document.getElementById(`project-${projectId}`);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+    const projectIds = [
+      "aviation-rag", "freight-voice", "marketing-ops",
+      "propauto", "lead-enrichment", "neuroscan",
+    ];
+    const idx = projectIds.indexOf(projectId);
+    if (idx === -1) return;
+
+    const beat = document.getElementById("work");
+    if (!beat) return;
+
+    const beatTop = beat.offsetTop;
+    const beatHeight = beat.offsetHeight;
+    const projectCount = projectIds.length;
+    const targetProgress = (idx + 0.5) / projectCount;
+
+    window.scrollTo({
+      top: beatTop + beatHeight * targetProgress,
+      behavior: "smooth",
+    });
   }, []);
 
   return (
