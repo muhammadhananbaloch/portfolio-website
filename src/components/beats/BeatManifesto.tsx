@@ -28,6 +28,7 @@ const BeatManifestoInner = ({ progress }: { progress: MotionValue<number> }) => 
   const attribOpacity = useTransform(progress, (p) => lerp(p, 0.6, 0.7, 0, 1));
 
   const blockOpacity = useTransform(progress, (p) => lerp(p, 0.8, 0.95, 1, 0));
+  const bgFadeOut = useTransform(progress, (p) => lerp(p, 0.8, 1, 1, 0));
 
   const lineData = [
     { opacity: line1Opacity, y: line1Y },
@@ -40,7 +41,7 @@ const BeatManifestoInner = ({ progress }: { progress: MotionValue<number> }) => 
       <motion.div
         className="manifesto-beat__bg"
         style={{
-          opacity: bgOpacity,
+          opacity: bgFadeOut,
           background: "linear-gradient(135deg, #b5430e 0%, #c4631a 40%, #a85a12 100%)",
         }}
       />

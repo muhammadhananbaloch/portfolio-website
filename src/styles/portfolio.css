@@ -353,7 +353,6 @@ body.portfolio {
   background: rgba(42, 31, 16, .6);
 }
 
-/* Hover project label */
 .const-hover-label {
   position: absolute;
   transform: translate(-50%, calc(-100% - 28px));
@@ -370,7 +369,6 @@ body.portfolio {
   z-index: 10;
 }
 
-/* Click panel */
 .const-panel {
   position: absolute;
   transform: translate(0, 20px);
@@ -409,7 +407,7 @@ body.portfolio {
   color: var(--ink-3);
 }
 
-/* Timeline */
+/* Timeline (right column) */
 .stack-timeline {
   padding-left: 32px;
   position: relative;

@@ -46,7 +46,8 @@ const Masthead = () => {
     for (const s of SECTIONS) {
       const el = document.getElementById(s.id);
       if (!el) continue;
-      if (el.getBoundingClientRect().top <= threshold) current = s.id;
+      const t = s.id === "experience" ? window.innerHeight * 0.15 : threshold;
+      if (el.getBoundingClientRect().top <= t) current = s.id;
     }
 
     setActiveSection(current);
