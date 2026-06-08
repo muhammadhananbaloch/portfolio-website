@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import Masthead from "@/components/Masthead";
-import BeatGenesis from "@/components/beats/BeatGenesis";
-import BeatProjects from "@/components/beats/BeatProjects";
-import BeatPhilosophy from "@/components/beats/BeatPhilosophy";
+import BeatHero from "@/components/beats/BeatHero";
+import BeatColorTransition from "@/components/beats/BeatColorTransition";
+import BeatProjectChapters from "@/components/beats/BeatProjectChapters";
+import BeatManifesto from "@/components/beats/BeatManifesto";
 import StackScene from "@/components/StackScene";
 import ContactScene from "@/components/ContactScene";
 import "@/styles/portfolio.css";
@@ -20,9 +21,10 @@ const Index = () => {
   return (
     <>
       <Masthead />
-      <BeatGenesis />
-      <BeatProjects />
-      <BeatPhilosophy />
+      <BeatHero />
+      <BeatColorTransition />
+      <BeatProjectChapters />
+      <BeatManifesto />
       <StackScene />
       <ContactScene />
       <footer className="site-footer">
