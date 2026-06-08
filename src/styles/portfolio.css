@@ -749,61 +749,6 @@ body.portfolio {
   }
 }
 
-/* ------------- FOOTER ------------- */
-.site-footer {
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 16px 32px;
-  border-top: 1px solid rgba(255, 255, 255, .08);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  font-family: var(--sans);
-  font-size: 13px;
-  color: var(--ink-3);
-}
-
-.site-footer__links {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.site-footer__links a {
-  color: var(--ink-3);
-  text-decoration: none;
-  transition: color .2s ease;
-}
-
-.site-footer__links a:hover {
-  color: var(--warm-2);
-}
-
-.site-footer__sep {
-  color: var(--ink-4);
-  user-select: none;
-}
-
-.site-footer__top {
-  margin-left: 6px;
-}
-
-@media (max-width: 768px) {
-  .site-footer {
-    flex-direction: column;
-    gap: 10px;
-    align-items: flex-start;
-    padding: 16px 20px;
-  }
-
-  .site-footer__links {
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-}
-
 
 /* =================================================================
    BEAT: HERO — Viewport-scale name + Statement assembly
