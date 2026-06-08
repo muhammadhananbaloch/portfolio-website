@@ -1,20 +1,19 @@
 import { useEffect, useRef, useCallback } from "react";
 
-const LERP_FACTOR = 0.04;
+const LERP = 0.035;
 
 const AmbientGlow = () => {
-  const mouseRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const pos = useRef({ x: 0.5, y: 0.3 });
   const target = useRef({ x: 0.5, y: 0.3 });
   const raf = useRef(0);
-  const active = useRef(false);
 
   const tick = useCallback(() => {
-    pos.current.x += (target.current.x - pos.current.x) * LERP_FACTOR;
-    pos.current.y += (target.current.y - pos.current.y) * LERP_FACTOR;
+    pos.current.x += (target.current.x - pos.current.x) * LERP;
+    pos.current.y += (target.current.y - pos.current.y) * LERP;
 
-    if (mouseRef.current) {
-      mouseRef.current.style.transform =
+    if (ref.current) {
+      ref.current.style.transform =
         `translate(${pos.current.x * 100}%, ${pos.current.y * 100}%)`;
     }
 
@@ -25,13 +24,8 @@ const AmbientGlow = () => {
     const onMove = (e: MouseEvent) => {
       target.current.x = e.clientX / window.innerWidth;
       target.current.y = e.clientY / window.innerHeight;
-      if (!active.current) {
-        active.current = true;
-        raf.current = requestAnimationFrame(tick);
-      }
     };
 
-    active.current = true;
     raf.current = requestAnimationFrame(tick);
     window.addEventListener("mousemove", onMove, { passive: true });
 
@@ -43,10 +37,7 @@ const AmbientGlow = () => {
 
   return (
     <div className="ambient-glow" aria-hidden>
-      <div className="ambient-glow__drift ambient-glow__drift--1" />
-      <div className="ambient-glow__drift ambient-glow__drift--2" />
-      <div className="ambient-glow__drift ambient-glow__drift--3" />
-      <div className="ambient-glow__mouse" ref={mouseRef} />
+      <div className="ambient-glow__mouse" ref={ref} />
     </div>
   );
 };
