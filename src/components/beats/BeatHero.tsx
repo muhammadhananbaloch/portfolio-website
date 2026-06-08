@@ -52,11 +52,11 @@ const BeatHeroInner = ({ progress }: { progress: MotionValue<number> }) => {
 
   const statementOpacity = useTransform(progress, (p) => lerp(p, 0.28, 0.34, 0, 1));
 
-  const statsOpacity = useTransform(progress, (p) => lerp(p, 0.68, 0.76, 0, 1));
-  const statsY = useTransform(progress, (p) => lerp(p, 0.68, 0.76, 30, 0));
+  const statsOpacity = useTransform(progress, (p) => lerp(p, 0.74, 0.82, 0, 1));
+  const statsY = useTransform(progress, (p) => lerp(p, 0.74, 0.82, 30, 0));
 
-  const ctaOpacity = useTransform(progress, (p) => lerp(p, 0.78, 0.86, 0, 1));
-  const ctaY = useTransform(progress, (p) => lerp(p, 0.78, 0.86, 16, 0));
+  const ctaOpacity = useTransform(progress, (p) => lerp(p, 0.84, 0.92, 0, 1));
+  const ctaY = useTransform(progress, (p) => lerp(p, 0.84, 0.92, 16, 0));
 
   let wordIndex = 0;
   const allWords = STATEMENT_LINES.flatMap((line) =>
@@ -130,7 +130,7 @@ const BeatHeroInner = ({ progress }: { progress: MotionValue<number> }) => {
 };
 
 const BeatHero = () => (
-  <ScrollBeat scrollHeight={450} id="hero">
+  <ScrollBeat scrollHeight={380} id="hero">
     {(progress) => <BeatHeroInner progress={progress} />}
   </ScrollBeat>
 );

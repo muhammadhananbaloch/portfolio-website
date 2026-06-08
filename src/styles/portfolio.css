@@ -151,12 +151,17 @@ body.portfolio {
 
 .beat {
   position: relative;
+  background: var(--paper);
 }
 
 .beat__sticky {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+#color-transition {
+  margin-top: -10px;
 }
 
 
@@ -760,15 +765,14 @@ body.portfolio {
   height: 100%;
   position: relative;
   overflow: hidden;
-  background: #0c0c0c;
+  background: var(--paper);
 }
 
 .hero-beat__light {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 90% 70% at 80% 75%, rgba(212, 117, 12, .10) 0%, rgba(180, 90, 20, .03) 40%, transparent 65%),
-    radial-gradient(ellipse 60% 50% at 20% 20%, rgba(212, 117, 12, .04) 0%, transparent 50%);
+    radial-gradient(ellipse 160% 140% at 75% 70%, rgba(212, 117, 12, .09) 0%, rgba(180, 90, 20, .03) 30%, transparent 55%);
   pointer-events: none;
   z-index: 1;
 }
@@ -944,6 +948,9 @@ body.portfolio {
   height: 100%;
   position: relative;
   overflow: hidden;
+  background:
+    radial-gradient(ellipse 160% 140% at 75% -30%, rgba(212, 117, 12, .09) 0%, rgba(180, 90, 20, .03) 30%, transparent 55%)
+    var(--paper);
 }
 
 .color-transition__shape {
