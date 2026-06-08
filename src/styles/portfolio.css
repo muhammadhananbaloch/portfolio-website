@@ -893,14 +893,14 @@ body.portfolio {
 }
 
 .hero-beat__resume {
-  background: var(--ink);
+  background: var(--warm);
   color: var(--paper);
-  border: 1px solid var(--ink);
+  border: 1px solid var(--warm);
 }
 
 .hero-beat__resume:hover {
-  background: var(--warm);
-  border-color: var(--warm);
+  background: var(--warm-2);
+  border-color: var(--warm-2);
 }
 
 .hero-beat__consult {
