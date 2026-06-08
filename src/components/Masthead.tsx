@@ -1,42 +1,63 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 
-const NAV_LINKS = [
-  { id: "work", href: "#work", label: "Work" },
-  { id: "stack", href: "#stack", label: "Stack" },
-  { id: "experience", href: "#experience", label: "Experience" },
+const SECTIONS = [
+  { id: "work", label: "Work" },
+  { id: "stack", label: "Stack" },
+  { id: "experience", label: "Experience" },
+  { id: "contact", label: "Contact" },
 ];
 
 const Masthead = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [scrolled, setScrolled] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
+  const lastScrollY = useRef(0);
+  const pastHero = useRef(false);
+  const hovering = useRef(false);
 
   const handleScroll = useCallback(() => {
-    const scrollTop = window.scrollY;
+    const y = window.scrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    setScrollProgress(docHeight > 0 ? scrollTop / docHeight : 0);
-    setScrolled(scrollTop > 100);
+    setScrollProgress(docHeight > 0 ? y / docHeight : 0);
+
+    const heroEl = document.getElementById("hero");
+    const heroBottom = heroEl
+      ? heroEl.offsetTop + heroEl.offsetHeight * 0.3
+      : window.innerHeight;
+    pastHero.current = y > heroBottom;
+
+    const delta = y - lastScrollY.current;
+    const scrollingDown = delta > 5;
+    const scrollingUp = delta < -5;
+
+    if (!pastHero.current) {
+      setVisible(false);
+    } else if (scrollingUp) {
+      setVisible(true);
+    } else if (scrollingDown && !hovering.current) {
+      setVisible(false);
+    }
+
+    lastScrollY.current = y;
 
     const threshold = window.innerHeight * 0.35;
     let current: string | null = null;
 
-    for (const id of ["work", "stack", "contact"]) {
-      const el = document.getElementById(id);
+    for (const s of SECTIONS) {
+      const el = document.getElementById(s.id);
       if (!el) continue;
-      if (el.getBoundingClientRect().top <= threshold) current = id;
-    }
-
-    const expEl = document.getElementById("experience");
-    if (expEl) {
-      const expTop = expEl.getBoundingClientRect().top;
-      const stackEl = document.getElementById("stack");
-      const stackTop = stackEl ? stackEl.getBoundingClientRect().top : 0;
-      if (expTop - stackTop > 200 && expTop <= threshold) {
-        current = "experience";
-      }
+      if (el.getBoundingClientRect().top <= threshold) current = s.id;
     }
 
     setActiveSection(current);
+  }, []);
+
+  const handleMouseEnter = useCallback(() => {
+    hovering.current = true;
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    hovering.current = false;
   }, []);
 
   useEffect(() => {
@@ -46,43 +67,26 @@ const Masthead = () => {
   }, [handleScroll]);
 
   return (
-    <header className={`masthead${scrolled ? " masthead--scrolled" : ""}`}>
+    <header
+      className={`masthead${visible ? " masthead--visible" : ""}`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <div
         className="masthead-progress"
         style={{ transform: `scaleX(${scrollProgress})` }}
       />
-      <div className="masthead-inner">
-        <a href="#top" className="masthead-logo">
-          Muhammad Hanan Baloch
-        </a>
-        <nav className="masthead-nav">
-          {NAV_LINKS.map((s) => (
-            <a
-              key={s.id}
-              href={s.href}
-              className={activeSection === s.id ? "active" : undefined}
-            >
-              {s.label}
-            </a>
-          ))}
+      <nav className="masthead-nav">
+        {SECTIONS.map((s) => (
           <a
-            href="#contact"
-            className={`cta${activeSection === "contact" ? " active" : ""}`}
+            key={s.id}
+            href={`#${s.id}`}
+            className={activeSection === s.id ? "active" : undefined}
           >
-            Get in touch
-            <svg
-              className="icn"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M7 17L17 7M7 7h10v10" />
-            </svg>
+            {s.label}
           </a>
-        </nav>
-      </div>
+        ))}
+      </nav>
     </header>
   );
 };
