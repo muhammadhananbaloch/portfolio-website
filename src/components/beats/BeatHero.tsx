@@ -79,7 +79,7 @@ const BeatHeroInner = ({ progress }: { progress: MotionValue<number> }) => {
           <span className="hero-beat__name-line">Muhammad</span>
           <span className="hero-beat__name-line">Hanan Baloch</span>
         </h1>
-        <span className="hero-beat__role">AI Systems Engineer</span>
+        <span className="hero-beat__role">AI Engineer</span>
       </motion.div>
 
       <motion.div className="hero-beat__statement" style={{ opacity: statementOpacity }}>
