@@ -74,7 +74,7 @@ button {
 [id="stack"],
 [id="experience"],
 [id="contact"] {
-  scroll-margin-top: 60px
+  scroll-margin-top: 60px;
 }
 
 body.portfolio {
@@ -188,10 +188,6 @@ body.portfolio {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-#color-transition {
-  margin-top: -10px;
 }
 
 

@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import Masthead from "@/components/Masthead";
 import AmbientGlow from "@/components/AmbientGlow";
 import BeatHero from "@/components/beats/BeatHero";
-import BeatColorTransition from "@/components/beats/BeatColorTransition";
 import BeatProjectChapters from "@/components/beats/BeatProjectChapters";
 import BeatManifesto from "@/components/beats/BeatManifesto";
 import StackScene from "@/components/StackScene";
@@ -24,7 +23,6 @@ const Index = () => {
       <AmbientGlow />
       <Masthead />
       <BeatHero />
-      <BeatColorTransition />
       <BeatProjectChapters />
       <BeatManifesto />
       <StackScene />

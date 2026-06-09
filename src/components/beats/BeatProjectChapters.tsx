@@ -1,9 +1,15 @@
 import { useState, useCallback } from "react";
-import { motion, AnimatePresence, useMotionValueEvent, MotionValue } from "framer-motion";
+import { motion, AnimatePresence, useMotionValueEvent, useTransform, MotionValue } from "framer-motion";
 import ScrollBeat from "@/components/scroll/ScrollBeat";
 import ProjectDemoOverlay from "@/components/projects/ProjectDemoOverlay";
 import { projects } from "@/components/projects/projectData";
 import type { ProjectDemoType } from "@/components/projects/projectData";
+
+function lerp(p: number, a: number, b: number, oA: number, oB: number) {
+  if (p <= a) return oA;
+  if (p >= b) return oB;
+  return oA + (oB - oA) * ((p - a) / (b - a));
+}
 
 const PROJECT_ENVS: Record<string, { bg: string; light: string; lightPos: string }> = {
   "aviation-rag": {
@@ -38,23 +44,70 @@ const PROJECT_ENVS: Record<string, { bg: string; light: string; lightPos: string
   },
 };
 
+const BAND_END = 0.15;
+const PROJECT_START = BAND_END;
+const PROJECT_RANGE = 1 - PROJECT_START;
 const PROJECT_COUNT = projects.length;
-const SUB_BEAT = 1 / PROJECT_COUNT;
 
 const BeatProjectChaptersInner = ({ progress }: { progress: MotionValue<number> }) => {
   const [activeIndex, setActiveIndex] = useState(-1);
+  const [bandsVisible, setBandsVisible] = useState(true);
   const [openDemo, setOpenDemo] = useState<ProjectDemoType | null>(null);
 
+  const band1X = useTransform(progress, (p) => {
+    const bp = p / BAND_END;
+    return lerp(bp, 0, 0.55, -100, 5) + "%";
+  });
+  const band1Opacity = useTransform(progress, (p) => {
+    const bp = p / BAND_END;
+    if (bp <= 0) return 0;
+    if (bp <= 0.10) return lerp(bp, 0, 0.10, 0, 0.9);
+    if (bp <= 0.55) return 0.9;
+    if (bp <= 0.80) return lerp(bp, 0.55, 0.80, 0.9, 0);
+    return 0;
+  });
+
+  const band2X = useTransform(progress, (p) => {
+    const bp = p / BAND_END;
+    return lerp(bp, 0.06, 0.60, -100, 5) + "%";
+  });
+  const band2Opacity = useTransform(progress, (p) => {
+    const bp = p / BAND_END;
+    if (bp <= 0.06) return 0;
+    if (bp <= 0.18) return lerp(bp, 0.06, 0.18, 0, 0.85);
+    if (bp <= 0.60) return 0.85;
+    if (bp <= 0.85) return lerp(bp, 0.60, 0.85, 0.85, 0);
+    return 0;
+  });
+
+  const band3X = useTransform(progress, (p) => {
+    const bp = p / BAND_END;
+    return lerp(bp, 0.14, 0.70, -100, 5) + "%";
+  });
+  const band3Opacity = useTransform(progress, (p) => {
+    const bp = p / BAND_END;
+    if (bp <= 0.14) return 0;
+    if (bp <= 0.28) return lerp(bp, 0.14, 0.28, 0, 0.8);
+    if (bp <= 0.65) return 0.8;
+    if (bp <= 0.90) return lerp(bp, 0.65, 0.90, 0.8, 0);
+    return 0;
+  });
+
   useMotionValueEvent(progress, "change", (p) => {
-    if (p <= 0.01) {
+    setBandsVisible(p < BAND_END);
+
+    if (p <= PROJECT_START) {
       setActiveIndex(-1);
       return;
     }
-    const raw = Math.floor(p / SUB_BEAT);
-    const idx = Math.min(raw, PROJECT_COUNT - 1);
-    const subProgress = (p - idx * SUB_BEAT) / SUB_BEAT;
 
-    if (subProgress < 0.06 || subProgress > 0.96) {
+    const projectP = (p - PROJECT_START) / PROJECT_RANGE;
+    const subBeat = 1 / PROJECT_COUNT;
+    const raw = Math.floor(projectP / subBeat);
+    const idx = Math.min(raw, PROJECT_COUNT - 1);
+    const subProgress = (projectP - idx * subBeat) / subBeat;
+
+    if (subProgress < 0.02 || subProgress > 0.98) {
       setActiveIndex(-1);
     } else {
       setActiveIndex(idx);
@@ -79,6 +132,50 @@ const BeatProjectChaptersInner = ({ progress }: { progress: MotionValue<number> 
       className="project-chapters"
       style={{ backgroundColor: env?.bg || "#0c0c0c" }}
     >
+      {bandsVisible && (
+        <div className="color-transition" style={{ position: "absolute", inset: 0, zIndex: 3 }}>
+          <motion.div
+            style={{
+              position: "absolute",
+              top: "-20%",
+              height: "140%",
+              width: "120%",
+              background: "#c44a1a",
+              opacity: band1Opacity,
+              x: band1X,
+              skewX: -8,
+              transformOrigin: "center center",
+            }}
+          />
+          <motion.div
+            style={{
+              position: "absolute",
+              top: "-20%",
+              height: "140%",
+              width: "110%",
+              background: "#d4750c",
+              opacity: band2Opacity,
+              x: band2X,
+              skewX: -12,
+              transformOrigin: "center center",
+            }}
+          />
+          <motion.div
+            style={{
+              position: "absolute",
+              top: "-20%",
+              height: "140%",
+              width: "100%",
+              background: "#2a1f10",
+              opacity: band3Opacity,
+              x: band3X,
+              skewX: -16,
+              transformOrigin: "center center",
+            }}
+          />
+        </div>
+      )}
+
       {env && (
         <div
           className="project-chapters__env"
@@ -159,7 +256,7 @@ const BeatProjectChaptersInner = ({ progress }: { progress: MotionValue<number> 
 };
 
 const BeatProjectChapters = () => (
-  <ScrollBeat scrollHeight={1600} id="work">
+  <ScrollBeat scrollHeight={950} id="work">
     {(progress) => <BeatProjectChaptersInner progress={progress} />}
   </ScrollBeat>
 );

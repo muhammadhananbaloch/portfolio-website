@@ -1,14 +1,16 @@
 import { useRef } from "react";
 import { useScroll, useTransform, MotionValue } from "framer-motion";
 
-export function useScrollProgress(): {
+export function useScrollProgress(
+  offset?: [string, string]
+): {
   containerRef: React.RefObject<HTMLDivElement | null>;
   progress: MotionValue<number>;
 } {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"],
+    offset: offset || ["start start", "end end"],
   });
 
   return { containerRef, progress: scrollYProgress };

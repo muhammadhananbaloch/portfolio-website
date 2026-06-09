@@ -7,17 +7,19 @@ interface ScrollBeatProps {
   children: (progress: MotionValue<number>) => ReactNode;
   className?: string;
   id?: string;
+  offset?: [string, string];
+  containerBg?: string;
 }
 
-const ScrollBeat = ({ scrollHeight, children, className, id }: ScrollBeatProps) => {
-  const { containerRef, progress } = useScrollProgress();
+const ScrollBeat = ({ scrollHeight, children, className, id, offset, containerBg }: ScrollBeatProps) => {
+  const { containerRef, progress } = useScrollProgress(offset);
 
   return (
     <div
       ref={containerRef}
       id={id}
       className={`beat ${className || ""}`}
-      style={{ height: `${scrollHeight}vh`, position: "relative" }}
+      style={{ height: `${scrollHeight}vh`, position: "relative", backgroundColor: containerBg }}
     >
       <div
         className="beat__sticky"
