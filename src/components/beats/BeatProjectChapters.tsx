@@ -44,7 +44,7 @@ const PROJECT_ENVS: Record<string, { bg: string; light: string; lightPos: string
   },
 };
 
-const BAND_END = 0.15;
+const BAND_END = 0.19;
 const PROJECT_START = BAND_END;
 const PROJECT_RANGE = 1 - PROJECT_START;
 const PROJECT_COUNT = projects.length;
@@ -256,7 +256,7 @@ const BeatProjectChaptersInner = ({ progress }: { progress: MotionValue<number> 
 };
 
 const BeatProjectChapters = () => (
-  <ScrollBeat scrollHeight={950} id="work">
+  <ScrollBeat scrollHeight={750} id="work">
     {(progress) => <BeatProjectChaptersInner progress={progress} />}
   </ScrollBeat>
 );
