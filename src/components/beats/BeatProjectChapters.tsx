@@ -256,7 +256,7 @@ const BeatProjectChaptersInner = ({ progress }: { progress: MotionValue<number> 
 };
 
 const BeatProjectChapters = () => (
-  <ScrollBeat scrollHeight={750} id="work">
+  <ScrollBeat scrollHeight={750} anchorId="work" anchorOffset={19}>
     {(progress) => <BeatProjectChaptersInner progress={progress} />}
   </ScrollBeat>
 );

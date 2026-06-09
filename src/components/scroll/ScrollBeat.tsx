@@ -9,9 +9,11 @@ interface ScrollBeatProps {
   id?: string;
   offset?: [string, string];
   containerBg?: string;
+  anchorId?: string;
+  anchorOffset?: number;
 }
 
-const ScrollBeat = ({ scrollHeight, children, className, id, offset, containerBg }: ScrollBeatProps) => {
+const ScrollBeat = ({ scrollHeight, children, className, id, offset, containerBg, anchorId, anchorOffset }: ScrollBeatProps) => {
   const { containerRef, progress } = useScrollProgress(offset);
 
   return (
@@ -21,6 +23,9 @@ const ScrollBeat = ({ scrollHeight, children, className, id, offset, containerBg
       className={`beat ${className || ""}`}
       style={{ height: `${scrollHeight}vh`, position: "relative", backgroundColor: containerBg }}
     >
+      {anchorId && (
+        <div id={anchorId} style={{ position: "absolute", top: `${anchorOffset || 0}%` }} />
+      )}
       <div
         className="beat__sticky"
         style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}
